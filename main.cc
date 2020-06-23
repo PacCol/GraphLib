@@ -2,5 +2,5 @@
 
 int main() {
     char fileName[] = "test.jpg";
-    readJpegImage(fileName);
+    jpegImage myImage(fileName);
 }

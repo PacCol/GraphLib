@@ -17,7 +17,7 @@ void my_error_exit(j_common_ptr imageInfo) {
   longjmp(myerr->setjmp_buffer, 1);
 }
 
-int readJpegImage(char* fileName) {
+jpegImage::jpegImage(char* fileName) {
   struct jpeg_decompress_struct imageInfo;
   struct my_error_mgr jerr;
 
@@ -27,7 +27,7 @@ int readJpegImage(char* fileName) {
 
   if ((jpegFile = fopen(fileName, "rb")) == NULL) {
     throw std::runtime_error("Fatal error : can't open this file");
-    return 0;
+    return;
   }
 
   imageInfo.err = jpeg_std_error(&jerr.pub);
@@ -37,7 +37,7 @@ int readJpegImage(char* fileName) {
     throw std::runtime_error("Fatal error : can't decode this file");
     jpeg_destroy_decompress(&imageInfo);
     fclose(jpegFile);
-    return 0;
+    return;
   }
 
   jpeg_create_decompress(&imageInfo);
@@ -56,10 +56,8 @@ int readJpegImage(char* fileName) {
     //put_scanline_someplace(buffer[0], row_stride);
   }
 
-  (void) jpeg_finish_decompress(&imageInfo);
+  jpeg_finish_decompress(&imageInfo);
   jpeg_destroy_decompress(&imageInfo);
 
   fclose(jpegFile);
-
-  return 1;
 }
