@@ -53,15 +53,17 @@ jpegImage::jpegImage(char* fileName) {
   pixelSize = imageInfo.output_components;
 
   int rowStride = imageInfo.output_width * imageInfo.output_components;
-  decompressedImage.reserve(imageInfo.output_height);
+
+  JSAMPARRAY decompressedImage = (*imageInfo.mem->alloc_sarray) ((j_common_ptr) &imageInfo, JPOOL_IMAGE, rowStride, 1);
 
   // We put the pixel values into a table
   while(imageInfo.output_scanline < imageInfo.output_height) {
-    std::vector<uint8_t> vector(rowStride);
-    uint8_t* scanLine = vector.data();
-    jpeg_read_scanlines(&imageInfo, &scanLine, 1 );
-    decompressedImage.push_back(vector);
+    jpeg_read_scanlines(&imageInfo, decompressedImage, 1);
   }
+
+  //std::cout << "pixel 2|4 : " << decompressedImage[0];
+
+
 
   // Then we finish the decompression
   jpeg_finish_decompress(&imageInfo);

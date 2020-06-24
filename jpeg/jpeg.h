@@ -12,7 +12,4 @@ class jpegImage {
     unsigned int height;
     unsigned int colorSpace;
     int pixelSize;
-
-    // We create a table to store the pixel values
-    std::vector<std::vector<uint8_t>> decompressedImage;
 };
