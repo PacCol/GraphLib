@@ -48,7 +48,7 @@ jpegImage::jpegImage(char* fileName) {
   width = imageInfo.output_width;
   height = imageInfo.output_height;
   pixelSize = imageInfo.output_components;
-
+  
   row_stride = imageInfo.output_width * imageInfo.output_components;
 
   buffer = (*imageInfo.mem->alloc_sarray)
