@@ -53,7 +53,6 @@ jpegImage::jpegImage(char* fileName) {
   pixelSize = imageInfo.output_components;
 
   int rowStride = imageInfo.output_width * imageInfo.output_components;
-  //decompressedImage.clear();
   decompressedImage.reserve(imageInfo.output_height);
 
   // We put the pixel values into a table
@@ -68,5 +67,6 @@ jpegImage::jpegImage(char* fileName) {
   jpeg_finish_decompress(&imageInfo);
   jpeg_destroy_decompress(&imageInfo);
 
+  // We close the image file
   fclose(jpegFile);
 }
