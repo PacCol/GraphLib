@@ -1,6 +1,9 @@
 int readJpegImage(char* fileName);
 
 class jpegImage {
-  public:
+public:
     explicit jpegImage(char* fileName);
+    int width;
+    int height;
+    int pixelSize;
 };
