@@ -49,6 +49,7 @@ jpegImage::jpegImage(char* fileName) {
   // We store the image informations into public variables
   width = imageInfo.output_width;
   height = imageInfo.output_height;
+  colorSpace = imageInfo.out_color_space;
   pixelSize = imageInfo.output_components;
 
   int rowStride = imageInfo.output_width * imageInfo.output_components;
