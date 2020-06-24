@@ -17,19 +17,19 @@ void my_error_exit(j_common_ptr imageInfo) {
   longjmp(myerr->setjmp_buffer, 1);
 }
 
+// We create a class to create jpegImage object
 jpegImage::jpegImage(char* fileName) {
   struct jpeg_decompress_struct imageInfo;
   struct my_error_mgr jerr;
 
+  // We try to open the image file
   FILE * jpegFile;
-  JSAMPARRAY buffer;
-  int row_stride;
-
   if ((jpegFile = fopen(fileName, "rb")) == NULL) {
     throw std::runtime_error("Fatal error : can't open this file");
     return;
   }
 
+  // We search potential errors
   imageInfo.err = jpeg_std_error(&jerr.pub);
   jerr.pub.error_exit = my_error_exit;
 
@@ -40,26 +40,30 @@ jpegImage::jpegImage(char* fileName) {
     return;
   }
 
+  // We decompress the image
   jpeg_create_decompress(&imageInfo);
   jpeg_stdio_src(&imageInfo, jpegFile);
   jpeg_read_header(&imageInfo, TRUE);
   jpeg_start_decompress(&imageInfo);
 
+  // We store the image informations into public variables
   width = imageInfo.output_width;
   height = imageInfo.output_height;
   pixelSize = imageInfo.output_components;
-  
-  row_stride = imageInfo.output_width * imageInfo.output_components;
 
-  buffer = (*imageInfo.mem->alloc_sarray)
-		((j_common_ptr) &imageInfo, JPOOL_IMAGE, row_stride, 1);
+  int rowStride = imageInfo.output_width * imageInfo.output_components;
+  //decompressedImage.clear();
+  decompressedImage.reserve(imageInfo.output_height);
 
-  while (imageInfo.output_scanline < imageInfo.output_height) {
-    jpeg_read_scanlines(&imageInfo, buffer, 1);
-    /* Assume put_scanline_someplace wants a pointer and sample count. */
-    //put_scanline_someplace(buffer[0], row_stride);
+  // We put the pixel values into a table
+  while(imageInfo.output_scanline < imageInfo.output_height) {
+    std::vector<uint8_t> vector(rowStride);
+    uint8_t* scanLine = vector.data();
+    jpeg_read_scanlines(&imageInfo, &scanLine, 1 );
+    decompressedImage.push_back(vector);
   }
 
+  // Then we finish the decompression
   jpeg_finish_decompress(&imageInfo);
   jpeg_destroy_decompress(&imageInfo);
 
