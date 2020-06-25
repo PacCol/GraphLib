@@ -52,18 +52,17 @@ jpegImage::jpegImage(char* fileName) {
   colorSpace = imageInfo.out_color_space;
   pixelSize = imageInfo.output_components;
 
-  int rowStride = imageInfo.output_width * imageInfo.output_components;
+  int rowStride = width * pixelSize;
 
-  JSAMPARRAY decompressedImage = (*imageInfo.mem->alloc_sarray) ((j_common_ptr) &imageInfo, JPOOL_IMAGE, rowStride, 1);
+  // We read the image line per line
+  while(imageInfo.output_scanline < height) {
+    std::vector<uint8_t> scannedLine(rowStride);
+    uint8_t* p = scannedLine.data();
+    jpeg_read_scanlines(&imageInfo, &p, 1);
 
-  // We put the pixel values into a table
-  while(imageInfo.output_scanline < imageInfo.output_height) {
-    jpeg_read_scanlines(&imageInfo, decompressedImage, 1);
+    // We put the pixels values into a table
+    pixels.push_back(scannedLine);
   }
-
-  //std::cout << "pixel 2|4 : " << decompressedImage[0];
-
-
 
   // Then we finish the decompression
   jpeg_finish_decompress(&imageInfo);
@@ -71,4 +70,20 @@ jpegImage::jpegImage(char* fileName) {
 
   // We close the image file
   fclose(jpegFile);
+}
+
+std::vector<uint8_t> jpegImage::getPixel(int x, int y) {
+  // We create a vector
+  std::vector<uint8_t> scannedPixel;
+
+  // We push the pixels values in the vector
+  for(int i = 0; i < pixelSize; i++) {
+    scannedPixel.push_back(pixels[y][x * pixelSize + i]);
+  }
+
+  // If the X or Y value is out of range, we throw an error
+  //throw std::runtime_error("Fatal error : The X or Y value is out of range");
+
+  // Return the scanned pixel
+  return scannedPixel;
 }

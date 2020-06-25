@@ -12,4 +12,11 @@ class jpegImage {
     unsigned int height;
     unsigned int colorSpace;
     int pixelSize;
+
+    // We create a function to return the requested pixel values
+    std::vector<uint8_t> getPixel(int x, int y);
+
+  private:
+    // We store the pixels values into a vector
+    std::vector<std::vector<uint8_t>> pixels;
 };
