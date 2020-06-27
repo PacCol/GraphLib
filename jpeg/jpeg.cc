@@ -73,6 +73,14 @@ jpegImage::jpegImage(char* fileName) {
 }
 
 std::vector<uint8_t> jpegImage::getRgbColor(int x, int y) {
+  // If the X or Y value is out of range, we throw an error
+  if(x >= width) {
+    throw std::runtime_error("Fatal error : The X value is out of range");
+  }
+  else if(y >= height) {
+    throw std::runtime_error("Fatal error : The Y value is out of range");
+  }
+  
   // We create a vector
   std::vector<uint8_t> scannedPixel;
 
@@ -80,9 +88,6 @@ std::vector<uint8_t> jpegImage::getRgbColor(int x, int y) {
   for(int i = 0; i < pixelSize; i++) {
     scannedPixel.push_back(pixels[y][x * pixelSize + i]);
   }
-
-  // If the X or Y value is out of range, we throw an error
-  //throw std::runtime_error("Fatal error : The X or Y value is out of range");
 
   // Return the scanned pixel
   return scannedPixel;
