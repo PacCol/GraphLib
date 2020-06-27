@@ -10,8 +10,8 @@ int main() {
   std::cout << "Image Pixel Size : " << myImage.pixelSize << "\n";
 
   std::cout << "Image Pixel : X = 3, Y = 6 : ";
-  std::vector<uint8_t> scannedLine = myImage.getPixel(3, 6);
-  std::cout << "R -> " << scannedLine[0] << "\n";
-  std::cout << "                             G -> " << scannedLine[1] << "\n";
-  std::cout << "                             B -> " << scannedLine[2] << "\n";
+  std::vector<uint8_t> scannedPixel = myImage.getRgbColor(3, 7);
+  std::cout << "R -> " << +scannedPixel[0] << "\n";
+  std::cout << "                             G -> " << +scannedPixel[1] << "\n";
+  std::cout << "                             B -> " << +scannedPixel[2] << "\n";
 }

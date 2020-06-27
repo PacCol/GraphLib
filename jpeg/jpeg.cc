@@ -72,7 +72,7 @@ jpegImage::jpegImage(char* fileName) {
   fclose(jpegFile);
 }
 
-std::vector<uint8_t> jpegImage::getPixel(int x, int y) {
+std::vector<uint8_t> jpegImage::getRgbColor(int x, int y) {
   // We create a vector
   std::vector<uint8_t> scannedPixel;
 
