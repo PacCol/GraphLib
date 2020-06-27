@@ -81,14 +81,59 @@ std::vector<uint8_t> jpegImage::getRgbColor(int x, int y) {
     throw std::runtime_error("Fatal error : The Y value is out of range");
   }
   
+  // If the image is monochrome, we throw an error
+  if(pixelSize == 1) {
+    throw std::runtime_error("Fatal error : The image is monochrome");
+  }
+  
   // We create a vector
   std::vector<uint8_t> scannedPixel;
 
   // We push the pixels values in the vector
-  for(int i = 0; i < pixelSize; i++) {
+  for(int i = 0; i < 3; i++) {
     scannedPixel.push_back(pixels[y][x * pixelSize + i]);
   }
 
   // Return the scanned pixel
   return scannedPixel;
 }
+
+uint8_t jpegImage::getLuminance(int x, int y) {
+  // If the image is monochrome
+  if(pixelSize == 1) {
+    //We just return the pixel value
+    return pixels[y][x];
+  }
+  
+  // Else if the image is colored
+  else if (pixelSize == 3) {
+    // We get the RGB pixel value
+    std::vector<uint8_t> pixel = getRgbColor(x, y);
+    
+    // We get the luminance with this operation
+    uint8_t luminance = (pixel[0] * 2 + pixel[1] * 3 + pixel[2]) / 6;
+    
+    // We return the luminance
+    return luminance;
+  }
+}
+
+/*void jpegImage::convertInGrayscale() {
+  // If the image is not already monochrome
+  if(pixelSize != 1) {
+    // We convert all pixels
+    std::vector<std::vector<uint8_t>> monochromePixels;
+    
+    int rowStride = width * pixelSize;
+    
+    for(int i = 0; i < height; i++) {
+      std::vector<uint8_t> monochromeLine(rowStride);
+      
+      return static_cast<uint8_t>(
+            ( vec[0] * 2 + vec[1] * 3 + vec[2] ) / 6
+            );
+      
+      monochromePixels.push_back(monochromeLine);
+    }
+  }
+}*/

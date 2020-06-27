@@ -13,8 +13,11 @@ class jpegImage {
     unsigned int colorSpace;
     int pixelSize;
 
-    // We create a function to return the requested pixel values
+    // We create a function to return the requested RGB value
     std::vector<uint8_t> getRgbColor(int x, int y);
+    
+    // We create a function to return the luminance of a pixel
+    uint8_t getLuminance(int x, int y);
 
   private:
     // We store the pixels values into a vector

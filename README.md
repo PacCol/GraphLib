@@ -26,18 +26,25 @@ This will return an `std::vector<uint8_t>` that contain the RGB values or a sing
 #### Example :
 ```
 #include <iostream>
-#include "jpeg/jpeg.h"
+#include "graphlib/jpeg.h"
 
 int main() {
-  char fileName[] = "test.jpg";
+  std::cout << "\n";
+  
+  char fileName[] = "imageSamples/test.jpg";
   jpegImage myImage(fileName);
 
-  std::cout << "Image Pixel : X = 3, Y = 6 : ";
-  std::vector<uint8_t> scannedPixel = myImage.getRgbColor(1023, 7);
-  std::cout << "R -> " << +scannedPixel[0] << "\n";
-  std::cout << "                             G -> " << +scannedPixel[1] << "\n";
-  std::cout << "                             B -> " << +scannedPixel[2] << "\n";
+  std::cout << "Image Dimensions : " << myImage.width << "x" << myImage.height <<"\n";
+  std::cout << "Image Color Space : " << myImage.colorSpace << "\n";
+  std::cout << "Image Pixel Size : " << myImage.pixelSize << "\n";
+
+  std::cout << "Image Pixel : X=3, Y=6 : ";
+  std::vector<uint8_t> scannedPixel = myImage.getRgbColor(3, 6);
+  std::cout << " R=" << +scannedPixel[0] << " G=" << +scannedPixel[1]  << " B=" << +scannedPixel[2] << "\n";
+  
+  std::cout << "\n";
 }
+
 ```
 
 #### Important :
