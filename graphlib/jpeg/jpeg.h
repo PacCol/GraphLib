@@ -18,6 +18,9 @@ class jpegImage {
     
     // We create a function to return the luminance of a pixel
     uint8_t getLuminance(int x, int y);
+    
+    // We create a function to reduce the image width
+    void resize(int newWidth);
 
   private:
     // We store the pixels values into a vector

@@ -26,7 +26,7 @@ This will return an `std::vector<uint8_t>` that contain the RGB values or a sing
 #### Example :
 ```
 #include <iostream>
-#include "graphlib/jpeg.h"
+#include "graphlib/jpeg/jpeg.h"
 
 int main() {
   std::cout << "\n";
