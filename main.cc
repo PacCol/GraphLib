@@ -17,7 +17,7 @@ int main() {
   
   std::cout << "Image Luminance : X=3, Y=6 : " << +myImage.getLuminance(3, 6) << "\n";
   
-  //myImage.resize(100); --> not available...
+  myImage.resize(100);
   
   std::cout << "\n";
   

@@ -80,12 +80,12 @@ std::vector<uint8_t> jpegImage::getRgbColor(int x, int y) {
   else if(y >= height) {
     throw std::runtime_error("Error : The Y value is out of range");
   }
-  
+
   // If the image is monochrome, we throw an error
   if(pixelSize == 1) {
     throw std::runtime_error("Error : The image is monochrome");
   }
-  
+
   // We create a vector
   std::vector<uint8_t> scannedPixel;
 
@@ -104,15 +104,15 @@ uint8_t jpegImage::getLuminance(int x, int y) {
     // We just return the pixel value
     return pixels[y][x];
   }
-  
+
   // Else if the image is colored
   else if (pixelSize == 3) {
     // We get the RGB pixel value
     std::vector<uint8_t> pixel = getRgbColor(x, y);
-    
+
     // We get the luminance with this operation
     uint8_t luminance = (pixel[0] * 0.21 + pixel[1] * 0.71 + pixel[2] * 0.07);
-    
+
     // We return the luminance
     return luminance;
   }
@@ -129,7 +129,7 @@ void jpegImage::resize(int newWidth) {
   else if(newWidth == width) {
     return;
   }
-  
+
   int newHeight = newWidth * width / 1024 * 768 / width;
   std::cout << "newHeight : " << newHeight << "\n";
 
