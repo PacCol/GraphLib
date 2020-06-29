@@ -21,6 +21,9 @@ class jpegImage {
     
     // We create a function to reduce the image width
     void resize(int newWidth);
+    
+    // We create a function to save the modified image
+    void save(char * fileName, int quality);
 
   private:
     // We store the pixels values into a vector

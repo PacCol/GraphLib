@@ -17,7 +17,10 @@ int main() {
   
   std::cout << "Image Luminance : X=3, Y=6 : " << +myImage.getLuminance(3, 6) << "\n";
   
-  myImage.resize(100);
+  //myImage.resize(100);
+  
+  char fileNameToSave[] = "imageSamples/test_saved.jpg";
+  myImage.save(fileNameToSave, 100);
   
   std::cout << "\n";
   
