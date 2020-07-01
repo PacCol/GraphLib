@@ -1,4 +1,5 @@
 #include <iostream>
+
 #include <jpeglib.h>
 #include <setjmp.h>
 
@@ -59,7 +60,7 @@ jpegImage::jpegImage(char* fileName) {
     uint8_t* p = scannedLine.data();
     jpeg_read_scanlines(&imageInfo, &p, 1);
 
-    // We put the pixels values into a table
+    // We put the pixels values into a vector of vectors
     pixels.push_back(scannedLine);
   }
 
@@ -80,9 +81,10 @@ void jpegImage::save(char * fileName, int quality) {
   if ((outputJpegFile = fopen(fileName, "wb")) == NULL) {
     throw std::runtime_error("Error : can't create this file");
   }
-  
+
   imageInfo.err = jpeg_std_error(&jerr);
 
+  // We start to compress the image
   jpeg_create_compress(&imageInfo);
   jpeg_stdio_dest(&imageInfo, outputJpegFile);
 
@@ -92,29 +94,18 @@ void jpegImage::save(char * fileName, int quality) {
   imageInfo.input_components = pixelSize;
   imageInfo.in_color_space = J_COLOR_SPACE(colorSpace);
 
+  // We continue to compress the image
   jpeg_set_defaults(&imageInfo);
   jpeg_set_quality(&imageInfo, quality, TRUE);
   jpeg_start_compress(&imageInfo, TRUE);
 
   int rowStride = width * pixelSize;
 
-  // Let's assume this vector is not empty.
-  /*vector<string> strs;
-  const vector<string>::iterator end_it = strs.end();
-
-  for (vector<string>::iterator it = strs.begin(); it != end_it; ++it) {
-    const string& s = *it;
-    // Some code here...
-  }
-  
-  vector<string> &strs;
-  for (const auto &s : strs){
-   //
-  }*/
-
+  // We read the image vector line per line
   for(auto const& vecLine : pixels) {
     JSAMPROW rowPtr[1];
-    rowPtr[0] = const_cast<::JSAMPROW>( vecLine.data() );
+    rowPtr[0] = const_cast<::JSAMPROW>(vecLine.data());
+    // And we write the image
     jpeg_write_scanlines(&imageInfo, rowPtr, 1);
   }
 

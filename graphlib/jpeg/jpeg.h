@@ -19,7 +19,7 @@ class jpegImage {
     // We create a function to return the luminance of a pixel
     uint8_t getLuminance(int x, int y);
     
-    // We create a function to reduce the image width
+    // We create a function to reduce the image width and height
     void resize(int newWidth);
     
     // We create a function to save the modified image

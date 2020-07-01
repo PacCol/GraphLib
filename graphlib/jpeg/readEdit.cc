@@ -2,6 +2,7 @@
 
 #include "jpeg.h"
 
+// We create a function to return the requested RGB value
 std::vector<uint8_t> jpegImage::getRgbColor(int x, int y) {
   // If the X or Y value is out of range, we throw an error
   if(x >= width) {
@@ -28,7 +29,7 @@ std::vector<uint8_t> jpegImage::getRgbColor(int x, int y) {
   return scannedPixel;
 }
 
-
+// We create a function to return the luminance of a pixel
 uint8_t jpegImage::getLuminance(int x, int y) {
   // If the X or Y value is out of range, we throw an error
   if(x >= width) {
@@ -37,7 +38,7 @@ uint8_t jpegImage::getLuminance(int x, int y) {
   else if(y >= height) {
     throw std::runtime_error("Error : The Y value is out of range");
   }
-  
+
   // If the image is monochrome
   if(pixelSize == 1) {
     // We just return the pixel value
@@ -57,6 +58,7 @@ uint8_t jpegImage::getLuminance(int x, int y) {
   }
 }
 
+// We create a function to reduce the image width and height
 void jpegImage::resize(int newWidth) {
   // We check the new width value
   if(newWidth == 0) {
