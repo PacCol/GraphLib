@@ -54,10 +54,14 @@ jpegImage::jpegImage(char* fileName) {
 
   int rowStride = width * pixelSize;
 
-  // We read the image line per line
+  pixels.reserve(height);
+
   while(imageInfo.output_scanline < height) {
     std::vector<uint8_t> scannedLine(rowStride);
+    scannedLine.reserve(rowStride);
     uint8_t* p = scannedLine.data();
+
+    // We read the image line per line
     jpeg_read_scanlines(&imageInfo, &p, 1);
 
     // We put the pixels values into a vector of vectors
@@ -101,10 +105,12 @@ void jpegImage::save(char * fileName, int quality) {
 
   int rowStride = width * pixelSize;
 
-  // We read the image vector line per line
   for(auto const& vecLine : pixels) {
     JSAMPROW rowPtr[1];
-    rowPtr[0] = const_cast<::JSAMPROW>(vecLine.data());
+
+    // We read the image vector line per line
+    rowPtr[0] = const_cast<JSAMPROW>(vecLine.data());
+
     // And we write the image
     jpeg_write_scanlines(&imageInfo, rowPtr, 1);
   }

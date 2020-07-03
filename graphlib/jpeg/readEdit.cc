@@ -19,6 +19,7 @@ std::vector<uint8_t> jpegImage::getRgbColor(int x, int y) {
 
   // We create a vector
   std::vector<uint8_t> scannedPixel;
+  scannedPixel.reserve(3);
 
   // We push the pixels values in the vector
   for(int i = 0; i < 3; i++) {
@@ -72,18 +73,33 @@ void jpegImage::resize(int newWidth) {
   else if(newWidth == width) {
     return;
   }
-
-  /*int newHeight = newWidth * width / 1024 * 768 / width;
-
-  int pixelWidthScale = width / newWidth;
-  int pixelHeight = height / newHeight;
-  std::cout << "newHeight : " << newHeight << "\n";
+  
+  float scale = float(newWidth) / width;
+  int newHeight = scale * height;
 
   std::vector<std::vector<uint8_t>> newPixels;
+  newPixels.reserve(height);
+  
+  std::cout << newHeight << " : " << scale << "\n";
+  
+  int rowStride = width * pixelSize;
 
   for(int i = 0; i < newHeight; i++) {
-    for(int j = 0; j < newWidth * pixelSize; j++) {
-      
+    std::vector<uint8_t> newLine;
+    newLine.reserve(rowStride);
+    for(int j = 0; j < newWidth; j++) {
+      for(int k = 0; k < pixelSize; k++) {
+        int x = float(j) / scale * float(pixelSize) + k;
+        int y = float(i) / scale;
+        //std::cout << y << " : " << x << "\n";
+        //std::cout << i << " : " << j << " : " << k << "\n";
+        //std::cout << "Pixel : " << +pixels[y][x] << "\n";
+        newLine[j * k] = pixels[y][x];
+      }
     }
-  }*/
+    newPixels.push_back(newLine);
+  }
+  pixels = newPixels;
+  width = newWidth;
+  height = newHeight;
 }
