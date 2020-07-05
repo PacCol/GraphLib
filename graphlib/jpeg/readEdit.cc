@@ -40,10 +40,13 @@ uint8_t jpegImage::getLuminance(int x, int y) {
     throw std::runtime_error("Error : The Y value is out of range");
   }
 
+  // We store the luminance into a variable
+  uint8_t luminance = 0;
+
   // If the image is monochrome
   if(pixelSize == 1) {
     // We just return the pixel value
-    return pixels[y][x];
+    luminance = pixels[y][x];
   }
 
   // Else if the image is colored
@@ -52,11 +55,11 @@ uint8_t jpegImage::getLuminance(int x, int y) {
     std::vector<uint8_t> pixel = getRgbColor(x, y);
 
     // We get the luminance with this operation
-    uint8_t luminance = (pixel[0] * 0.21 + pixel[1] * 0.71 + pixel[2] * 0.07);
-
-    // We return the luminance
-    return luminance;
+    luminance = (pixel[0] * 0.21 + pixel[1] * 0.71 + pixel[2] * 0.07);
   }
+
+  // We return the luminance
+  return luminance;
 }
 
 // We create a function to reduce the image width and height
@@ -73,28 +76,27 @@ void jpegImage::resize(int newWidth) {
   else if(newWidth == width) {
     return;
   }
-  
+
   float scale = float(newWidth) / width;
   int newHeight = scale * height;
 
   std::vector<std::vector<uint8_t>> newPixels;
   newPixels.reserve(height);
-  
-  std::cout << newHeight << " : " << scale << "\n";
-  
+
   int rowStride = width * pixelSize;
+
+  int x = 0;
+  int y = 0;
 
   for(int i = 0; i < newHeight; i++) {
     std::vector<uint8_t> newLine;
     newLine.reserve(rowStride);
     for(int j = 0; j < newWidth; j++) {
       for(int k = 0; k < pixelSize; k++) {
-        int x = float(j) / scale * float(pixelSize) + k;
-        int y = float(i) / scale;
-        //std::cout << y << " : " << x << "\n";
-        //std::cout << i << " : " << j << " : " << k << "\n";
-        //std::cout << "Pixel : " << +pixels[y][x] << "\n";
-        newLine[j * k] = pixels[y][x];
+        x = float(j) / scale * float(pixelSize) + k;
+        y = float(i) / scale;
+        std::cout << "j * pixelSize + k = " << j * pixelSize + k << "\n";
+        newLine[j * pixelSize + k] = pixels[y][x];
       }
     }
     newPixels.push_back(newLine);

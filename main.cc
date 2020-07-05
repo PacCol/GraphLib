@@ -17,7 +17,7 @@ int main() {
 
   std::cout << "Image Luminance : X=3, Y=6 : " << +myImage.getLuminance(3, 6) << "\n";
 
-  /*myImage.resize(150);
+  myImage.resize(150);
 
   scannedPixel = myImage.getRgbColor(3, 6);
   std::cout << "Image Pixel : X=3, Y=6 : R=" << +scannedPixel[0] << " G=" << +scannedPixel[1]  << " B=" << +scannedPixel[2] << "\n";
@@ -25,7 +25,7 @@ int main() {
   
   scannedPixel = myImage.getRgbColor(120, 70);
   std::cout << "Image Pixel : X=120, Y=70 : R=" << +scannedPixel[0] << " G=" << +scannedPixel[1]  << " B=" << +scannedPixel[2] << "\n";
-  std::cout << "Image Luminance : X=120, Y=70 : " << +myImage.getLuminance(3, 6) << "\n";*/
+  std::cout << "Image Luminance : X=120, Y=70 : " << +myImage.getLuminance(3, 6) << "\n";
 
   char fileNameToSave[] = "imageSamples/test_saved.jpg";
   myImage.save(fileNameToSave, 100);

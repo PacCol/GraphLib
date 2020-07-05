@@ -118,7 +118,7 @@ void jpegImage::save(char * fileName, int quality) {
   // Then we finish the decompression
   jpeg_finish_compress(&imageInfo);
   jpeg_destroy_compress(&imageInfo);
-
+  
   // We close the image file
   fclose(outputJpegFile);
 }
