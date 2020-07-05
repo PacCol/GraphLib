@@ -4,6 +4,7 @@
 
 // We create a function to return the requested RGB value
 std::vector<uint8_t> jpegImage::getRgbColor(int x, int y) {
+  
   // If the X or Y value is out of range, we throw an error
   if(x >= width) {
     throw std::runtime_error("Error : The X value is out of range");
@@ -19,6 +20,7 @@ std::vector<uint8_t> jpegImage::getRgbColor(int x, int y) {
 
   // We create a vector
   std::vector<uint8_t> scannedPixel;
+  // We reserve the pixelSize of a colored image
   scannedPixel.reserve(3);
 
   // We push the pixels values in the vector
@@ -32,6 +34,7 @@ std::vector<uint8_t> jpegImage::getRgbColor(int x, int y) {
 
 // We create a function to return the luminance of a pixel
 uint8_t jpegImage::getLuminance(int x, int y) {
+
   // If the X or Y value is out of range, we throw an error
   if(x >= width) {
     throw std::runtime_error("Error : The X value is out of range");
@@ -45,12 +48,14 @@ uint8_t jpegImage::getLuminance(int x, int y) {
 
   // If the image is monochrome
   if(pixelSize == 1) {
+
     // We just return the pixel value
     luminance = pixels[y][x];
   }
 
   // Else if the image is colored
   else if (pixelSize == 3) {
+
     // We get the RGB pixel value
     std::vector<uint8_t> pixel = getRgbColor(x, y);
 
@@ -60,48 +65,4 @@ uint8_t jpegImage::getLuminance(int x, int y) {
 
   // We return the luminance
   return luminance;
-}
-
-// We create a function to reduce the image width and height
-void jpegImage::resize(int newWidth) {
-  // We check the new width value
-  if(newWidth == 0) {
-    throw std::runtime_error("Error : The new width can't be 0");
-    return;
-  }
-  else if(newWidth > width) {
-    throw std::runtime_error("Error : The new width can't be bigger");
-    return;
-  }
-  else if(newWidth == width) {
-    return;
-  }
-
-  float scale = float(newWidth) / width;
-  int newHeight = scale * height;
-
-  std::vector<std::vector<uint8_t>> newPixels;
-  newPixels.reserve(height);
-
-  int rowStride = width * pixelSize;
-
-  int x = 0;
-  int y = 0;
-
-  for(int i = 0; i < newHeight; i++) {
-    std::vector<uint8_t> newLine;
-    newLine.reserve(rowStride);
-    for(int j = 0; j < newWidth; j++) {
-      for(int k = 0; k < pixelSize; k++) {
-        x = float(j) / scale * float(pixelSize) + k;
-        y = float(i) / scale;
-        std::cout << "j * pixelSize + k = " << j * pixelSize + k << "\n";
-        newLine[j * pixelSize + k] = pixels[y][x];
-      }
-    }
-    newPixels.push_back(newLine);
-  }
-  pixels = newPixels;
-  width = newWidth;
-  height = newHeight;
 }

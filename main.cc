@@ -14,23 +14,16 @@ int main() {
 
   std::vector<uint8_t> scannedPixel = myImage.getRgbColor(3, 6);
   std::cout << "Image Pixel : X=3, Y=6 : R=" << +scannedPixel[0] << " G=" << +scannedPixel[1]  << " B=" << +scannedPixel[2] << "\n";
-
   std::cout << "Image Luminance : X=3, Y=6 : " << +myImage.getLuminance(3, 6) << "\n";
 
-  myImage.resize(150);
-
-  scannedPixel = myImage.getRgbColor(3, 6);
-  std::cout << "Image Pixel : X=3, Y=6 : R=" << +scannedPixel[0] << " G=" << +scannedPixel[1]  << " B=" << +scannedPixel[2] << "\n";
-  std::cout << "Image Luminance : X=3, Y=6 : " << +myImage.getLuminance(3, 6) << "\n";
-  
-  scannedPixel = myImage.getRgbColor(120, 70);
-  std::cout << "Image Pixel : X=120, Y=70 : R=" << +scannedPixel[0] << " G=" << +scannedPixel[1]  << " B=" << +scannedPixel[2] << "\n";
-  std::cout << "Image Luminance : X=120, Y=70 : " << +myImage.getLuminance(3, 6) << "\n";
+  myImage.crop(20, 20, 1004, 748);
 
   char fileNameToSave[] = "imageSamples/test_saved.jpg";
   myImage.save(fileNameToSave, 100);
 
   std::cout << "\n";
+
+  system("gwenview imageSamples/test_saved.jpg");
 
   return 0;
 }

@@ -20,6 +20,7 @@ void my_error_exit(j_common_ptr imageInfo) {
 
 // We create a class to create a jpegImage object
 jpegImage::jpegImage(char* fileName) {
+
   struct jpeg_decompress_struct imageInfo;
   struct my_error_mgr jerr;
 
@@ -52,19 +53,22 @@ jpegImage::jpegImage(char* fileName) {
   colorSpace = imageInfo.out_color_space;
   pixelSize = imageInfo.output_components;
 
+  // We are computing the row stride
   int rowStride = width * pixelSize;
 
+  // We reserve the output height
   pixels.reserve(height);
 
+  // For each line
   while(imageInfo.output_scanline < height) {
     std::vector<uint8_t> scannedLine(rowStride);
     scannedLine.reserve(rowStride);
     uint8_t* p = scannedLine.data();
 
-    // We read the image line per line
+    // We read the image
     jpeg_read_scanlines(&imageInfo, &p, 1);
 
-    // We put the pixels values into a vector of vectors
+    // We put the pixels values into a vector
     pixels.push_back(scannedLine);
   }
 
@@ -77,6 +81,7 @@ jpegImage::jpegImage(char* fileName) {
 }
 
 void jpegImage::save(char * fileName, int quality) {
+  
   struct jpeg_compress_struct imageInfo;
   struct jpeg_error_mgr jerr;
 
@@ -103,6 +108,7 @@ void jpegImage::save(char * fileName, int quality) {
   jpeg_set_quality(&imageInfo, quality, TRUE);
   jpeg_start_compress(&imageInfo, TRUE);
 
+  // We are computing the row stride
   int rowStride = width * pixelSize;
 
   for(auto const& vecLine : pixels) {
@@ -118,7 +124,7 @@ void jpegImage::save(char * fileName, int quality) {
   // Then we finish the decompression
   jpeg_finish_compress(&imageInfo);
   jpeg_destroy_compress(&imageInfo);
-  
+
   // We close the image file
   fclose(outputJpegFile);
 }
