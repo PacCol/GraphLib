@@ -48,7 +48,7 @@ void jpegImage::resize(int newWidth) {
   height = newHeight;
 }*/
 
-
+// We create a function to crop the image
 void jpegImage::crop(int xStartPoint, int yStartPoint, int newWidth, int newHeight) {
 
   // We check the values
@@ -81,7 +81,7 @@ void jpegImage::crop(int xStartPoint, int yStartPoint, int newWidth, int newHeig
     // We reserve the line width
     newLine.reserve(rowStride);
 
-    // We get the values of each pixel
+    // We get the value of each pixel
     for(int j = 0; j < newWidth; j++) {
       for(int k = 0; k < pixelSize; k++) {
 
