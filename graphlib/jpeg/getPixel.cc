@@ -20,8 +20,6 @@ std::vector<uint8_t> jpegImage::getRgbColor(unsigned int x, unsigned int y) {
 
   // We create a vector
   std::vector<uint8_t> scannedPixel;
-  // We reserve the pixelSize of a colored image
-  scannedPixel.reserve(3);
 
   // We push the pixels values in the vector
   for(int i = 0; i < 3; i++) {
@@ -54,7 +52,7 @@ uint8_t jpegImage::getLuminance(unsigned int x, unsigned int y) {
   }
 
   // Else if the image is colored
-  else if (pixelSize == 3) {
+  else if(pixelSize == 3) {
 
     // We get the RGB pixel value
     std::vector<uint8_t> pixel = getRgbColor(x, y);

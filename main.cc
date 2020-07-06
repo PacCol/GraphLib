@@ -19,10 +19,9 @@ int main() {
   myImage.crop(500, 300, 400, 300);
 
   std::vector<uint8_t> rgbValues;
-  rgbValues.reserve(myImage.pixelSize);
-  rgbValues.push_back(uint8_t(256));
-  rgbValues.push_back(uint8_t(0));
-  rgbValues.push_back(uint8_t(0));
+  rgbValues.push_back(255);
+  rgbValues.push_back(0);
+  rgbValues.push_back(0);
   myImage.setRgbColor(rgbValues, 0, 0);
   myImage.setRgbColor(rgbValues, 1, 0);
   myImage.setRgbColor(rgbValues, 0, 1);

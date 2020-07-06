@@ -18,15 +18,8 @@ void jpegImage::setRgbColor(std::vector<uint8_t> rgbValues, unsigned int x, unsi
     throw std::runtime_error("Error : in jpegImage::setRgbColor : The image is monochrome");
   }
 
-  for(int i = 0; i < pixelSize; i++) {
-    std::cout << "rgbValues : " << +rgbValues[i] << "\n";
-    if(+rgbValues[i] > 255) {
-      throw std::runtime_error("Error : in jpegImage::setRgbColor : The RGB values must be less than 256");
-    }
-  }
-
   // We set the RGB values
-  for(int i = 0; i < pixelSize; i++) {
-    pixels[y][x * pixelSize + i] = rgbValues[i];
+  for(int i = 0; i < 3; i++) {
+    pixels[y][x * 3 + i] = rgbValues[i];
   }
 }
