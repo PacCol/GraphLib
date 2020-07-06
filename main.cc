@@ -16,14 +16,12 @@ int main() {
   std::cout << "Image Pixel : X=3, Y=6 : R=" << +scannedPixel[0] << " G=" << +scannedPixel[1]  << " B=" << +scannedPixel[2] << "\n";
   std::cout << "Image Luminance : X=3, Y=6 : " << +myImage.getLuminance(3, 6) << "\n";
 
-  myImage.crop(20, 20, 1004, 748);
+  myImage.crop(500, 300, 400, 300);
 
   char fileNameToSave[] = "imageSamples/test_saved.jpg";
   myImage.save(fileNameToSave, 100);
 
   std::cout << "\n";
-
-  system("gwenview imageSamples/test_saved.jpg");
 
   return 0;
 }

@@ -3,19 +3,19 @@
 #include "jpeg.h"
 
 // We create a function to return the requested RGB value
-std::vector<uint8_t> jpegImage::getRgbColor(int x, int y) {
-  
+std::vector<uint8_t> jpegImage::getRgbColor(unsigned int x, unsigned int y) {
+
   // If the X or Y value is out of range, we throw an error
   if(x >= width) {
-    throw std::runtime_error("Error : The X value is out of range");
+    throw std::runtime_error("Error : in jpegImage::getRgbColor : The X value is out of range");
   }
   else if(y >= height) {
-    throw std::runtime_error("Error : The Y value is out of range");
+    throw std::runtime_error("Error : in jpegImage::getRgbColor : The Y value is out of range");
   }
 
   // If the image is monochrome, we throw an error
   if(pixelSize == 1) {
-    throw std::runtime_error("Error : The image is monochrome");
+    throw std::runtime_error("Error : in jpegImage::getRgbColor : The image is monochrome");
   }
 
   // We create a vector
@@ -33,14 +33,14 @@ std::vector<uint8_t> jpegImage::getRgbColor(int x, int y) {
 }
 
 // We create a function to return the luminance of a pixel
-uint8_t jpegImage::getLuminance(int x, int y) {
+uint8_t jpegImage::getLuminance(unsigned int x, unsigned int y) {
 
   // If the X or Y value is out of range, we throw an error
   if(x >= width) {
-    throw std::runtime_error("Error : The X value is out of range");
+    throw std::runtime_error("Error : in jpegImage::getLuminance : The X value is out of range");
   }
   else if(y >= height) {
-    throw std::runtime_error("Error : The Y value is out of range");
+    throw std::runtime_error("Error : in jpegImage::getLuminance : The Y value is out of range");
   }
 
   // We store the luminance into a variable

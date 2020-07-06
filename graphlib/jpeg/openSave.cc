@@ -27,7 +27,7 @@ jpegImage::jpegImage(char* fileName) {
   // We try to open the image file
   FILE * inputJpegFile;
   if((inputJpegFile = fopen(fileName, "rb")) == NULL) {
-    throw std::runtime_error("Error : can't open this file");
+    throw std::runtime_error("Error : in jpegImage::jpegImage : can't open this file");
   }
 
   // We search potential errors
@@ -35,7 +35,7 @@ jpegImage::jpegImage(char* fileName) {
   jerr.pub.error_exit = my_error_exit;
 
   if(setjmp(jerr.setjmp_buffer)) {
-    throw std::runtime_error("Error : can't decode this file");
+    throw std::runtime_error("Error : in jpegImage::jpegImage : can't decode this file");
     jpeg_destroy_decompress(&imageInfo);
     fclose(inputJpegFile);
     return;
@@ -81,14 +81,14 @@ jpegImage::jpegImage(char* fileName) {
 }
 
 void jpegImage::save(char * fileName, int quality) {
-  
+
   struct jpeg_compress_struct imageInfo;
   struct jpeg_error_mgr jerr;
 
   // We try to create the image file
   FILE * outputJpegFile;
   if ((outputJpegFile = fopen(fileName, "wb")) == NULL) {
-    throw std::runtime_error("Error : can't create this file");
+    throw std::runtime_error("Error : in jpegImage::save : can't create this file");
   }
 
   imageInfo.err = jpeg_std_error(&jerr);
