@@ -23,11 +23,8 @@ If the pixelSize is 3, the image is colored
 Use : `myImage.getRgbColor(x, y);` to get the color of a pixel (X and Y are integer)
 This will return an `std::vector<uint8_t>` that contain the RGB values or a single value if the image is monochrome
 
-#### Example :
-```
-Hdjd
-
-```
+#### Build your own project with Graphlib :
+Replace the main.cc file by your own code. The main.cc file is an example to show you how to use the lib.
 
 #### Important :
 To get the first RGB pixel valur you must write : `myImage.getRgbColor(0, 0);` and not `myImage.getRgbColor(1, 1);`  
