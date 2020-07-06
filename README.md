@@ -9,15 +9,15 @@ Install G++
 `jpegImage myImage(fileName);` will open the image  
 You must create a char named fileName : `char fileName[] = "test.jpg";`
 
-## Read some properties
-### There are some properties to read the image informations :
+## Read some informations
+### There are some functions to read the image informations :
 
-#### The dimensions `myImage.width; myImage.height;`
+#### The dimensions `myImage.getWidth(); myImage.getHeight();`
 You can get the dimensions of the image (in pixels)
 
-#### The pixelSize `myImage.pixelSize;`
-If the pixelSize is 0 the image is monochrome  
-If the pixelSize is 3 the image is colored
+#### The pixelSize `myImage.getPixelSize();`
+If the pixelSize is 1, the image is monochrome  
+If the pixelSize is 3, the image is colored
 
 ## Read the pixels color
 Use : `myImage.getRgbColor(x, y);` to get the color of a pixel (X and Y are integer)
@@ -30,7 +30,7 @@ This will return an `std::vector<uint8_t>` that contain the RGB values or a sing
 
 int main() {
   std::cout << "\n";
-  
+
   char fileName[] = "imageSamples/test.jpg";
   jpegImage myImage(fileName);
 
@@ -41,7 +41,7 @@ int main() {
   std::cout << "Image Pixel : X=3, Y=6 : ";
   std::vector<uint8_t> scannedPixel = myImage.getRgbColor(3, 6);
   std::cout << " R=" << +scannedPixel[0] << " G=" << +scannedPixel[1]  << " B=" << +scannedPixel[2] << "\n";
-  
+
   std::cout << "\n";
 }
 

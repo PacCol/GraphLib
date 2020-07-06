@@ -16,7 +16,7 @@ int main() {
   std::cout << "Image Pixel : X=3, Y=6 : R=" << +scannedPixel[0] << " G=" << +scannedPixel[1]  << " B=" << +scannedPixel[2] << "\n";
   std::cout << "Image Luminance : X=3, Y=6 : " << +myImage.getLuminance(3, 6) << "\n";
 
-  myImage.crop(500, 300, 400, 300);
+  myImage.crop(210, 90, 650, 600);
 
   std::vector<uint8_t> rgbValues;
   rgbValues.push_back(255);
