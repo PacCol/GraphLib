@@ -8,9 +8,9 @@ int main() {
   char fileNameToRead[] = "imageSamples/test.jpg";
   jpegImage myImage(fileNameToRead);
 
-  std::cout << "Image Dimensions : " << myImage.width << "x" << myImage.height <<"\n";
-  std::cout << "Image Color Space : " << myImage.colorSpace << "\n";
-  std::cout << "Image Pixel Size : " << myImage.pixelSize << "\n";
+  std::cout << "Image Dimensions : " << myImage.getWidth() << "x" << myImage.getHeight() <<"\n";
+  std::cout << "Image Color Space : " << myImage.getColorSpace() << "\n";
+  std::cout << "Image Pixel Size : " << myImage.getPixelSize() << "\n";
 
   std::vector<uint8_t> scannedPixel = myImage.getRgbColor(3, 6);
   std::cout << "Image Pixel : X=3, Y=6 : R=" << +scannedPixel[0] << " G=" << +scannedPixel[1]  << " B=" << +scannedPixel[2] << "\n";

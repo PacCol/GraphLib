@@ -7,11 +7,11 @@ class jpegImage {
     // The class take one argument to open the image file
     explicit jpegImage(char* fileName);
 
-    // We store the image informations into public variables
-    unsigned int width;
-    unsigned int height;
-    unsigned int colorSpace;
-    int pixelSize;
+    // We create functions to return the image informations
+    unsigned int getWidth();
+    unsigned int getHeight();
+    unsigned int getColorSpace();
+    unsigned int getPixelSize();
 
     // We create a function to save the modified image
     void save(char * fileName, int quality);
@@ -29,6 +29,12 @@ class jpegImage {
     void setRgbColor(std::vector<uint8_t> rgbValues, unsigned int x, unsigned int y);
 
   private:
+    // We store the image informations into private variables
+    unsigned int width;
+    unsigned int height;
+    unsigned int colorSpace;
+    unsigned int pixelSize;
+
     // We store the pixels values into a vector
     std::vector<std::vector<uint8_t>> pixels;
 };
