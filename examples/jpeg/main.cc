@@ -33,6 +33,9 @@ int main() {
   myImage.crop(1800, 700, 650, 600);
   // Only the central part of the image has been preserved
 
+  // We resize the image
+  // The new width will be 150 pixels
+  // The new height will be computed
   myImage.resize(150);
 
   // We create a vector that contains the RGB values of the pixel

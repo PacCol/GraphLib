@@ -27,20 +27,22 @@ void jpegImage::resize(unsigned int newWidth) {
   // We are computing the row stride
   int rowStride = newWidth * pixelSize;
 
-  // We fill in the new vector line per line
+  // For each line of the image...
   for(unsigned int i = 0; i < newHeight; i++) {
 
-    // We create a new vector to save the new line
+    // We create a vector to save the new line
     std::vector<uint8_t> newLine;
     // We reserve the line width
     newLine.reserve(rowStride);
 
-    // We get the value of each pixel
+    // For each pixel of this line...
     for(unsigned int j = 0; j < newWidth; j++) {
+      // For each value of this pixel...
       for(unsigned int k = 0; k < pixelSize; k++) {
 
         // We set the pixel value using the scale
-        newLine.push_back(pixels[i * scale][(static_cast<unsigned int>(j * scale)) * pixelSize + k]);
+        // With the scale, we find the corresponding pixels between the resized image and the original image
+        newLine.push_back(pixels[static_cast<unsigned int>(i * scale)][(static_cast<unsigned int>(j * scale)) * pixelSize + k]);
       }
     }
     // We push the new line into the newPixels vector
@@ -80,19 +82,21 @@ void jpegImage::crop(unsigned int xStartPoint, unsigned int yStartPoint, unsigne
   // We are computing the row stride
   int rowStride = newWidth * pixelSize;
 
-  // We fill in the new vector line per line
+  // For each line of the image...
   for(unsigned int i = 0; i < newHeight; i++) {
 
-    // We create a new vector to save the new line
+    // We create a vector to save the new line
     std::vector<uint8_t> newLine;
     // We reserve the line width
     newLine.reserve(rowStride);
 
-    // We get the value of each pixel
+    // For each pixel of this line...
     for(unsigned int j = 0; j < newWidth; j++) {
+      // For each value of this pixel...
       for(unsigned int k = 0; k < pixelSize; k++) {
 
         // We set the pixel value
+        // We take into consideration the x start point and the y start point
         newLine.push_back(pixels[yStartPoint + i][(xStartPoint + j) * pixelSize + k]);
       }
     }
