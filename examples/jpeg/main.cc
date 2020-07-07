@@ -1,6 +1,6 @@
 #include <iostream>
 
-#include <jpeg.h>
+#include <graphlib/jpeg.h>
 
 int main() {
   std::cout << "\n";

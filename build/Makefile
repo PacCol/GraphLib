@@ -30,7 +30,8 @@ libgraph.$(RELEASE).a: $(OBJ)
 
 install:
 	install -m 644 -o root -g root ../lib/libgraph.so.$(RELEASE) ../lib/libgraph.$(RELEASE).a -t $(LIB_DIR)
-	install -m 644 -o root -g root ../src/jpeg/jpeg.h -t $(INCLUDE_DIR)
+	mkdir $(INCLUDE_DIR)graphlib
+	install -m 644 -o root -g root ../src/jpeg/jpeg.h -t $(INCLUDE_DIR)graphlib
 	(cd $(LIB_DIR) && ln -s libgraph.so.$(RELEASE) libgraph.so.$(MAJOR))
 	(cd $(LIB_DIR) && ln -s libgraph.so.$(MAJOR) libgraph.so)
 
