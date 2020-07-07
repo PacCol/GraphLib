@@ -1,5 +1,5 @@
 all:
-	g++ -o main main.cc -I/usr/local/include -L/usr/local/lib -lgraph
+	g++ -Wall -o main main.cc -I/usr/local/include -L/usr/local/lib -lgraph
 	./main
 
 clean:
