@@ -1,11 +1,3 @@
-LIB_DIR := lib
-LIB_NAME := graph
-
-auto:
-	make clean
-	make all
-	make install
-
 .PHONY : all
 all: libgraph.a libgraph.so.1.0
 
@@ -31,3 +23,8 @@ libgraph.a: $(OBJ)
 install:
 	install -m 644 -o root -g root ../lib/libgraph.so.1.0 libgraph.a -t /usr/local/lib
 	install -m 644 -o root -g root ../src/jpeg/jpeg.h -t /usr/local/include/
+
+auto:
+	make clean
+	make all
+	make install
