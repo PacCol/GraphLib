@@ -108,9 +108,6 @@ void jpegImage::save(char * fileName, int quality) {
   jpeg_set_quality(&imageInfo, quality, TRUE);
   jpeg_start_compress(&imageInfo, TRUE);
 
-  // We are computing the row stride
-  int rowStride = width * pixelSize;
-
   for(auto const& vecLine : pixels) {
     JSAMPROW rowPtr[1];
 

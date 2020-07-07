@@ -3,7 +3,7 @@
 #include "jpeg.h"
 
 // We create a function to crop the image
-void jpegImage::crop(int xStartPoint, int yStartPoint, int newWidth, int newHeight) {
+void jpegImage::crop(unsigned int xStartPoint, unsigned int yStartPoint, unsigned int newWidth, unsigned int newHeight) {
 
   // We check the values
   if(xStartPoint + newWidth > width) {
@@ -28,7 +28,7 @@ void jpegImage::crop(int xStartPoint, int yStartPoint, int newWidth, int newHeig
   int rowStride = newWidth * pixelSize;
 
   // We fill in the new vector line per line
-  for(int i = 0; i < newHeight; i++) {
+  for(unsigned int i = 0; i < newHeight; i++) {
 
     // We create a new vector to save the new line
     std::vector<uint8_t> newLine;
@@ -36,8 +36,8 @@ void jpegImage::crop(int xStartPoint, int yStartPoint, int newWidth, int newHeig
     newLine.reserve(rowStride);
 
     // We get the value of each pixel
-    for(int j = 0; j < newWidth; j++) {
-      for(int k = 0; k < pixelSize; k++) {
+    for(unsigned int j = 0; j < newWidth; j++) {
+      for(unsigned int k = 0; k < pixelSize; k++) {
 
         // We set the pixel value
         newLine.push_back(pixels[yStartPoint + i][(xStartPoint + j) * pixelSize + k]);

@@ -1,2 +1,6 @@
-imageSamples
-main
+env.sh
+examples/images
+build/*.o
+build/*.cc
+build/*.a
+*.so*

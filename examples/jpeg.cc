@@ -1,11 +1,11 @@
 #include <iostream>
 
-#include "graphlib/jpeg/jpeg.h"
+#include <jpeg.h>
 
 int main() {
   std::cout << "\n";
 
-  char fileNameToRead[] = "imageSamples/test.jpg";
+  char fileNameToRead[] = "images/test.jpg";
   jpegImage myImage(fileNameToRead);
 
   std::cout << "Image Dimensions : " << myImage.getWidth() << "x" << myImage.getHeight() <<"\n";
@@ -27,7 +27,7 @@ int main() {
   myImage.setRgbColor(rgbValues, 0, 1);
   myImage.setRgbColor(rgbValues, 1, 1);
 
-  char fileNameToSave[] = "imageSamples/test_saved.jpg";
+  char fileNameToSave[] = "images/testSaved.jpg";
   myImage.save(fileNameToSave, 100);
 
   std::cout << "\n";
