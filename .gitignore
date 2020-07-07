@@ -1,6 +1,4 @@
 env.sh
-examples/images
-build/*.o
-build/*.cc
-build/*.a
+*.o
+*.a
 *.so*

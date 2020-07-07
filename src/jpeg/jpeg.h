@@ -16,6 +16,9 @@ class jpegImage {
     // We create a function to save the modified image
     void save(char * fileName, int quality);
 
+    // We create a function to return the image
+    std::vector<std::vector<uint8_t>> getPixels();
+
     // We create a function to return the RGB value of a pixel
     std::vector<uint8_t> getRgbColor(unsigned int x, unsigned int y);
 

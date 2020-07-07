@@ -1,28 +1,42 @@
+LIB_DIR := /usr/local/lib/
+INCLUDE_DIR := /usr/local/include/
+
+MAJOR := 1
+MINOR := 0
+RELEASE := $(MAJOR).$(MINOR)
+
 .PHONY : all
-all: libgraph.a libgraph.so.1.0
+all: libgraph.$(RELEASE).a libgraph.so.$(RELEASE)
 
 .PHONY : clean
 clean :
-	rm -f *.o libgraph.so.1.0 libgraph.a
+	rm -f *.o libgraph.so.$(RELEASE) libgraph.$(RELEASE).a
 
 %.o: ../src/jpeg/%.cc ../src/jpeg/jpeg.h
 	g++ -Wall -fPIC -o $@ -c $<
 
 OBJ := getPixel.o imageInformations.o openSave.o resizeCrop.o setPixel.o
 
-libgraph.so.1.0: $(OBJ)
-	g++ -Wall -shared -Wl,-soname,libgraph.so.1 -o libgraph.so.1.0 $(OBJ) -ljpeg
+libgraph.so.$(RELEASE): $(OBJ)
+	g++ -Wall -shared -Wl,-soname,libgraph.so.$(MAJOR) -o libgraph.so.$(RELEASE) $(OBJ) -ljpeg
 	rm -f ../lib/libgraph*
-	cp libgraph.so.1.0 ../lib
-	(cd ../lib && ln -s libgraph.so.1.0 libgraph.so.1)
-	(cd ../lib && ln -s libgraph.so.1 libgraph.so)
+	cp libgraph.so.$(RELEASE) ../lib
+	cp libgraph.$(RELEASE).a ../lib
+	(cd ../lib && ln -s libgraph.so.$(RELEASE) libgraph.so.$(MAJOR))
+	(cd ../lib && ln -s libgraph.so.$(MAJOR) libgraph.so)
 
-libgraph.a: $(OBJ)
-	ar -cvq libgraph.a $+
+libgraph.$(RELEASE).a: $(OBJ)
+	ar -cvq libgraph.$(RELEASE).a $+
 
 install:
-	install -m 644 -o root -g root ../lib/libgraph.so.1.0 libgraph.a -t /usr/local/lib
-	install -m 644 -o root -g root ../src/jpeg/jpeg.h -t /usr/local/include/
+	install -m 644 -o root -g root ../lib/libgraph.so.$(RELEASE) ../lib/libgraph.$(RELEASE).a -t $(LIB_DIR)
+	install -m 644 -o root -g root ../src/jpeg/jpeg.h -t $(INCLUDE_DIR)
+	(cd $(LIB_DIR) && ln -s libgraph.so.$(RELEASE) libgraph.so.$(MAJOR))
+	(cd $(LIB_DIR) && ln -s libgraph.so.$(MAJOR) libgraph.so)
+
+uninstall:
+	rm $(LIB_DIR)libgraph*
+	rm $(INCLUDE_DIR)jpeg.h
 
 auto:
 	make clean
