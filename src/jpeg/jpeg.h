@@ -28,6 +28,9 @@ class jpegImage {
     // We create a function to crop the image
     void crop(unsigned int xStartPoint, unsigned int yStartPoint, unsigned int newWidth, unsigned int newHeight);
 
+    // We create a function to resize the image
+    void resize(unsigned int newWidth);
+
     // We create a function to set the RGB values of a pixel
     void setRgbColor(std::vector<uint8_t> rgbValues, unsigned int x, unsigned int y);
 

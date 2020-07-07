@@ -30,8 +30,10 @@ int main() {
   // The new width will be 650 pixels
   // The new height will be 600 pixels
   // We start at X = 210 and Y = 90 to get the interesting part of the image
-  myImage.crop(1800, 700, 650, 600);
+  //myImage.crop(1800, 700, 650, 600);
   // Only the central part of the image has been preserved
+
+  myImage.resize(1000);
 
   // We create a vector that contains the RGB values of the pixel
   std::vector<uint8_t> rgbValues;
