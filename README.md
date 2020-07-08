@@ -25,5 +25,11 @@ Set the LD_LIBRARY_PATH running `env.sh` (`. ./env.sh`)
 ## Your first example
 Go into the examples directory (`cd /examples/jpeg/`)  
 Build the example (`make`)  
-Now read the main.cc file  
+Now read the `main.cc` file  
 The comments will help you  
+To build the programm you need to use this shell line :  
+`g++ -Wall -o main main.cc -I/usr/local/include -L/usr/local/lib -lgraph`  
+`-Wall` option : show all warnings  
+`-I/usr/local/include` option : find the graphlib headers  
+`-L/usr/local/lib` option : find the graphlib executable  
+`-lgraph` option : include the graphlib
