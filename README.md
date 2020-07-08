@@ -33,3 +33,6 @@ To build the programm you need to use this shell line :
 `-I/usr/local/include` option : find the graphlib headers  
 `-L/usr/local/lib` option : find the graphlib executable  
 `-lgraph` option : include the graphlib
+
+## Errors
+If you detected any errors, please contact me in the issues section !
