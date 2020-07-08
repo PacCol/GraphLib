@@ -53,6 +53,12 @@ int main() {
   myImage.setRgbColor(rgbValues, 1, 1);
   // The top left corner is now red
 
+  uint8_t luminance = 200;
+  myImage.setLuminance(luminance, 2, 2);
+  myImage.setLuminance(luminance, 2, 3);
+  myImage.setLuminance(luminance, 3, 2);
+  myImage.setLuminance(luminance, 3, 3);
+
   // We choose a file name
   char fileNameToSave[] = "images/testSaved.jpg";
   // We save the modified image

@@ -29,15 +29,17 @@ libgraph.$(RELEASE).a: $(OBJ)
 	ar -cvq libgraph.$(RELEASE).a $+
 
 install:
-	install -m 644 -o root -g root ../lib/libgraph.so.$(RELEASE) ../lib/libgraph.$(RELEASE).a -t $(LIB_DIR)
-	mkdir $(INCLUDE_DIR)graphlib
+	mkdir -p $(INCLUDE_DIR)graphlib
 	install -m 644 -o root -g root ../src/jpeg/jpeg.h -t $(INCLUDE_DIR)graphlib
+	install -m 644 -o root -g root ../lib/libgraph.so.$(RELEASE) ../lib/libgraph.$(RELEASE).a -t $(LIB_DIR)
+	rm -f $(LIB_DIR)libgraph.so
+	rm -f $(LIB_DIR)libgraph.so.$(MAJOR)
 	(cd $(LIB_DIR) && ln -s libgraph.so.$(RELEASE) libgraph.so.$(MAJOR))
 	(cd $(LIB_DIR) && ln -s libgraph.so.$(MAJOR) libgraph.so)
 
 uninstall:
 	rm $(LIB_DIR)libgraph*
-	rm $(INCLUDE_DIR)jpeg.h
+	rm -rf $(INCLUDE_DIR)graphlib
 
 auto:
 	make clean

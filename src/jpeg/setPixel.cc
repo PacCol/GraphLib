@@ -23,3 +23,8 @@ void jpegImage::setRgbColor(std::vector<uint8_t> rgbValues, unsigned int x, unsi
     pixels[y][x * 3 + i] = rgbValues[i];
   }
 }
+
+// We create a function to set the luminance of a pixel
+void jpegImage::setLuminance(uint8_t luminance, unsigned int x, unsigned int y) {
+  std::cout << "New Luminance : " << +luminance << "\n";
+}

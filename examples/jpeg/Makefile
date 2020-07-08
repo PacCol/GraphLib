@@ -3,4 +3,4 @@ all:
 	./main
 
 clean:
-	rm main
+	rm -f main
