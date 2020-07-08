@@ -38,7 +38,7 @@ install:
 	(cd $(LIB_DIR) && ln -s libgraph.so.$(MAJOR) libgraph.so)
 
 uninstall:
-	rm $(LIB_DIR)libgraph*
+	rm -f $(LIB_DIR)libgraph*
 	rm -rf $(INCLUDE_DIR)graphlib
 
 auto:
