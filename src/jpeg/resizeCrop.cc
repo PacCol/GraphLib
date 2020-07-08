@@ -5,7 +5,7 @@
 // We create a function to resize the image
 void jpegImage::resize(unsigned int newWidth) {
 
-  // We check the values
+  // We check the new width
   if(newWidth == width) {
     return;
   }

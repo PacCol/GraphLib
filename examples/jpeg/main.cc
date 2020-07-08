@@ -19,9 +19,9 @@ int main() {
 
   // We print the RGB values of a pixel
   // This return a vector that contains the RGB values
-  std::vector<uint8_t> scannedPixel = myImage.getRgbColor(3, 6);
+  std::vector<uint8_t> pixel = myImage.getRgbColor(3, 6);
   // We use a + to print the value as a number
-  std::cout << "Image Pixel : X=3, Y=6 : R=" << +scannedPixel[0] << " G=" << +scannedPixel[1]  << " B=" << +scannedPixel[2] << "\n";
+  std::cout << "Image Pixel : X=3, Y=6 : R=" << +pixel[0] << " G=" << +pixel[1]  << " B=" << +pixel[2] << "\n";
 
   // We print the luminance of a pixel
   std::cout << "Image Luminance : X=3, Y=6 : " << +myImage.getLuminance(3, 6) << "\n";

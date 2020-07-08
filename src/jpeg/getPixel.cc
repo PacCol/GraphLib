@@ -19,15 +19,15 @@ std::vector<uint8_t> jpegImage::getRgbColor(unsigned int x, unsigned int y) {
   }
 
   // We create a vector to store the RGB values
-  std::vector<uint8_t> scannedPixel;
+  std::vector<uint8_t> pixel;
 
   // We push the pixels values in the vector
   for(int i = 0; i < 3; i++) {
-    scannedPixel.push_back(pixels[y][x * 3 + i]);
+    pixel.push_back(pixels[y][x * 3 + i]);
   }
 
   // We return the scanned pixel
-  return scannedPixel;
+  return pixel;
 }
 
 // We create a function to return the luminance of a pixel
@@ -47,7 +47,7 @@ uint8_t jpegImage::getLuminance(unsigned int x, unsigned int y) {
   // If the image is monochrome
   if(pixelSize == 1) {
 
-    // We just return the pixel value
+    // We get the luminance with the pixel value
     luminance = pixels[y][x];
   }
 

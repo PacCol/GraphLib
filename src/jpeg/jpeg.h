@@ -29,7 +29,7 @@ class jpegImage {
     void setRgbColor(std::vector<uint8_t> rgbValues, unsigned int x, unsigned int y);
 
     // We create a function to set the luminance of a pixel
-    void setLuminance(uint8_t luminance, unsigned int x, unsigned int y);
+    void setLuminance(uint8_t newLuminance, unsigned int x, unsigned int y);
 
     // We create a function to crop the image
     void crop(unsigned int xStartPoint, unsigned int yStartPoint, unsigned int newWidth, unsigned int newHeight);

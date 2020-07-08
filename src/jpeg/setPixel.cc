@@ -25,8 +25,7 @@ void jpegImage::setRgbColor(std::vector<uint8_t> rgbValues, unsigned int x, unsi
 }
 
 // We create a function to set the luminance of a pixel
-void jpegImage::setLuminance(uint8_t luminance, unsigned int x, unsigned int y) {
-  std::cout << "New Luminance : " << +luminance << "\n";
+void jpegImage::setLuminance(uint8_t newLuminance, unsigned int x, unsigned int y) {
 
   // If the X or Y value is out of range, we throw an error
   if(x >= width) {
@@ -39,17 +38,12 @@ void jpegImage::setLuminance(uint8_t luminance, unsigned int x, unsigned int y) 
   // If the image is monochrome
   if(pixelSize == 1) {
 
-    // We just return the pixel value
-    uint8_t luminance = pixels[y][x];
+    // We set the pixel value to the luminance
+    pixels[y][x] = newLuminance;
   }
 
-  // Else if the image is colored
+  // Else if the image is colored, we throw an error
   else if(pixelSize == 3) {
-
-    // We create a vector to store the RGB values
-    std::vector<uint8_t> pixel = getRgbColor(x, y);
-
-    // We get the luminance with this operation
-    uint8_t luminance = (pixel[0] * 0.21 + pixel[1] * 0.71 + pixel[2] * 0.07);
+    throw std::runtime_error("Error : in jpegImage::setLuminance : This function does not work for colored images");
   }
 }
