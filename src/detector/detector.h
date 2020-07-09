@@ -1,8 +1,6 @@
 #include <vector>
 #include <cstdint>
 
-#include "../jpeg/jpeg.h"
-
 #ifndef GRAPHLIB_DETECTOR_H
 #define GRAPHLIB_DETECTOR_H
 

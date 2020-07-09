@@ -16,6 +16,12 @@ int main() {
   myImage.resize(500);
   myImage.convertToGrayscale();
 
+  std::cout << "\n";
+
+  std::cout << "Image Dimensions : " << myImage.getWidth() << "x" << myImage.getHeight() <<"\n";
+  std::cout << "Image Color Space : " << myImage.getColorSpace() << "\n";
+  std::cout << "Image Pixel Size : " << myImage.getPixelSize() << "\n";
+
   faceDetector myDetector;
   myDetector.setFiability(50);
   myDetector.detectHumanFaces(myImage.getPixels(), myImage.getWidth(), myImage.getHeight(), myImage.getPixelSize());

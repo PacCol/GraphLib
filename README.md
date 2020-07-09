@@ -1,4 +1,4 @@
-# GraphLib
+# GraphLib (for v1.0)
 [![Language](https://img.shields.io/badge/language-C%2B%2B11-orange.svg)](https://isocpp.org)
 ### A graphic library
 
