@@ -58,6 +58,9 @@ int main() {
   myImage.setRgbColor(rgbValues, 1, 1);
   // The top left corner is now red
 
+  // We convert the image to grayscale (you can remove the //)
+  // myImage.convertToGrayscale();
+
   // We choose a file name
   char fileNameToSave[] = "images/testSaved.jpg";
   // We save the modified image

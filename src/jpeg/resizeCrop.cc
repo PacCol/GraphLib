@@ -38,7 +38,7 @@ void jpegImage::resize(unsigned int newWidth) {
     // For each pixel of this line...
     for(unsigned int j = 0; j < newWidth; j++) {
       // For each value of this pixel...
-      for(unsigned int k = 0; k < pixelSize; k++) {
+      for(unsigned int k = 0; k < 3; k++) {
 
         // We set the pixel value using the scale
         // With the scale, we find the corresponding pixels between the resized image and the original image
@@ -93,7 +93,7 @@ void jpegImage::crop(unsigned int xStartPoint, unsigned int yStartPoint, unsigne
     // For each pixel of this line...
     for(unsigned int j = 0; j < newWidth; j++) {
       // For each value of this pixel...
-      for(unsigned int k = 0; k < pixelSize; k++) {
+      for(unsigned int k = 0; k < 3; k++) {
 
         // We set the pixel value
         // We take into consideration the x start point and the y start point

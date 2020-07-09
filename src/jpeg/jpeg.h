@@ -1,10 +1,13 @@
 #include <vector>
 #include <cstdint>
 
+#ifndef GRAPHLIB_JPEG_H
+#define GRAPHLIB_JPEG_H
+
 // We create a class to create jpegImage object
 class jpegImage {
   public:
-    // The class take one argument to open the image file
+    // The class takes one argument to open the image file
     explicit jpegImage(char* fileName);
 
     // We create functions to return the image informations
@@ -37,6 +40,9 @@ class jpegImage {
     // We create a function to resize the image
     void resize(unsigned int newWidth);
 
+    // We create a function to convert the image to grayscale
+    void convertToGrayscale();
+
   private:
     // We store the image informations into private variables
     unsigned int width;
@@ -47,3 +53,5 @@ class jpegImage {
     // We store the pixels values into a vector
     std::vector<std::vector<uint8_t>> pixels;
 };
+
+#endif // GRAPHLIB_JPEG_H
