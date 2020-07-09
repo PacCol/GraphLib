@@ -1,5 +1,5 @@
 # GraphLib
-[![Language](https://img.shields.io/badge/language-C%2B%2B98-orange.svg)](https://isocpp.org)
+[![Language](https://img.shields.io/badge/language-C%2B%2B11-orange.svg)](https://isocpp.org)
 ### A graphic library
 
 ## Get started

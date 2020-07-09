@@ -15,17 +15,15 @@ clean :
 %.o: ../src/*/%.cc
 	g++ -Wall -fPIC -o $@ -c $<
 
-OBJ := getPixel.o imageInformations.o openSave.o resizeCrop.o setPixel.o convertToGrayscale.o initDetector.o
-
-libgraph.so.$(RELEASE): $(OBJ)
-	g++ -Wall -shared -Wl,-soname,libgraph.so.$(MAJOR) -o libgraph.so.$(RELEASE) $(OBJ) -ljpeg
+libgraph.so.$(RELEASE): *.o
+	g++ -Wall -shared -Wl,-soname,libgraph.so.$(MAJOR) -o libgraph.so.$(RELEASE) *.o -ljpeg
 	rm -f ../lib/libgraph*
 	cp libgraph.so.$(RELEASE) ../lib
 	cp libgraph.$(RELEASE).a ../lib
 	(cd ../lib && ln -s libgraph.so.$(RELEASE) libgraph.so.$(MAJOR))
 	(cd ../lib && ln -s libgraph.so.$(MAJOR) libgraph.so)
 
-libgraph.$(RELEASE).a: $(OBJ)
+libgraph.$(RELEASE).a: *.o
 	ar -cvq libgraph.$(RELEASE).a $+
 
 install:

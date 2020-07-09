@@ -16,7 +16,7 @@ class faceDetector {
     void setFiability(unsigned int newFiability);
 
     // We create a function to detect human faces
-    std::vector<std::vector<unsigned int>> detectHumanFaces(std::vector<std::vector<uint8_t>> pixels, unsigned int width, unsigned int height, unsigned int pixelSize) {
+    std::vector<std::vector<unsigned int>> detectHumanFaces(std::vector<std::vector<uint8_t>> pixels, unsigned int width, unsigned int height, unsigned int pixelSize);
 
   private:
     // We store the fiability value into a variable

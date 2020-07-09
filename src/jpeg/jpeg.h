@@ -19,6 +19,9 @@ class jpegImage {
     // We create a function to return the image
     std::vector<std::vector<uint8_t>> getPixels();
 
+    // We create a function to get the global luminance
+    uint8_t getGlobalLuminance();
+
     // We create a function to save the modified image
     void save(char * fileName, int quality);
 

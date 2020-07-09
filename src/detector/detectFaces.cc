@@ -10,5 +10,10 @@ std::vector<std::vector<unsigned int>> faceDetector::detectHumanFaces(std::vecto
   }
 
   // We compute the global luminance
-  
+  for(unsigned int i = 0; i < height; i++) {
+    for(unsigned int j = 0; j < height; j++) {
+
+    }
+  }
+
 }
