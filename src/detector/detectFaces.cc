@@ -27,10 +27,9 @@ std::vector<std::vector<unsigned int>> faceDetector::detectHumanFaces(std::vecto
   uint8_t globalLuminance = int(totalLuminance / (height * width));
 
   // We want to convert the image into a black and white image (not to grayscale)
-  // So we set a limit
+  // So the global luminance will be a limit
   // If the luminance of the pixel if larger than the limit, the pixel will be white
   // Else the pixel will be black
-  uint8_t limit = 140;
 
   // For each line of the image...
   for(unsigned int i = 0; i < height; i++) {
