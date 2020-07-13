@@ -2,6 +2,11 @@
 
 #include "jpeg.h"
 
+// We create a function to set all pixels of the image
+void jpegImage::setPixels(std::vector<std::vector<uint8_t>> newPixels) {
+  pixels = newPixels;
+}
+
 // We create a function to set the RGB values of a pixel
 void jpegImage::setRgbColor(std::vector<uint8_t> rgbValues, unsigned int x, unsigned int y) {
 

@@ -18,8 +18,3 @@ unsigned int jpegImage::getColorSpace() {
 unsigned int jpegImage::getPixelSize() {
   return pixelSize;
 }
-
-// We create a function to return the image
-std::vector<std::vector<uint8_t>> jpegImage::getPixels() {
-  return pixels;
-}

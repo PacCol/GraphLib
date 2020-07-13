@@ -2,6 +2,11 @@
 
 #include "jpeg.h"
 
+// We create a function to return the complete image
+std::vector<std::vector<uint8_t>> jpegImage::getPixels() {
+  return pixels;
+}
+
 // We create a function to return the requested RGB value
 std::vector<uint8_t> jpegImage::getRgbColor(unsigned int x, unsigned int y) {
 
