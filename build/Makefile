@@ -19,7 +19,7 @@ clean :
 OBJ := getPixel.o imageInformations.o openSave.o resizeCrop.o setPixel.o convertToGrayscale.o
 
 # face detector
-OBJ := $(OBJ) initDetector.o detectFaces.o
+OBJ := $(OBJ) initDetector.o detectHumans.o
 
 libgraph.so.$(RELEASE): $(OBJ)
 	g++ -Wall -shared -Wl,-soname,libgraph.so.$(MAJOR) -o libgraph.so.$(RELEASE) $(OBJ) -ljpeg

@@ -13,12 +13,26 @@ class faceDetector {
     // We create a function to set the fiability value
     void setFiability(unsigned int newFiability);
 
+    // We create a function to load the image
+    void loadImage(std::vector<std::vector<uint8_t>> imagePixels, unsigned int imageWidth, unsigned int imageHeight, unsigned int imagePixelSize);
+
     // We create a function to detect human faces
-    std::vector<std::vector<uint8_t>> detectHumanFaces(std::vector<std::vector<uint8_t>> pixels, uint8_t faceGlobalLuminance, unsigned int width, unsigned int height, unsigned int pixelSize);
+    std::vector<std::vector<uint8_t>> detectHumanEyes();
 
   private:
     // We store the fiability value into a variable
     unsigned int fiability;
+
+    // We store the pixels values into a vector
+    std::vector<std::vector<uint8_t>> pixels;
+
+    // We store the image informations into private variables
+    unsigned int width;
+    unsigned int height;
+    unsigned int pixelSize;
+
+    // We create a function to convert the loaded image to black and white
+    void convertImageToBlackAndWhite(uint8_t limit);
 };
 
 #endif // GRAPHLIB_DETECTOR_H

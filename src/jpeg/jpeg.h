@@ -47,14 +47,15 @@ class jpegImage {
     void convertToGrayscale();
 
   private:
+
+    // We store the pixels values into a vector
+    std::vector<std::vector<uint8_t>> pixels;
+
     // We store the image informations into private variables
     unsigned int width;
     unsigned int height;
     unsigned int colorSpace;
     unsigned int pixelSize;
-
-    // We store the pixels values into a vector
-    std::vector<std::vector<uint8_t>> pixels;
 };
 
 #endif // GRAPHLIB_JPEG_H
