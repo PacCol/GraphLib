@@ -16,7 +16,7 @@ clean :
 	g++ -Wall -fPIC -o $@ -c $<
 
 # JPEG Image
-OBJ := getPixel.o imageInformations.o openSave.o resizeCrop.o setPixel.o convertToGrayscale.o
+OBJ := getPixel.o imageInformations.o openSave.o resizeCrop.o setPixel.o convertToGrayscale.o showEdgeOnly.o
 
 # face detector
 OBJ := $(OBJ) initDetector.o detectHumans.o

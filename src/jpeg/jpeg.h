@@ -46,6 +46,9 @@ class jpegImage {
     // We create a function to convert the image to grayscale
     void convertToGrayscale();
 
+    // We create a function to show the edge of the objects of the image
+    void showEdgeOnly();
+
   private:
 
     // We store the pixels values into a vector
