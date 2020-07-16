@@ -58,7 +58,7 @@ int main() {
   myImage.setRgbColor(rgbValues, 1, 1);
   // The top left corner is now red
 
-  // We convert the image to grayscale (you can remove the //)
+  // We convert the image to grayscale (you can remove the // to do it)
   // myImage.convertToGrayscale();
 
   // We choose a file name
@@ -66,7 +66,7 @@ int main() {
   // We save the modified image
   myImage.save(fileNameToSave, 100);
 
-  // Now open and compare the two images
+  // Now, you can open and compare the two images
 
   std::cout << "\n";
 
