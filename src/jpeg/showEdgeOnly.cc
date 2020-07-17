@@ -10,6 +10,11 @@ void jpegImage::showEdgeOnly() {
     throw std::runtime_error("Error : in jpegImage::showEdgeOnly : the image must be monochrome");
   }
 
+  std::vector<std::vector<uint8_t>> newPixels;
+  newPixels.reserve(height);
+
+  newPixels = pixels;
+
   
 
 }

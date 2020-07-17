@@ -7,6 +7,7 @@
 // We create a class to create jpegImage object
 class jpegImage {
   public:
+    
     // The class takes one argument to open the image file
     explicit jpegImage(char* fileName);
 
@@ -45,6 +46,9 @@ class jpegImage {
 
     // We create a function to convert the image to grayscale
     void convertToGrayscale();
+
+    // We create a function to reduce the noise of the image
+    void reduceNoise(uint8_t strength);
 
     // We create a function to show the edge of the objects of the image
     void showEdgeOnly();

@@ -7,6 +7,7 @@
 // We create a class to create faceDetector object
 class faceDetector {
   public:
+
     // The class takes no argument
     explicit faceDetector();
 
@@ -16,10 +17,11 @@ class faceDetector {
     // We create a function to load the image
     void loadImage(std::vector<std::vector<uint8_t>> imagePixels, unsigned int imageWidth, unsigned int imageHeight, unsigned int imagePixelSize);
 
-    // We create a function to detect human faces
+    // We create a function to detect human eyes
     std::vector<std::vector<uint8_t>> detectHumanEyes();
 
   private:
+    
     // We store the fiability value into a variable
     unsigned int fiability;
 
@@ -30,9 +32,6 @@ class faceDetector {
     unsigned int width;
     unsigned int height;
     unsigned int pixelSize;
-
-    // We create a function to convert the loaded image to black and white
-    void convertImageToBlackAndWhite(uint8_t limit);
 };
 
 #endif // GRAPHLIB_DETECTOR_H

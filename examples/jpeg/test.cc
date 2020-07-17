@@ -59,7 +59,7 @@ int main() {
   // The top left corner is now red
 
   // We convert the image to grayscale (you can remove the // to do it)
-  // myImage.convertToGrayscale();
+  //myImage.convertToGrayscale();
 
   // We choose a file name
   char fileNameToSave[] = "images/testSaved.jpg";

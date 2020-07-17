@@ -17,14 +17,16 @@ int main() {
 
   std::cout << "Image Luminance : X=3, Y=6 : " << +myImage.getLuminance(3, 6) << "\n";
 
-  myImage.convertToGrayscale();
-
   myImage.resize(500);
 
-  myImage.showEdgeOnly();
+  myImage.convertToGrayscale();
 
-  char fileNameToSave[] = "images/testSaved.jpg";
-  myImage.save(fileNameToSave, 100);
+  //uint8_t strength = 50;
+  //myImage.reduceNoise(strength);
+  //myImage.showEdgeOnly();
+
+  //char fileNameToSave[] = "images/testSaved.jpg";
+  //myImage.save(fileNameToSave, 100);
 
   std::cout << "\n";
 
