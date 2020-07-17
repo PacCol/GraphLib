@@ -10,6 +10,6 @@ void jpegImage::showEdgeOnly() {
     throw std::runtime_error("Error : in jpegImage::showEdgeOnly : the image must be monochrome");
   }
 
-
+  
 
 }
