@@ -62,8 +62,6 @@ class Image {
     unsigned int width;
     unsigned int height;
     unsigned int pixelSize;
-    
-    // Only for jpeg images
     unsigned int colorSpace;
 
     // Only for png images

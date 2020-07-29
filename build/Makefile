@@ -19,7 +19,7 @@ clean :
 OBJ := getPixel.o imageInformations.o openSave.o resizeCrop.o setPixel.o convertToGrayscale.o
 
 libgraph.so.$(RELEASE): $(OBJ)
-	g++ -Wall -shared -Wl,-soname,libgraph.so.$(MAJOR) -o libgraph.so.$(RELEASE) $(OBJ) -ljpeg
+	g++ -Wall -shared -Wl,-soname,libgraph.so.$(MAJOR) -o libgraph.so.$(RELEASE) $(OBJ) -ljpeg -lpng
 	rm -f ../lib/libgraph*
 	cp libgraph.so.$(RELEASE) ../lib
 	cp libgraph.$(RELEASE).a ../lib

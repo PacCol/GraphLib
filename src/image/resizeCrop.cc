@@ -32,7 +32,7 @@ void Image::resize(unsigned int newWidth) {
 
     // We create a vector to save the new line
     std::vector<uint8_t> newLine;
-    // We reserve the line width
+    // We reserve the row stride
     newLine.reserve(rowStride);
 
     // For each pixel of this line...

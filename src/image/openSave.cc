@@ -35,7 +35,6 @@ Image::Image(char* fileName, std::string fileType) {
   // If the image is a jpeg file...
   if(fileType == "jpg" || fileType == "jpeg") {
   
-    // We create the jpeg decompression struct
     struct jpeg_decompress_struct imageInfo;
     struct my_error_mgr jerr;
 
@@ -47,7 +46,6 @@ Image::Image(char* fileName, std::string fileType) {
       throw std::runtime_error("Error : in Image::Image : can't decode this file");
       jpeg_destroy_decompress(&imageInfo);
       fclose(inputImageFile);
-      abort();
     }
 
     // We decompress the image
@@ -56,7 +54,7 @@ Image::Image(char* fileName, std::string fileType) {
     jpeg_read_header(&imageInfo, TRUE);
     jpeg_start_decompress(&imageInfo);
 
-    // We store the image informations into public variables
+    // We store the image informations into privates variables
     width = imageInfo.output_width;
     height = imageInfo.output_height;
     colorSpace = imageInfo.out_color_space;
@@ -86,103 +84,71 @@ Image::Image(char* fileName, std::string fileType) {
     jpeg_destroy_decompress(&imageInfo);
   }
 
-  // If the image is a png file...
+  // Else if the image is a png file...
   else if(fileType == "png") {
     
-    
-    
-    
+    // We start the decompression
     png_structp png = png_create_read_struct(PNG_LIBPNG_VER_STRING, NULL, NULL, NULL);
-    
-    if(!png) {
-      abort();
-    }
-
     png_infop imageInfo = png_create_info_struct(png);
-    
-    if(!imageInfo) {
-      abort();
-    }
-
-    if(setjmp(png_jmpbuf(png))) {
-      abort();
-    }
-
     png_init_io(png, inputImageFile);
     png_read_info(png, imageInfo);
 
+    // We store the image informations into privates variables
     width = png_get_image_width(png, imageInfo);
     height = png_get_image_height(png, imageInfo);
     colorType = png_get_color_type(png, imageInfo);
     bitDepth = png_get_bit_depth(png, imageInfo);
 
-    if(bitDepth == 16) {
-      png_set_strip_16(png);
-    }
-
-    if(colorType == PNG_COLOR_TYPE_PALETTE) {
-      png_set_palette_to_rgb(png);
-    }
-
-    // PNG_COLOR_TYPE_GRAY_ALPHA is always 8 or 16bit depth.
-    if(colorType == PNG_COLOR_TYPE_GRAY && bitDepth < 8) {
-      png_set_expand_gray_1_2_4_to_8(png);
-    }
-
-    if(png_get_valid(png, imageInfo, PNG_INFO_tRNS)) {
-      png_set_tRNS_to_alpha(png);
-    }
-
-    // These color_type don't have an alpha channel then fill it with 0xff.
-    if(colorType == PNG_COLOR_TYPE_RGB || colorType == PNG_COLOR_TYPE_GRAY || colorType == PNG_COLOR_TYPE_PALETTE) {
-      png_set_filler(png, 0xFF, PNG_FILLER_AFTER);
-    }
-
-    if(colorType == PNG_COLOR_TYPE_GRAY || colorType == PNG_COLOR_TYPE_GRAY_ALPHA) {
-      png_set_gray_to_rgb(png);
-    }
-
+    // We continue to read the image
     png_read_update_info(png, imageInfo);
     
-    png_bytep * row_pointers;
-
-    if(row_pointers) {
-      abort();
-    }
-
-    row_pointers = (png_bytep*)malloc(sizeof(png_bytep) * height);
+    // We create a table to store the pixels values
+    png_bytep * rowPointers;
+    rowPointers = (png_bytep*)malloc(sizeof(png_bytep) * height);
+    
+    // We fill in this table
     for(unsigned int y = 0; y < height; y++) {
-      row_pointers[y] = (png_byte*)malloc(png_get_rowbytes(png,imageInfo));
+      rowPointers[y] = (png_byte*)malloc(png_get_rowbytes(png,imageInfo));
     }
 
-    png_read_image(png, row_pointers);
-
+    // We finish the decompression
+    png_read_image(png, rowPointers);
     png_destroy_read_struct(&png, &imageInfo, NULL);
     
+    // We define some informations
     pixelSize = 3;
+    colorSpace = 2;
+    
+    // We are computing the row stride
     unsigned int rowStride = width * pixelSize;
     
+    // We convert the row pointers to a std::vector<std::vector<uint8_t>>
+    
+    // For each line of the image...
     for(unsigned int i = 0; i < height; i++) {
       
+      // We create a vector to save this line
       std::vector<uint8_t> line;
+      // We reserve the row stride
       line.reserve(rowStride);
       
-      png_bytep row = row_pointers[i];
-      
-      for(unsigned int j = 0; j < height; j++) {
+      // For each pixel of this line...
+      for(unsigned int j = 0; j < width; j++) {
         
-        png_bytep pixel = &(row[j * pixelSize]);
+        // We store the value of the pixel into a variable
+        png_bytep pixel = &(rowPointers[i][j * pixelSize]);
         
+        // We add the RGB values into the vector
         line.push_back(pixel[0]);
         line.push_back(pixel[1]);
         line.push_back(pixel[2]);
       }
-      
+      // We add the line into the pixels vector
       pixels.push_back(line);
     }
   }
 
-  // The file type is not supported
+  // Else if the file type is not supported...
   else {
     throw std::runtime_error("Error : in Image::Image : " + fileType + " is not a supported file type");
   }
@@ -193,47 +159,76 @@ Image::Image(char* fileName, std::string fileType) {
 
 void Image::save(char * fileName, int quality, std::string fileType) {
 
-  struct jpeg_compress_struct imageInfo;
-  struct jpeg_error_mgr jerr;
-
   // We try to create the image file
-  FILE * outputJpegFile;
-  if ((outputJpegFile = fopen(fileName, "wb")) == NULL) {
+  FILE * outputImageFile;
+  if ((outputImageFile = fopen(fileName, "wb")) == NULL) {
     throw std::runtime_error("Error : in Image::save : can't create this file");
-    abort();
   }
+  
+  // If the image to save will be a jpeg file...
+  if(fileType == "jpg" || fileType == "jpeg") {
+    
+    struct jpeg_compress_struct imageInfo;
+    struct jpeg_error_mgr jerr;
 
-  imageInfo.err = jpeg_std_error(&jerr);
+    imageInfo.err = jpeg_std_error(&jerr);
 
-  // We start to compress the image
-  jpeg_create_compress(&imageInfo);
-  jpeg_stdio_dest(&imageInfo, outputJpegFile);
+    // We start to compress the image
+    jpeg_create_compress(&imageInfo);
+    jpeg_stdio_dest(&imageInfo, outputImageFile);
+  
+    // We define some informations
+    imageInfo.image_width = width;
+    imageInfo.image_height = height;
+    imageInfo.input_components = pixelSize;
+    imageInfo.in_color_space = J_COLOR_SPACE(colorSpace);
 
-  // We define some informations
-  imageInfo.image_width = width;
-  imageInfo.image_height = height;
-  imageInfo.input_components = pixelSize;
-  imageInfo.in_color_space = J_COLOR_SPACE(colorSpace);
+    // We continue to compress the image
+    jpeg_set_defaults(&imageInfo);
+    jpeg_set_quality(&imageInfo, quality, TRUE);
+    jpeg_start_compress(&imageInfo, TRUE);
 
-  // We continue to compress the image
-  jpeg_set_defaults(&imageInfo);
-  jpeg_set_quality(&imageInfo, quality, TRUE);
-  jpeg_start_compress(&imageInfo, TRUE);
+    for(auto const& vecLine : pixels) {
+      JSAMPROW rowPointer[1];
 
-  for(auto const& vecLine : pixels) {
-    JSAMPROW rowPtr[1];
+      // We read the image vector line per line
+      rowPointer[0] = const_cast<JSAMPROW>(vecLine.data());
 
-    // We read the image vector line per line
-    rowPtr[0] = const_cast<JSAMPROW>(vecLine.data());
+      // And we write the image
+      jpeg_write_scanlines(&imageInfo, rowPointer, 1);
+    }
 
-    // And we write the image
-    jpeg_write_scanlines(&imageInfo, rowPtr, 1);
+    // Then we finish the decompression
+    jpeg_finish_compress(&imageInfo);
+    jpeg_destroy_compress(&imageInfo);
   }
+  
+  // Else if the image will be a png file...
+  else if(fileType == "png") {
+    
+    /*png_structp png = png_create_write_struct(PNG_LIBPNG_VER_STRING, NULL, NULL, NULL);
+    png_infop imageInfo = png_create_info_struct(png);
+    png_init_io(png, outputImageFile);
 
-  // Then we finish the decompression
-  jpeg_finish_compress(&imageInfo);
-  jpeg_destroy_compress(&imageInfo);
+    png_set_IHDR(png, imageInfo, width, height, 8, PNG_COLOR_TYPE_RGBA, PNG_INTERLACE_NONE, PNG_COMPRESSION_TYPE_DEFAULT, PNG_FILTER_TYPE_DEFAULT);
+    png_write_info(png, imageInfo);
+    png_set_filler(png, 0, PNG_FILLER_AFTER);
+    
+    png_bytep * rowPointers = NULL;
+    
+    
+
+    png_write_image(png, rowPointers);
+    png_write_end(png, NULL);
+
+    png_destroy_write_struct(&png, &imageInfo);*/
+  }
+  
+  // Else if the file type is not supported...
+  else {
+    throw std::runtime_error("Error : in Image::save : " + fileType + " is not a supported file type");
+  }
 
   // We close the image file
-  fclose(outputJpegFile);
+  fclose(outputImageFile);
 }
