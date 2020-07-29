@@ -5,7 +5,7 @@
 int main() {
   std::cout << "\n";
   
-  char fileNameToRead[] = "images/test.png";
+  char fileNameToRead[] = "images/test1.png";
   Image myImage(fileNameToRead, "png");
 
   std::cout << "Image Dimensions : " << myImage.getWidth() << "x" << myImage.getHeight() <<"\n";
@@ -35,6 +35,8 @@ int main() {
   
   char fileNameToSave[] = "images/testSaved.jpg";
   myImage.save(fileNameToSave, 100, "jpg");
+  
+  system("gpicview images/testSaved.jpg");
 
   std::cout << "\n";
 

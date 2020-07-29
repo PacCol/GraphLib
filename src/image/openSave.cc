@@ -106,9 +106,9 @@ Image::Image(char* fileName, std::string fileType) {
     png_bytep * rowPointers;
     rowPointers = (png_bytep*)malloc(sizeof(png_bytep) * height);
     
-    // We fill in this table
-    for(unsigned int y = 0; y < height; y++) {
-      rowPointers[y] = (png_byte*)malloc(png_get_rowbytes(png,imageInfo));
+    // We allocate memory
+    for(unsigned int i = 0; i < height; i++) {
+      rowPointers[i] = (png_byte*)malloc(png_get_rowbytes(png, imageInfo));
     }
 
     // We finish the decompression
@@ -124,6 +124,9 @@ Image::Image(char* fileName, std::string fileType) {
     
     // We convert the row pointers to a std::vector<std::vector<uint8_t>>
     
+    // We reserve the output height
+    pixels.reserve(height);
+    
     // For each line of the image...
     for(unsigned int i = 0; i < height; i++) {
       
@@ -136,7 +139,7 @@ Image::Image(char* fileName, std::string fileType) {
       for(unsigned int j = 0; j < width; j++) {
         
         // We store the value of the pixel into a variable
-        png_bytep pixel = &(rowPointers[i][j * pixelSize]);
+        png_bytep pixel = &(rowPointers[i][j * 4]);
         
         // We add the RGB values into the vector
         line.push_back(pixel[0]);
