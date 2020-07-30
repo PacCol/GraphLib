@@ -1,5 +1,7 @@
 #include <iostream>
 
+#include <algorithm>
+
 // We include the libjpeg
 #include <jpeglib.h>
 #include <setjmp.h>
@@ -98,56 +100,21 @@ Image::Image(char* fileName, std::string fileType) {
     colorType = png_get_color_type(png, imageInfo);
     bitDepth = png_get_bit_depth(png, imageInfo);
 
-    // We continue to read the image
-    png_read_update_info(png, imageInfo);
-    
-    // We create a table to store the pixels values
-    png_bytep * rowPointers;
-    rowPointers = (png_bytep*)malloc(sizeof(png_bytep) * height);
-    
-    // We allocate memory
-    for(unsigned int i = 0; i < height; i++) {
-      rowPointers[i] = (png_byte*)malloc(png_get_rowbytes(png, imageInfo));
-    }
-
-    // We finish the decompression
-    png_read_image(png, rowPointers);
-    png_destroy_read_struct(&png, &imageInfo, NULL);
-    
     // We define some informations
     pixelSize = 4;
     colorSpace = 2;
+
+    // We continue to read the image
+    png_read_update_info(png, imageInfo);
     
-    // We are computing the row stride
-    unsigned int rowStride = width * pixelSize;
-    
-    // We convert the row pointers to a std::vector<std::vector<uint8_t>>
-    
-    // We reserve the output height
-    pixels.reserve(height);
-    
-    // For each line of the image...
-    for(unsigned int i = 0; i < height; i++) {
-      
-      // We create a vector to save this line
-      std::vector<uint8_t> line;
-      // We reserve the row stride
-      line.reserve(rowStride);
-      
-      // For each pixel of this line...
-      for(unsigned int j = 0; j < width; j++) {
-        
-        // We store the value of the pixel into a variable
-        png_bytep pixel = &(rowPointers[i][j * pixelSize]);
-        
-        // We add the RGB values into the vector
-        for(unsigned int k = 0; k < pixelSize; k++) {
-          line.push_back(pixel[k]);
-        }
-      }
-      // We add the line into the pixels vector
-      pixels.push_back(line);
-    }
+    // We want to store the pixels into a vector
+    pixels.resize(height, std::vector<png_byte>(width * 4));
+    std::vector<png_byte *> ppixels(height);
+    std::transform(pixels.begin(), pixels.end(), ppixels.begin(), [](auto & vector){ return vector.data(); });
+
+    // We finish the decompression
+    png_read_image(png, ppixels.data());
+    png_destroy_read_struct(&png, &imageInfo, NULL);
   }
 
   // Else if the file type is not supported...
@@ -213,9 +180,11 @@ void Image::save(char * fileName, int quality, std::string fileType) {
     png_init_io(png, outputImageFile);
     png_set_IHDR(png, imageInfo, width, height, 8, PNG_COLOR_TYPE_RGBA, PNG_INTERLACE_NONE, PNG_COMPRESSION_TYPE_DEFAULT, PNG_FILTER_TYPE_DEFAULT);
     png_write_info(png, imageInfo);
-    png_set_filler(png, 0, PNG_FILLER_AFTER);
-    png_bytep * rowPointers = NULL;
-    png_write_image(png, rowPointers);
+    
+    std::vector<png_byte *> ppixels(height);
+    std::transform(pixels.begin(), pixels.end(), ppixels.begin(), [](auto & vector){ return vector.data(); });
+    png_write_image(png, ppixels.data());
+    
     png_write_end(png, NULL);
     png_destroy_write_struct(&png, &imageInfo);
   }

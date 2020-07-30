@@ -17,23 +17,23 @@ class Image {
     unsigned int getColorSpace();
     unsigned int getPixelSize();
 
+    // We create a function to save the modified image
+    void save(char * fileName, int quality, std::string fileType);
+    
     // We create a function to return the image
     std::vector<std::vector<uint8_t>> getPixels();
 
-    // We create a function to set all pixels of the image
-    void setPixels(std::vector<std::vector<uint8_t>> newPixels);
-
-    // We create a function to save the modified image
-    void save(char * fileName, int quality, std::string fileType);
-
     // We create a function to return the RGB value of a pixel
-    std::vector<uint8_t> getRgbColor(unsigned int x, unsigned int y);
+    std::vector<uint8_t> getPixel(unsigned int x, unsigned int y);
 
     // We create a function to return the luminance of a pixel
     uint8_t getLuminance(unsigned int x, unsigned int y);
 
+    // We create a function to set all pixels of the image
+    void setPixels(std::vector<std::vector<uint8_t>> newPixels);
+
     // We create a function to set the RGB values of a pixel
-    void setRgbColor(std::vector<uint8_t> rgbValues, unsigned int x, unsigned int y);
+    void setPixel(std::vector<uint8_t> rgbValues, unsigned int x, unsigned int y);
 
     // We create a function to set the luminance of a pixel
     void setLuminance(uint8_t newLuminance, unsigned int x, unsigned int y);
