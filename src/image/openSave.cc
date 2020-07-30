@@ -29,7 +29,6 @@ Image::Image(char* fileName, std::string fileType) {
   FILE * inputImageFile;
   if((inputImageFile = fopen(fileName, "rb")) == NULL) {
     throw std::runtime_error("Error : in Image::Image : can't open this file");
-    abort();
   }
   
   // If the image is a jpeg file...
@@ -116,7 +115,7 @@ Image::Image(char* fileName, std::string fileType) {
     png_destroy_read_struct(&png, &imageInfo, NULL);
     
     // We define some informations
-    pixelSize = 3;
+    pixelSize = 4;
     colorSpace = 2;
     
     // We are computing the row stride
@@ -139,12 +138,12 @@ Image::Image(char* fileName, std::string fileType) {
       for(unsigned int j = 0; j < width; j++) {
         
         // We store the value of the pixel into a variable
-        png_bytep pixel = &(rowPointers[i][j * 4]);
+        png_bytep pixel = &(rowPointers[i][j * pixelSize]);
         
         // We add the RGB values into the vector
-        line.push_back(pixel[0]);
-        line.push_back(pixel[1]);
-        line.push_back(pixel[2]);
+        for(unsigned int k = 0; k < pixelSize; k++) {
+          line.push_back(pixel[k]);
+        }
       }
       // We add the line into the pixels vector
       pixels.push_back(line);
@@ -209,22 +208,16 @@ void Image::save(char * fileName, int quality, std::string fileType) {
   // Else if the image will be a png file...
   else if(fileType == "png") {
     
-    /*png_structp png = png_create_write_struct(PNG_LIBPNG_VER_STRING, NULL, NULL, NULL);
+    png_structp png = png_create_write_struct(PNG_LIBPNG_VER_STRING, NULL, NULL, NULL);
     png_infop imageInfo = png_create_info_struct(png);
     png_init_io(png, outputImageFile);
-
     png_set_IHDR(png, imageInfo, width, height, 8, PNG_COLOR_TYPE_RGBA, PNG_INTERLACE_NONE, PNG_COMPRESSION_TYPE_DEFAULT, PNG_FILTER_TYPE_DEFAULT);
     png_write_info(png, imageInfo);
     png_set_filler(png, 0, PNG_FILLER_AFTER);
-    
     png_bytep * rowPointers = NULL;
-    
-    
-
     png_write_image(png, rowPointers);
     png_write_end(png, NULL);
-
-    png_destroy_write_struct(&png, &imageInfo);*/
+    png_destroy_write_struct(&png, &imageInfo);
   }
   
   // Else if the file type is not supported...
