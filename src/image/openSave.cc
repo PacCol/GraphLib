@@ -32,10 +32,10 @@ Image::Image(char* fileName, std::string fileType) {
   if((inputImageFile = fopen(fileName, "rb")) == NULL) {
     throw std::runtime_error("Error : in Image::Image : can't open this file");
   }
-  
+
   // If the image is a jpeg file...
   if(fileType == "jpg" || fileType == "jpeg") {
-  
+
     struct jpeg_decompress_struct imageInfo;
     struct my_error_mgr jerr;
 
@@ -87,7 +87,7 @@ Image::Image(char* fileName, std::string fileType) {
 
   // Else if the image is a png file...
   else if(fileType == "png") {
-    
+
     // We start the decompression
     png_structp png = png_create_read_struct(PNG_LIBPNG_VER_STRING, NULL, NULL, NULL);
     png_infop imageInfo = png_create_info_struct(png);
@@ -106,9 +106,9 @@ Image::Image(char* fileName, std::string fileType) {
 
     // We continue to read the image
     png_read_update_info(png, imageInfo);
-    
+
     // We want to store the pixels into a vector
-    pixels.resize(height, std::vector<png_byte>(width * 4));
+    pixels.resize(height, std::vector<png_byte>(width * pixelSize));
     std::vector<png_byte *> ppixels(height);
     std::transform(pixels.begin(), pixels.end(), ppixels.begin(), [](auto & vector){ return vector.data(); });
 
@@ -133,10 +133,15 @@ void Image::save(char * fileName, int quality, std::string fileType) {
   if ((outputImageFile = fopen(fileName, "wb")) == NULL) {
     throw std::runtime_error("Error : in Image::save : can't create this file");
   }
-  
+
   // If the image to save will be a jpeg file...
   if(fileType == "jpg" || fileType == "jpeg") {
-    
+
+    // If the image has an alpha channel, we delete it
+    if(pixelSize == 4) {
+      removeAlphaChannel();
+    }
+
     struct jpeg_compress_struct imageInfo;
     struct jpeg_error_mgr jerr;
 
@@ -145,7 +150,7 @@ void Image::save(char * fileName, int quality, std::string fileType) {
     // We start to compress the image
     jpeg_create_compress(&imageInfo);
     jpeg_stdio_dest(&imageInfo, outputImageFile);
-  
+
     // We define some informations
     imageInfo.image_width = width;
     imageInfo.image_height = height;
@@ -171,24 +176,38 @@ void Image::save(char * fileName, int quality, std::string fileType) {
     jpeg_finish_compress(&imageInfo);
     jpeg_destroy_compress(&imageInfo);
   }
-  
+
   // Else if the image will be a png file...
   else if(fileType == "png") {
-    
+
+    // We start to compress the image
     png_structp png = png_create_write_struct(PNG_LIBPNG_VER_STRING, NULL, NULL, NULL);
     png_infop imageInfo = png_create_info_struct(png);
     png_init_io(png, outputImageFile);
-    png_set_IHDR(png, imageInfo, width, height, 8, PNG_COLOR_TYPE_RGBA, PNG_INTERLACE_NONE, PNG_COMPRESSION_TYPE_DEFAULT, PNG_FILTER_TYPE_DEFAULT);
+
+    // We configure the library
+    // If the pixel size is 3, we don't save the alpha channel
+    if(pixelSize == 3) {
+      png_set_IHDR(png, imageInfo, width, height, 8, PNG_COLOR_TYPE_RGB, PNG_INTERLACE_NONE, PNG_COMPRESSION_TYPE_DEFAULT, PNG_FILTER_TYPE_DEFAULT);
+    }
+    // Else if the pixel size is 4, we save the alpha channel
+    else if(pixelSize == 4) {
+      png_set_IHDR(png, imageInfo, width, height, 8, PNG_COLOR_TYPE_RGBA, PNG_INTERLACE_NONE, PNG_COMPRESSION_TYPE_DEFAULT, PNG_FILTER_TYPE_DEFAULT);
+    }
+
+    // We continue to compress the image
     png_write_info(png, imageInfo);
-    
+
+    // We get the pixels values
     std::vector<png_byte *> ppixels(height);
     std::transform(pixels.begin(), pixels.end(), ppixels.begin(), [](auto & vector){ return vector.data(); });
     png_write_image(png, ppixels.data());
-    
+
+    // We finish the compression
     png_write_end(png, NULL);
     png_destroy_write_struct(&png, &imageInfo);
   }
-  
+
   // Else if the file type is not supported...
   else {
     throw std::runtime_error("Error : in Image::save : " + fileType + " is not a supported file type");

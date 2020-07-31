@@ -7,7 +7,7 @@
 // We create a class to the Image object
 class Image {
   public:
-    
+
     // The class takes one argument to open the image file
     explicit Image(char* fileName, std::string fileType);
 
@@ -19,7 +19,7 @@ class Image {
 
     // We create a function to save the modified image
     void save(char * fileName, int quality, std::string fileType);
-    
+
     // We create a function to return the image
     std::vector<std::vector<uint8_t>> getPixels();
 
@@ -52,6 +52,9 @@ class Image {
 
     // We create a function to show the edge of the objects of the image
     void showEdgeOnly();
+
+    // We create a function to remove tha alpha channel
+    void removeAlphaChannel();
 
   private:
 
