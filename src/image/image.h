@@ -16,6 +16,7 @@ class Image {
     unsigned int getHeight();
     unsigned int getColorSpace();
     unsigned int getPixelSize();
+    bool isAlphaChannelUsed();
 
     // We create a function to save the modified image
     void save(char * fileName, int quality, std::string fileType);
@@ -62,14 +63,11 @@ class Image {
     std::vector<std::vector<uint8_t>> pixels;
 
     // We store the image informations into private variables
-    unsigned int width;
-    unsigned int height;
-    unsigned int pixelSize;
-    unsigned int colorSpace;
-
-    // Only for png images
-    unsigned int colorType;
-    unsigned int bitDepth;
+    unsigned int width = 0;
+    unsigned int height = 0;
+    unsigned int pixelSize = 0;
+    unsigned int colorSpace = 0;
+    bool alphaUsed = false;
 };
 
 #endif // GRAPHLIB_IMAGE_H

@@ -16,14 +16,6 @@ struct my_error_mgr {
   jmp_buf setjmp_buffer;
 };
 
-typedef struct my_error_mgr * my_error_ptr;
-
-void my_error_exit(j_common_ptr imageInfo) {
-  my_error_ptr myerr = (my_error_ptr) imageInfo->err;
-  (*imageInfo->err->output_message) (imageInfo);
-  longjmp(myerr->setjmp_buffer, 1);
-}
-
 // We create a class to create the Image object
 Image::Image(char* fileName, std::string fileType) {
 
@@ -36,18 +28,12 @@ Image::Image(char* fileName, std::string fileType) {
   // If the image is a jpeg file...
   if(fileType == "jpg" || fileType == "jpeg") {
 
+    // We crete a jpeg decompression structure
     struct jpeg_decompress_struct imageInfo;
     struct my_error_mgr jerr;
 
     // We search potential errors
     imageInfo.err = jpeg_std_error(&jerr.pub);
-    jerr.pub.error_exit = my_error_exit;
-
-    if(setjmp(jerr.setjmp_buffer)) {
-      throw std::runtime_error("Error : in Image::Image : can't decode this file");
-      jpeg_destroy_decompress(&imageInfo);
-      fclose(inputImageFile);
-    }
 
     // We decompress the image
     jpeg_create_decompress(&imageInfo);
@@ -60,6 +46,7 @@ Image::Image(char* fileName, std::string fileType) {
     height = imageInfo.output_height;
     colorSpace = imageInfo.out_color_space;
     pixelSize = imageInfo.output_components;
+    alphaUsed = false;
 
     // We are computing the row stride
     int rowStride = width * pixelSize;
@@ -69,6 +56,8 @@ Image::Image(char* fileName, std::string fileType) {
 
     // For each line
     while(imageInfo.output_scanline < height) {
+
+      // We create a vector to store the scanned line
       std::vector<uint8_t> scannedLine(rowStride);
       scannedLine.reserve(rowStride);
       uint8_t* p = scannedLine.data();
@@ -76,7 +65,7 @@ Image::Image(char* fileName, std::string fileType) {
       // We read the image
       jpeg_read_scanlines(&imageInfo, &p, 1);
 
-      // We put the pixels values into a vector
+      // We put the new line into a vector
       pixels.push_back(scannedLine);
     }
 
@@ -97,8 +86,9 @@ Image::Image(char* fileName, std::string fileType) {
     // We store the image informations into privates variables
     width = png_get_image_width(png, imageInfo);
     height = png_get_image_height(png, imageInfo);
-    colorType = png_get_color_type(png, imageInfo);
-    bitDepth = png_get_bit_depth(png, imageInfo);
+    //unsigned int colorType = png_get_color_type(png, imageInfo);
+    //unsigned int bitDepth = png_get_bit_depth(png, imageInfo);
+    alphaUsed = true;
 
     // We define some informations
     pixelSize = 4;
@@ -119,7 +109,7 @@ Image::Image(char* fileName, std::string fileType) {
 
   // Else if the file type is not supported...
   else {
-    throw std::runtime_error("Error : in Image::Image : " + fileType + " is not a supported file type");
+    throw std::runtime_error("Error : in Image::Image : " + fileType + " is not a supported option");
   }
 
   // We close the image file
@@ -138,10 +128,11 @@ void Image::save(char * fileName, int quality, std::string fileType) {
   if(fileType == "jpg" || fileType == "jpeg") {
 
     // If the image has an alpha channel, we delete it
-    if(pixelSize == 4) {
+    if(alphaUsed) {
       removeAlphaChannel();
     }
 
+    // We create a jpeg compression structure
     struct jpeg_compress_struct imageInfo;
     struct jpeg_error_mgr jerr;
 
@@ -180,19 +171,24 @@ void Image::save(char * fileName, int quality, std::string fileType) {
   // Else if the image will be a png file...
   else if(fileType == "png") {
 
+    // We check the pixelSize
+    if(pixelSize == 1) {
+      throw std::runtime_error("Error : in Image::save : can't save a monochrome image as PNG");
+    }
+
     // We start to compress the image
     png_structp png = png_create_write_struct(PNG_LIBPNG_VER_STRING, NULL, NULL, NULL);
     png_infop imageInfo = png_create_info_struct(png);
     png_init_io(png, outputImageFile);
 
     // We configure the library
-    // If the pixel size is 3, we don't save the alpha channel
-    if(pixelSize == 3) {
-      png_set_IHDR(png, imageInfo, width, height, 8, PNG_COLOR_TYPE_RGB, PNG_INTERLACE_NONE, PNG_COMPRESSION_TYPE_DEFAULT, PNG_FILTER_TYPE_DEFAULT);
-    }
-    // Else if the pixel size is 4, we save the alpha channel
-    else if(pixelSize == 4) {
+    // If the alpha channel is used, we save it
+    if(alphaUsed) {
       png_set_IHDR(png, imageInfo, width, height, 8, PNG_COLOR_TYPE_RGBA, PNG_INTERLACE_NONE, PNG_COMPRESSION_TYPE_DEFAULT, PNG_FILTER_TYPE_DEFAULT);
+    }
+    // Else we save the RGB values
+    else {
+      png_set_IHDR(png, imageInfo, width, height, 8, PNG_COLOR_TYPE_RGB, PNG_INTERLACE_NONE, PNG_COMPRESSION_TYPE_DEFAULT, PNG_FILTER_TYPE_DEFAULT);
     }
 
     // We continue to compress the image
@@ -210,7 +206,7 @@ void Image::save(char * fileName, int quality, std::string fileType) {
 
   // Else if the file type is not supported...
   else {
-    throw std::runtime_error("Error : in Image::save : " + fileType + " is not a supported file type");
+    throw std::runtime_error("Error : in Image::save : " + fileType + " is not a supported option");
   }
 
   // We close the image file
