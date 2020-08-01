@@ -54,9 +54,6 @@ class Image {
     // We create a function to show the edge of the objects of the image
     void showEdgeOnly();
 
-    // We create a function to remove tha alpha channel
-    void removeAlphaChannel();
-
   private:
 
     // We store the pixels values into a vector

@@ -48,6 +48,11 @@ Image::Image(char* fileName, std::string fileType) {
     pixelSize = imageInfo.output_components;
     alphaUsed = false;
 
+    // We check the color space
+    if(colorSpace != 1 || colorSpace != 2 || colorSpace != 13) {
+      throw std::runtime_error("Error : in Image::Image : this color space is not supported");
+    }
+
     // We are computing the row stride
     int rowStride = width * pixelSize;
 
@@ -86,13 +91,31 @@ Image::Image(char* fileName, std::string fileType) {
     // We store the image informations into privates variables
     width = png_get_image_width(png, imageInfo);
     height = png_get_image_height(png, imageInfo);
-    //unsigned int colorType = png_get_color_type(png, imageInfo);
+    unsigned int colorType = png_get_color_type(png, imageInfo);
     //unsigned int bitDepth = png_get_bit_depth(png, imageInfo);
     alphaUsed = true;
 
-    // We define some informations
-    pixelSize = 4;
-    colorSpace = 2;
+    if(colorType == 0) {
+      pixelSize = 1;
+      colorSpace = 1;
+    }
+    else if(colorType == 2) {
+      pixelSize = 3;
+      colorSpace = 2;
+    }
+    else if(colorType == 3) {
+      throw std::runtime_error("Error : in Image::Image : this color type is not supported");
+    }
+    else if(colorType == 4) {
+      pixelSize = 2;
+      colorSpace = 0;
+      alphaUsed = true;
+    }
+    else if(colorType == 4) {
+      pixelSize = 4;
+      colorSpace = 13;
+      alphaUsed = true;
+    }
 
     // We continue to read the image
     png_read_update_info(png, imageInfo);
@@ -126,11 +149,6 @@ void Image::save(char * fileName, int quality, std::string fileType) {
 
   // If the image to save will be a jpeg file...
   if(fileType == "jpg" || fileType == "jpeg") {
-
-    // If the image has an alpha channel, we delete it
-    if(alphaUsed) {
-      removeAlphaChannel();
-    }
 
     // We create a jpeg compression structure
     struct jpeg_compress_struct imageInfo;
@@ -182,12 +200,13 @@ void Image::save(char * fileName, int quality, std::string fileType) {
     png_init_io(png, outputImageFile);
 
     // We configure the library
-    // If the alpha channel is used, we save it
-    if(alphaUsed) {
-      png_set_IHDR(png, imageInfo, width, height, 8, PNG_COLOR_TYPE_RGBA, PNG_INTERLACE_NONE, PNG_COMPRESSION_TYPE_DEFAULT, PNG_FILTER_TYPE_DEFAULT);
+    if(colorSpace == 1) {
+      png_set_IHDR(png, imageInfo, width, height, 8, PNG_COLOR_TYPE_RGB, PNG_INTERLACE_NONE, PNG_COMPRESSION_TYPE_DEFAULT, PNG_FILTER_TYPE_DEFAULT);
     }
-    // Else we save the RGB values
-    else {
+    else if(colorSpace == 1) {
+      png_set_IHDR(png, imageInfo, width, height, 8, PNG_COLOR_TYPE_RGB, PNG_INTERLACE_NONE, PNG_COMPRESSION_TYPE_DEFAULT, PNG_FILTER_TYPE_DEFAULT);
+    }
+    else if(colorSpace == 1) {
       png_set_IHDR(png, imageInfo, width, height, 8, PNG_COLOR_TYPE_RGB, PNG_INTERLACE_NONE, PNG_COMPRESSION_TYPE_DEFAULT, PNG_FILTER_TYPE_DEFAULT);
     }
 
