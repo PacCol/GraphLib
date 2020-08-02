@@ -6,7 +6,7 @@
 void Image::convertToGrayscale() {
 
   // We check the actual pixel size
-  if(pixelSize == 1) {
+  if(colorSpace == 1) {
     throw std::runtime_error("Error : in Image::convertToGrayscale : the image is already monochrome");
   }
 

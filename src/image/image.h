@@ -9,7 +9,7 @@ class Image {
   public:
 
     // The class takes one argument to open the image file
-    explicit Image(char* fileName, std::string fileType);
+    explicit Image(char* fileName, std::string option);
 
     // We create functions to return the image informations
     unsigned int getWidth();
@@ -19,7 +19,7 @@ class Image {
     bool isAlphaChannelUsed();
 
     // We create a function to save the modified image
-    void save(char * fileName, int quality, std::string fileType);
+    void save(char * fileName, int quality, std::string option);
 
     // We create a function to return the image
     std::vector<std::vector<uint8_t>> getPixels();
@@ -56,6 +56,18 @@ class Image {
 
   private:
 
+    // We create a function to open a jpeg image
+    void openJpegImage(char* fileName);
+
+    // We create a function to save a jpeg image
+    void saveJpegImage(char* fileName, unsigned int quality);
+
+    // We create a function to open a png image
+    void openPngImage(char* fileName);
+
+    // We create a function to save a png image
+    void savePngImage(char* fileName);
+
     // We store the pixels values into a vector
     std::vector<std::vector<uint8_t>> pixels;
 
@@ -64,7 +76,6 @@ class Image {
     unsigned int height = 0;
     unsigned int pixelSize = 0;
     unsigned int colorSpace = 0;
-    bool alphaUsed = false;
 };
 
 #endif // GRAPHLIB_IMAGE_H

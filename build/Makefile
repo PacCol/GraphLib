@@ -15,8 +15,8 @@ clean :
 %.o: ../src/*/%.cc
 	g++ -Wall -fPIC -o $@ -c $<
 
-# JPEG Image
-OBJ := getPixel.o imageInformations.o openSave.o resizeCrop.o setPixel.o convertToGrayscale.o
+# Image
+OBJ := openSave.o jpeg.o png.o imageInformations.o getPixel.o resizeCrop.o setPixel.o convertToGrayscale.o
 
 libgraph.so.$(RELEASE): $(OBJ)
 	g++ -Wall -shared -Wl,-soname,libgraph.so.$(MAJOR) -o libgraph.so.$(RELEASE) $(OBJ) -ljpeg -lpng
