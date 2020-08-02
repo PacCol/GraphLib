@@ -46,6 +46,30 @@ void Image::openPngImage(char* fileName) {
 
   // We close the image file
   fclose(inputImageFile);
+
+  // We define the color space and the pixelSize
+  // One value (monochrome)
+  if(colorType == 0) {
+    colorSpace = 1;
+    pixelSize = 1;
+  }
+  // Three values (RGB)
+  else if(colorType == 2) {
+    colorSpace = 2;
+    pixelSize = 3;
+  }
+  // Two values (monochrome with an alpha channel)
+  else if(colorType == 4) {
+    colorSpace = 0;
+    pixelSize = 2;
+    alphaUsed = true;
+  }
+  // Four values (RGB with an alpha channel)
+  else if(colorType == 6) {
+    colorSpace = 12;
+    pixelSize = 4;
+    alphaUsed = true;
+  }
 }
 
 // We create a function to save a png image
@@ -63,7 +87,22 @@ void Image::savePngImage(char* fileName) {
   png_init_io(png, outputImageFile);
 
   // We configure the library
-  png_set_IHDR(png, imageInfo, width, height, 8, PNG_COLOR_TYPE_RGB, PNG_INTERLACE_NONE, PNG_COMPRESSION_TYPE_DEFAULT, PNG_FILTER_TYPE_DEFAULT);
+  if(alphaUsed) {
+    if(colorSpace == 0 && pixelSize == 2) {
+      png_set_IHDR(png, imageInfo, width, height, 8, PNG_COLOR_TYPE_GRAY_ALPHA, PNG_INTERLACE_NONE, PNG_COMPRESSION_TYPE_DEFAULT, PNG_FILTER_TYPE_DEFAULT);
+    }
+    else if(colorSpace == 12) {
+      png_set_IHDR(png, imageInfo, width, height, 8, PNG_COLOR_TYPE_RGBA, PNG_INTERLACE_NONE, PNG_COMPRESSION_TYPE_DEFAULT, PNG_FILTER_TYPE_DEFAULT);
+    }
+  }
+  else {
+    if(colorSpace == 1) {
+      png_set_IHDR(png, imageInfo, width, height, 8, PNG_COLOR_TYPE_GRAY, PNG_INTERLACE_NONE, PNG_COMPRESSION_TYPE_DEFAULT, PNG_FILTER_TYPE_DEFAULT);
+    }
+    else if(colorSpace == 3) {
+      png_set_IHDR(png, imageInfo, width, height, 8, PNG_COLOR_TYPE_RGB, PNG_INTERLACE_NONE, PNG_COMPRESSION_TYPE_DEFAULT, PNG_FILTER_TYPE_DEFAULT);
+    }
+  }
 
   // We continue to compress the image
   png_write_info(png, imageInfo);

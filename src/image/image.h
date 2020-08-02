@@ -76,6 +76,7 @@ class Image {
     unsigned int height = 0;
     unsigned int pixelSize = 0;
     unsigned int colorSpace = 0;
+    bool alphaUsed = false;
 };
 
 #endif // GRAPHLIB_IMAGE_H

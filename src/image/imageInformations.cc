@@ -18,3 +18,7 @@ unsigned int Image::getColorSpace() {
 unsigned int Image::getPixelSize() {
   return pixelSize;
 }
+
+bool Image::isAlphaChannelUsed() {
+  return alphaUsed;
+}

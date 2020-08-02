@@ -40,7 +40,9 @@ void Image::openJpegImage(char* fileName) {
   pixelSize = imageInfo.output_components;
 
   // We check the colorSpace
-  //if(colorSpace != )
+  if(colorSpace != 1 || colorSpace != 3 || colorSpace != 12) {
+    throw std::runtime_error("Error : in Image::openJpegImage : this color space is not supported");
+  }
 
   // We are computing the row stride
   int rowStride = width * pixelSize;
@@ -73,6 +75,9 @@ void Image::openJpegImage(char* fileName) {
 
 // We create a function to save a jpeg image
 void Image::saveJpegImage(char* fileName, unsigned int quality) {
+
+  // We check some parameters
+  
 
   // We try to create the image file
   FILE * outputImageFile;
