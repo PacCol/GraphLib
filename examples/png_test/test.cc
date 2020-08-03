@@ -5,8 +5,8 @@
 int main() {
   std::cout << "\n";
 
-  char fileNameToRead[] = "images/test.png";
-  Image myImage(fileNameToRead, "png");
+  char fileNameToRead[] = "images/testSaved.jpg";
+  Image myImage(fileNameToRead, "jpeg");
 
   std::cout << "Image Dimensions : " << myImage.getWidth() << "x" << myImage.getHeight() <<"\n";
   std::cout << "Image Pixel Size : " << myImage.getPixelSize() << "\n";
@@ -21,7 +21,7 @@ int main() {
 
   myImage.resize(60);
 
-  char fileNameToSave[] = "images/testSaved.jpg";
+  char fileNameToSave[] = "images/testSaved.png";
   myImage.save(fileNameToSave, 100, "jpg");
 
   std::cout << "\n";

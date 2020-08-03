@@ -39,10 +39,7 @@ void Image::openJpegImage(char* fileName) {
   colorSpace = imageInfo.out_color_space;
   pixelSize = imageInfo.output_components;
 
-  // We check the colorSpace
-  if(colorSpace != 1 || colorSpace != 3 || colorSpace != 12) {
-    throw std::runtime_error("Error : in Image::openJpegImage : this color space is not supported");
-  }
+  std::cout << "Image Color Space : " << colorSpace << "\n";
 
   // We are computing the row stride
   int rowStride = width * pixelSize;
@@ -75,11 +72,6 @@ void Image::openJpegImage(char* fileName) {
 
 // We create a function to save a jpeg image
 void Image::saveJpegImage(char* fileName, unsigned int quality) {
-
-  // We check some parameters
-  if(alphaUsed && pixelSize == 2) {
-    throw std::runtime_error("Error : in Image::saveJpegImage : the alpha channel can't be saved for monochrome image");
-  }
 
   // We try to create the image file
   FILE * outputImageFile;
