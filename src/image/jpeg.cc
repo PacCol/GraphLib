@@ -77,7 +77,9 @@ void Image::openJpegImage(char* fileName) {
 void Image::saveJpegImage(char* fileName, unsigned int quality) {
 
   // We check some parameters
-  
+  if(alphaUsed && pixelSize == 2) {
+    throw std::runtime_error("Error : in Image::saveJpegImage : the alpha channel can't be saved for monochrome image");
+  }
 
   // We try to create the image file
   FILE * outputImageFile;
