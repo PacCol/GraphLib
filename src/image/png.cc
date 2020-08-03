@@ -32,21 +32,6 @@ void Image::openPngImage(char* fileName) {
     throw std::runtime_error("Error : in Image::openPngImage : this color type is not supported");
   }
 
-  // We continue to read the image
-  png_read_update_info(png, imageInfo);
-
-  // We want to store the pixels into a vector
-  pixels.resize(height, std::vector<png_byte>(width * pixelSize));
-  std::vector<png_byte *> ppixels(height);
-  std::transform(pixels.begin(), pixels.end(), ppixels.begin(), [](auto & vector){ return vector.data(); });
-
-  // We finish the decompression
-  png_read_image(png, ppixels.data());
-  png_destroy_read_struct(&png, &imageInfo, NULL);
-
-  // We close the image file
-  fclose(inputImageFile);
-
   // We define the color space and the pixelSize
   // One value (monochrome)
   if(colorType == 0) {
@@ -70,6 +55,21 @@ void Image::openPngImage(char* fileName) {
     pixelSize = 4;
     alphaUsed = true;
   }
+
+  // We continue to read the image
+  png_read_update_info(png, imageInfo);
+
+  // We want to store the pixels into a vector
+  pixels.resize(height, std::vector<png_byte>(width * pixelSize));
+  std::vector<png_byte *> ppixels(height);
+  std::transform(pixels.begin(), pixels.end(), ppixels.begin(), [](auto & vector){ return vector.data(); });
+
+  // We finish the decompression
+  png_read_image(png, ppixels.data());
+  png_destroy_read_struct(&png, &imageInfo, NULL);
+
+  // We close the image file
+  fclose(inputImageFile);
 }
 
 // We create a function to save a png image

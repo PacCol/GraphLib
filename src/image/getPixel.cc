@@ -23,7 +23,6 @@ std::vector<uint8_t> Image::getPixel(unsigned int x, unsigned int y) {
 
   // We push the pixels values in the vector
   for(unsigned int i = 0; i < pixelSize; i++) {
-    std::cout << pixels[y][x * pixelSize + i] << "\n";
     pixel.push_back(pixels[y][x * pixelSize + i]);
   }
 
