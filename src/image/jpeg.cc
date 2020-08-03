@@ -39,8 +39,6 @@ void Image::openJpegImage(char* fileName) {
   colorSpace = imageInfo.out_color_space;
   pixelSize = imageInfo.output_components;
 
-  std::cout << "Image Color Space : " << colorSpace << "\n";
-
   // We are computing the row stride
   int rowStride = width * pixelSize;
 

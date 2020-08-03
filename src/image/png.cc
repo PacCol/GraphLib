@@ -27,35 +27,6 @@ void Image::openPngImage(char* fileName) {
   unsigned int colorType = png_get_color_type(png, imageInfo);
   //unsigned int bitDepth = png_get_bit_depth(png, imageInfo);
 
-  // If the color type is not supported we throw an error
-  if(colorType == 3) {
-    throw std::runtime_error("Error : in Image::openPngImage : this color type is not supported");
-  }
-
-  // We define the color space and the pixelSize
-  // One value (monochrome)
-  if(colorType == 0) {
-    colorSpace = 1;
-    pixelSize = 1;
-  }
-  // Three values (RGB)
-  else if(colorType == 2) {
-    colorSpace = 2;
-    pixelSize = 3;
-  }
-  // Two values (monochrome with an alpha channel)
-  else if(colorType == 4) {
-    colorSpace = 0;
-    pixelSize = 2;
-    alphaUsed = true;
-  }
-  // Four values (RGB with an alpha channel)
-  else if(colorType == 6) {
-    colorSpace = 12;
-    pixelSize = 4;
-    alphaUsed = true;
-  }
-
   // We continue to read the image
   png_read_update_info(png, imageInfo);
 
