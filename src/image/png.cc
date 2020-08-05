@@ -27,6 +27,35 @@ void Image::openPngImage(char* fileName) {
   unsigned int colorType = png_get_color_type(png, imageInfo);
   //unsigned int bitDepth = png_get_bit_depth(png, imageInfo);
 
+  // If the color type is a palette index, we convert it into RGB
+  if(colorType == PNG_COLOR_TYPE_PALETTE) {
+    png_set_palette_to_rgb(png);
+  }
+
+  // We define some informations
+  if(colorType == PNG_COLOR_TYPE_GRAY) {
+    pixelSize = 1;
+    colorSpace = 1;
+  }
+  else if(colorType == PNG_COLOR_TYPE_GRAY_ALPHA) {
+    pixelSize = 2;
+    colorSpace = 1;
+    alphaUsed = true;
+  }
+  else if(colorType == PNG_COLOR_TYPE_PALETTE) {
+    pixelSize = 3;
+    colorSpace = 2;
+  }
+  else if(colorType == PNG_COLOR_TYPE_RGB) {
+    pixelSize = 3;
+    colorSpace = 2;
+  }
+  else if(colorType == PNG_COLOR_TYPE_RGBA) {
+    pixelSize = 4;
+    colorSpace = 2;
+    alphaUsed = true;
+  }
+
   // We continue to read the image
   png_read_update_info(png, imageInfo);
 
