@@ -87,7 +87,12 @@ void Image::saveJpegImage(char* fileName, unsigned int quality) {
 
   // If the alpha channel is used, we remove it
   if(alphaUsed) {
-    //if()
+    if(colorType == 4) {
+
+    }
+    else if(colorType == 6) {
+
+    }
   }
 
   // We create a jpeg compression structure
