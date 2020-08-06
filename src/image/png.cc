@@ -24,12 +24,13 @@ void Image::openPngImage(char* fileName) {
   // We store the image informations into privates variables
   width = png_get_image_width(png, imageInfo);
   height = png_get_image_height(png, imageInfo);
-  unsigned int colorType = png_get_color_type(png, imageInfo);
+  colorType = png_get_color_type(png, imageInfo);
   //unsigned int bitDepth = png_get_bit_depth(png, imageInfo);
 
   // If the color type is a palette index, we convert it into RGB
   if(colorType == PNG_COLOR_TYPE_PALETTE) {
     png_set_palette_to_rgb(png);
+    colorType = PNG_COLOR_TYPE_RGB;
   }
 
   // We define some informations
@@ -41,10 +42,6 @@ void Image::openPngImage(char* fileName) {
     pixelSize = 2;
     colorSpace = 1;
     alphaUsed = true;
-  }
-  else if(colorType == PNG_COLOR_TYPE_PALETTE) {
-    pixelSize = 3;
-    colorSpace = 2;
   }
   else if(colorType == PNG_COLOR_TYPE_RGB) {
     pixelSize = 3;
@@ -87,22 +84,7 @@ void Image::savePngImage(char* fileName) {
   png_init_io(png, outputImageFile);
 
   // We configure the library
-  if(alphaUsed) {
-    if(colorSpace == 0 && pixelSize == 2) {
-      png_set_IHDR(png, imageInfo, width, height, 8, PNG_COLOR_TYPE_GRAY_ALPHA, PNG_INTERLACE_NONE, PNG_COMPRESSION_TYPE_DEFAULT, PNG_FILTER_TYPE_DEFAULT);
-    }
-    else if(colorSpace == 12) {
-      png_set_IHDR(png, imageInfo, width, height, 8, PNG_COLOR_TYPE_RGBA, PNG_INTERLACE_NONE, PNG_COMPRESSION_TYPE_DEFAULT, PNG_FILTER_TYPE_DEFAULT);
-    }
-  }
-  else {
-    if(colorSpace == 1) {
-      png_set_IHDR(png, imageInfo, width, height, 8, PNG_COLOR_TYPE_GRAY, PNG_INTERLACE_NONE, PNG_COMPRESSION_TYPE_DEFAULT, PNG_FILTER_TYPE_DEFAULT);
-    }
-    else if(colorSpace == 3) {
-      png_set_IHDR(png, imageInfo, width, height, 8, PNG_COLOR_TYPE_RGB, PNG_INTERLACE_NONE, PNG_COMPRESSION_TYPE_DEFAULT, PNG_FILTER_TYPE_DEFAULT);
-    }
-  }
+  png_set_IHDR(png, imageInfo, width, height, 8, colorType, PNG_INTERLACE_NONE, PNG_COMPRESSION_TYPE_DEFAULT, PNG_FILTER_TYPE_DEFAULT);
 
   // We continue to compress the image
   png_write_info(png, imageInfo);

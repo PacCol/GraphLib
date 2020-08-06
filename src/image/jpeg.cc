@@ -39,6 +39,14 @@ void Image::openJpegImage(char* fileName) {
   colorSpace = imageInfo.out_color_space;
   pixelSize = imageInfo.output_components;
 
+  // We define the colorType
+  if(colorSpace == 1) {
+    colorType = 0;
+  }
+  else if(colorSpace == 2) {
+    colorType = 2;
+  }
+
   // We are computing the row stride
   int rowStride = width * pixelSize;
 
@@ -75,6 +83,11 @@ void Image::saveJpegImage(char* fileName, unsigned int quality) {
   FILE * outputImageFile;
   if ((outputImageFile = fopen(fileName, "wb")) == NULL) {
     throw std::runtime_error("Error : in Image::saveJpegImage : can't create this file");
+  }
+
+  // If the alpha channel is used, we remove it
+  if(alphaUsed) {
+    //if()
   }
 
   // We create a jpeg compression structure

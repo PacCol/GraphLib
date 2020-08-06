@@ -14,9 +14,10 @@ class Image {
     // We create functions to return the image informations
     unsigned int getWidth();
     unsigned int getHeight();
-    unsigned int getColorSpace();
     unsigned int getPixelSize();
     bool isAlphaChannelUsed();
+    unsigned int getColorSpace();
+    unsigned int getColorType();
 
     // We create a function to save the modified image
     void save(char * fileName, int quality, std::string option);
@@ -72,11 +73,21 @@ class Image {
     std::vector<std::vector<uint8_t>> pixels;
 
     // We store the image informations into private variables
+    // The width and the height are the dimensions of the image in pixels
     unsigned int width = 0;
     unsigned int height = 0;
+
+    // The pixel size is the number of values for a pixel
+    // For exmple an RGB image will have a pixelSize of 3
     unsigned int pixelSize = 0;
-    unsigned int colorSpace = 0;
+
+    // The alpha used variable tell us if the alpha channel is used
     bool alphaUsed = false;
+
+    // The color space is the same thing that the color type
+    unsigned int colorSpace = 0;
+    // The color type has more possibilities
+    unsigned int colorType = 0;
 };
 
 #endif // GRAPHLIB_IMAGE_H
