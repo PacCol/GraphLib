@@ -93,6 +93,7 @@ int main() {
   // We choose a file name
   char fileNameToSave[] = "../imageSamples/testSaved.jpg";
   // We save the modified image
+  // If you save the image as png, the quality (100 here) will not be used
   myImage.save(fileNameToSave, 100, "jpg");
 
   // Now, you can open and compare the two images
