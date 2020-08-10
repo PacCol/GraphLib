@@ -50,10 +50,10 @@ class Image {
     void convertToGrayscale();
 
     // We create a function to reduce the noise of the image
-    void reduceNoise(uint8_t strength);
+    void applyMedianFilter(unsigned int filterType);
 
     // We create a function to show the edge of the objects of the image
-    void showEdgeOnly();
+    void applyCannyFilter();
 
     // We create a function to return the alpha value of a pixel
     uint8_t getAlphaValue(unsigned int x, unsigned int y);

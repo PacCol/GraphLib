@@ -11,19 +11,48 @@ int main() {
   Image myImage(fileNameToRead, "jpg");
 
   // We print some informations
+
+  // The dimensions in pixels
   std::cout << "Image Dimensions : " << myImage.getWidth() << "x" << myImage.getHeight() <<"\n";
+
+  // - Color space 1 :
+  //    1 value (luminance --> monochrome image)
+  // - Color space 2 :
+  //    3 values (RGB --> colored image)
   std::cout << "Image Color Space : " << myImage.getColorSpace() << "\n";
-  // If the pixel size is 1, the image is monochrome
-  // If the pixel size is 3, the image is colored
+
+  // - Color type 0 :
+  //    1 value (monochrome image)
+  // - Color type 2 :
+  //    3 values (RGB --> colored image)
+  // - Color type 4 :
+  //    2 values (monochrome image with alpha channel)
+  // - Color type 6 :
+  //    4 values (RGBA --> colored image with alpha channel)
+  std::cout << "Image Color Type : " << myImage.getColorType() << "\n";
+
+  // The pixel size is the number of value for a pixel
+  // For example : an RGB image will have a pixel size of 3
   std::cout << "Image Pixel Size : " << myImage.getPixelSize() << "\n";
 
+  // The alpha channel is the transparancy
+  std::cout << "Image Alpha Channel : ";
+  if(alphaUsed) {
+    std::cout << "Used" << "\n";
+  }
+  else {
+    std::cout << "Unused" << "\n";
+  }
+
   // For all functions the X and the Y value start to 0
-  // If you want to get the first pixel value, do this :
-  // std::vector<uint8_t> pixel = myImage.getRgbColor(0, 0);
+  // If you want to get the first pixel values, do this :
+  // std::vector<uint8_t> pixel = myImage.getPixel(0, 0);
 
   // We print the RGB values of a pixel
-  // This return a vector that contains the RGB values
-  std::vector<uint8_t> pixel = myImage.getRgbColor(3, 6);
+  // In this example, the image is an RGB image (color type 3)
+  // Please read the color type explanations
+  // This function return vector that contain in this case three values (see the pixel size)
+  std::vector<uint8_t> pixel = myImage.getPixel(3, 6);
   // We use a + to print the value as a number
   std::cout << "Image Pixel : X=3, Y=6 : R=" << +pixel[0] << " G=" << +pixel[1]  << " B=" << +pixel[2] << "\n";
 
