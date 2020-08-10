@@ -46,6 +46,9 @@ void Image::openJpegImage(char* fileName) {
   else if(colorSpace == 2) {
     colorType = 2;
   }
+  else {
+    throw std::runtime_error("Error : in Image::openJpegImage : this color space is not supported");
+  }
 
   // We are computing the row stride
   int rowStride = width * pixelSize;
