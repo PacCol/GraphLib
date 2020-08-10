@@ -7,7 +7,7 @@ std::vector<std::vector<uint8_t>> Image::getPixels() {
   return pixels;
 }
 
-// We create a function to return the requested RGB value
+// We create a function to return the requested pixel values
 std::vector<uint8_t> Image::getPixel(unsigned int x, unsigned int y) {
 
   // If the X or Y value is out of range, we throw an error
@@ -18,7 +18,7 @@ std::vector<uint8_t> Image::getPixel(unsigned int x, unsigned int y) {
     throw std::runtime_error("Error : in Image::getPixel : The Y value is out of range");
   }
 
-  // We create a vector to store the RGB values
+  // We create a vector to store the pixel values
   std::vector<uint8_t> pixel;
 
   // We push the pixels values in the vector
@@ -44,15 +44,15 @@ uint8_t Image::getLuminance(unsigned int x, unsigned int y) {
   // We store the luminance into a variable
   uint8_t luminance = 0;
 
-  // If the image is monochrome
-  if(pixelSize == 1) {
+  // If the image is monochrome...
+  if(colorSpace == 1) {
 
     // We get the luminance with the pixel value
-    luminance = pixels[y][x];
+    luminance = pixels[y][x * pixelSize];
   }
 
   // Else if the image is colored
-  else if(pixelSize == 3 || pixelSize == 4) {
+  else if(colorSpace == 2) {
 
     // We create a vector to store the RGB values
     std::vector<uint8_t> pixel = getPixel(x, y);

@@ -2,6 +2,21 @@
 
 #include "image.h"
 
+// We create a function to return the alpha value of a pixel
+uint8_t Image::getAlphaValue(unsigned int x, unsigned int y) {
+
+  // We check the alpha channel
+  if(!alphaUsed) {
+    throw std::runtime_error("Error : in Image::getAlphaValue : alpha channel not found");
+  }
+
+  // We store the alpha value into a variable
+  uint8_t alphaValue = pixels[y][x * pixelSize + colorSpace];
+
+  // We return the alpha value
+  return alphaValue;
+}
+
 // We create a function to remove the alpha channel of the image
 void Image::removeAlphaChannel() {
 

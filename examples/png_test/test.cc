@@ -17,7 +17,8 @@ int main() {
   std::cout << "Image Pixel : X=3, Y=6 : R=" << +pixel[0] << " G=" << +pixel[1]  << " B=" << +pixel[2] << "\n";
   std::cout << "Image Luminance : X=3, Y=6 : " << +myImage.getLuminance(3, 6) << "\n";
 
-  //myImage.resize(60);
+  myImage.convertToGrayscale();
+
   myImage.removeAlphaChannel();
 
   char fileNameToSave[] = "../imageSamples/testSaved.jpg";

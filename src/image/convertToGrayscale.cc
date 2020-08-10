@@ -5,7 +5,7 @@
 // We create a function to convert the image to grayscale
 void Image::convertToGrayscale() {
 
-  // We check the actual pixel size
+  // We check the actual color space
   if(colorSpace == 1) {
     throw std::runtime_error("Error : in Image::convertToGrayscale : the image is already monochrome");
   }
@@ -28,6 +28,9 @@ void Image::convertToGrayscale() {
 
       // We push the luminance of the pixel
       newLine.push_back(getLuminance(j, i));
+
+      // If the alpha channel is used, we push the alpha value
+      newLine.push_back(getAlphaValue(j, i));
     }
     // We push the new line into the newPixels vector
     newPixels.push_back(newLine);
@@ -37,6 +40,6 @@ void Image::convertToGrayscale() {
   pixels = newPixels;
 
   // We update the image informations
-  pixelSize = 1;
+  pixelSize = pixelSize - 2;
   colorSpace = 1;
 }
