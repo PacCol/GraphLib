@@ -6,7 +6,7 @@ int main() {
   std::cout << "\n";
 
   // We select an image
-  char fileNameToRead[] = "images/test.jpg";
+  char fileNameToRead[] = "../imageSamples/test.jpg";
   // We open and decode the image
   Image myImage(fileNameToRead, "jpg");
 
@@ -62,7 +62,7 @@ int main() {
   //myImage.convertToGrayscale();
 
   // We choose a file name
-  char fileNameToSave[] = "images/testSaved.jpg";
+  char fileNameToSave[] = "../imageSamples/testSaved.jpg";
   // We save the modified image
   myImage.save(fileNameToSave, 100, "jpg");
 

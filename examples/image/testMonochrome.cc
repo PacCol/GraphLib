@@ -6,7 +6,7 @@ int main() {
   std::cout << "\n";
 
   // We select an image
-  char fileNameToRead[] = "images/testMonochrome.jpg";
+  char fileNameToRead[] = "../imageSamples/testMonochrome.jpg";
   // We open and decode the image
   jpegImage myImage(fileNameToRead);
 
@@ -50,7 +50,7 @@ int main() {
   // The top left corner is now darker
 
   // We choose a file name
-  char fileNameToSave[] = "images/testSavedMonochrome.jpg";
+  char fileNameToSave[] = "../imageSamples/testSavedMonochrome.jpg";
   // We save the modified image
   myImage.save(fileNameToSave, 100);
 

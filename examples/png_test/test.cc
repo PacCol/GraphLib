@@ -5,8 +5,8 @@
 int main() {
   std::cout << "\n";
 
-  char fileNameToRead[] = "../image/images/test.jpg";
-  Image myImage(fileNameToRead, "jpg");
+  char fileNameToRead[] = "../imageSamples/test.png";
+  Image myImage(fileNameToRead, "png");
 
   std::cout << "Image Dimensions : " << myImage.getWidth() << "x" << myImage.getHeight() <<"\n";
   std::cout << "Image Pixel Size : " << myImage.getPixelSize() << "\n";
@@ -18,9 +18,10 @@ int main() {
   std::cout << "Image Luminance : X=3, Y=6 : " << +myImage.getLuminance(3, 6) << "\n";
 
   //myImage.resize(60);
+  myImage.removeAlphaChannel();
 
-  char fileNameToSave[] = "images/testSaved.png";
-  myImage.save(fileNameToSave, 100, "png");
+  char fileNameToSave[] = "../imageSamples/testSaved.jpg";
+  myImage.save(fileNameToSave, 100, "jpg");
 
   std::cout << "\n";
 

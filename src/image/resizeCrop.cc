@@ -37,6 +37,7 @@ void Image::resize(unsigned int newWidth) {
 
     // For each pixel of this line...
     for(unsigned int j = 0; j < newWidth; j++) {
+
       // For each value of this pixel...
       for(unsigned int k = 0; k < pixelSize; k++) {
 
@@ -92,6 +93,7 @@ void Image::crop(unsigned int xStartPoint, unsigned int yStartPoint, unsigned in
 
     // For each pixel of this line...
     for(unsigned int j = 0; j < newWidth; j++) {
+      
       // For each value of this pixel...
       for(unsigned int k = 0; k < pixelSize; k++) {
 

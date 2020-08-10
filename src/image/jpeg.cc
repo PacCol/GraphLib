@@ -39,6 +39,11 @@ void Image::openJpegImage(char* fileName) {
   colorSpace = imageInfo.out_color_space;
   pixelSize = imageInfo.output_components;
 
+  /* - Color space 1 :
+          1 value (monochrome image)
+     - Color space 2 :
+          3 values (RGB --> colored image) */
+
   // We define the colorType
   if(colorSpace == 1) {
     colorType = 0;
@@ -88,14 +93,9 @@ void Image::saveJpegImage(char* fileName, unsigned int quality) {
     throw std::runtime_error("Error : in Image::saveJpegImage : can't create this file");
   }
 
-  // If the alpha channel is used, we remove it
+  // If the alpha channel is used, we throw an error
   if(alphaUsed) {
-    if(colorType == 4) {
-
-    }
-    else if(colorType == 6) {
-
-    }
+    throw std::runtime_error("Error : in Image::saveJpegImage : can't save the alpha channel of the image (Please remove it)");
   }
 
   // We create a jpeg compression structure

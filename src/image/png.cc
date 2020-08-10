@@ -27,6 +27,17 @@ void Image::openPngImage(char* fileName) {
   colorType = png_get_color_type(png, imageInfo);
   //unsigned int bitDepth = png_get_bit_depth(png, imageInfo);
 
+  /* - Color type 0 :
+          1 value (monochrome image)
+     - Color type 2 :
+          3 values (RGB --> colored image)
+     - Color type 3 :
+          pallete index
+     - Color type 4 :
+          2 values (monochrome image with alpha channel)
+     - Color type 6 :
+          4 values (RGBA --> colored image with alpha channel) */
+
   // If the color type is a palette index, we convert it into RGB
   if(colorType == PNG_COLOR_TYPE_PALETTE) {
     png_set_palette_to_rgb(png);
