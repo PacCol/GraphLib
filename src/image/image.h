@@ -53,7 +53,7 @@ class Image {
     void reduceNoise(uint8_t strength);
 
     // We create a function to show the edge of the objects of the image
-    //void showEdgeOnly();
+    void showEdgeOnly();
 
     // We create a function to return the alpha value of a pixel
     uint8_t getAlphaValue(unsigned int x, unsigned int y);
