@@ -50,7 +50,7 @@ class Image {
     void convertToGrayscale();
 
     // We create a function to reduce the noise of the image
-    void applyMedianFilter(unsigned int filterType);
+    void applyMedianFilter();
 
     // We create a function to show the edge of the objects of the image
     void applyCannyFilter();
