@@ -6,6 +6,8 @@
 // We create a function to reduce the noise of the image
 void Image::applyMedianFilter() {
 
+  // We check the strength value
+
   // We create a vector to save the new image
   std::vector<std::vector<uint8_t>> newPixels = pixels;
 
@@ -19,19 +21,31 @@ void Image::applyMedianFilter() {
       for(unsigned int k = 0; k < pixelSize; k++) {
 
         std::vector<uint8_t> medianPixels;
-        medianPixels.reserve(9);
+        medianPixels.reserve(8);
 
-        medianPixels.push_back(pixels[i - 1][(j -1) * pixelSize + k]);
+        /*medianPixels.push_back(pixels[i - 1][(j -1) * pixelSize + k]);
         medianPixels.push_back(pixels[i][(j - 1) * pixelSize + k]);
         medianPixels.push_back(pixels[i + 1][(j - 1) * pixelSize + k]);
 
         medianPixels.push_back(pixels[i - 1][j * pixelSize + k]);
-        medianPixels.push_back(pixels[i][j * pixelSize + k]);
+        //medianPixels.push_back(pixels[i][j * pixelSize + k]);
         medianPixels.push_back(pixels[i + 1][j * pixelSize + k]);
 
         medianPixels.push_back(pixels[i - 1][(j + 1) * pixelSize + k]);
         medianPixels.push_back(pixels[i][(j + 1) * pixelSize + k]);
-        medianPixels.push_back(pixels[i + 1][(j + 1) * pixelSize + k]);
+        medianPixels.push_back(pixels[i + 1][(j + 1) * pixelSize + k]);*/
+
+        medianPixels.push_back(newPixels[i - 1][(j -1) * pixelSize + k]);
+        medianPixels.push_back(newPixels[i][(j - 1) * pixelSize + k]);
+        medianPixels.push_back(newPixels[i + 1][(j - 1) * pixelSize + k]);
+
+        medianPixels.push_back(newPixels[i - 1][j * pixelSize + k]);
+        medianPixels.push_back(pixels[i][j * pixelSize + k]);
+        medianPixels.push_back(newPixels[i + 1][j * pixelSize + k]);
+
+        medianPixels.push_back(newPixels[i - 1][(j + 1) * pixelSize + k]);
+        medianPixels.push_back(newPixels[i][(j + 1) * pixelSize + k]);
+        medianPixels.push_back(newPixels[i + 1][(j + 1) * pixelSize + k]);
 
         std::sort(medianPixels.begin(), medianPixels.end());
 

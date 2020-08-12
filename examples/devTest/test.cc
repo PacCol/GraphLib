@@ -5,8 +5,8 @@
 int main() {
   std::cout << "\n";
 
-  char fileNameToRead[] = "testResized.png";
-  Image myImage(fileNameToRead, "png");
+  char fileNameToRead[] = "testNoise.jpg";
+  Image myImage(fileNameToRead, "jpg");
 
   std::cout << "Image Dimensions : " << myImage.getWidth() << "x" << myImage.getHeight() <<"\n";
   std::cout << "Image Color Space : " << myImage.getColorSpace() << "\n";
