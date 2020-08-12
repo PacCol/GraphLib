@@ -19,6 +19,8 @@ void Image::applyMedianFilter() {
       for(unsigned int k = 0; k < pixelSize; k++) {
 
         // We create a vector to store the pixel values (value per value)
+        // For example for an RGB image :
+        // Fist, we calculate the median of the red values of the pixels of the neighborhood
         std::vector<uint8_t> medianPixels;
         // We reserve 9 places (3x3)
         medianPixels.reserve(9);
@@ -34,7 +36,7 @@ void Image::applyMedianFilter() {
         std::sort(medianPixels.begin(), medianPixels.end());
         uint8_t median = medianPixels[4];
 
-        // And we pdate the value
+        // And we update the value
         newPixels[i][j * pixelSize + k] = median;
       }
     }
