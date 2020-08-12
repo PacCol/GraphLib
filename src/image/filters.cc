@@ -41,7 +41,6 @@ void Image::applyMedianFilter() {
       }
     }
   }
-
   // We update the image
   pixels = newPixels;
 }
