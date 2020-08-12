@@ -17,8 +17,8 @@ int main() {
 
   std::cout << "saving..." << "\n";
 
-  char fileNameToSave[] = "testSaved.png";
-  myImage.save(fileNameToSave, 100, "png");
+  char fileNameToSave[] = "testSaved.jpg";
+  myImage.save(fileNameToSave, 100, "jpg");
 
   std::cout << "\n";
 

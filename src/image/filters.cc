@@ -21,31 +21,25 @@ void Image::applyMedianFilter() {
       for(unsigned int k = 0; k < pixelSize; k++) {
 
         std::vector<uint8_t> medianPixels;
-        medianPixels.reserve(8);
+        medianPixels.reserve(9);
 
-        /*medianPixels.push_back(pixels[i - 1][(j -1) * pixelSize + k]);
+        for(unsigned int l = 0; l < pixelSize; l++) {
+          for(unsigned int m = 0; m < pixelSize; m++) {
+
+          }
+        }
+
+        medianPixels.push_back(pixels[i - 1][(j -1) * pixelSize + k]);
         medianPixels.push_back(pixels[i][(j - 1) * pixelSize + k]);
         medianPixels.push_back(pixels[i + 1][(j - 1) * pixelSize + k]);
 
         medianPixels.push_back(pixels[i - 1][j * pixelSize + k]);
-        //medianPixels.push_back(pixels[i][j * pixelSize + k]);
+        medianPixels.push_back(pixels[i][j * pixelSize + k]);
         medianPixels.push_back(pixels[i + 1][j * pixelSize + k]);
 
         medianPixels.push_back(pixels[i - 1][(j + 1) * pixelSize + k]);
         medianPixels.push_back(pixels[i][(j + 1) * pixelSize + k]);
-        medianPixels.push_back(pixels[i + 1][(j + 1) * pixelSize + k]);*/
-
-        medianPixels.push_back(newPixels[i - 1][(j -1) * pixelSize + k]);
-        medianPixels.push_back(newPixels[i][(j - 1) * pixelSize + k]);
-        medianPixels.push_back(newPixels[i + 1][(j - 1) * pixelSize + k]);
-
-        medianPixels.push_back(newPixels[i - 1][j * pixelSize + k]);
-        medianPixels.push_back(pixels[i][j * pixelSize + k]);
-        medianPixels.push_back(newPixels[i + 1][j * pixelSize + k]);
-
-        medianPixels.push_back(newPixels[i - 1][(j + 1) * pixelSize + k]);
-        medianPixels.push_back(newPixels[i][(j + 1) * pixelSize + k]);
-        medianPixels.push_back(newPixels[i + 1][(j + 1) * pixelSize + k]);
+        medianPixels.push_back(pixels[i + 1][(j + 1) * pixelSize + k]);
 
         std::sort(medianPixels.begin(), medianPixels.end());
 
