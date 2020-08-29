@@ -68,7 +68,7 @@ void Image::openPngImage(char* fileName) {
   png_read_update_info(png, imageInfo);
 
   // We want to store the pixels into a vector
-  pixels.resize(height, std::vector<png_byte>(width * pixelSize));
+  pixels.resize(height, std::vector<uint8_t>(width * pixelSize));
   std::vector<png_byte *> ppixels(height);
   std::transform(pixels.begin(), pixels.end(), ppixels.begin(), [](auto & vector){ return vector.data(); });
 

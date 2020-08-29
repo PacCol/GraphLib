@@ -6,9 +6,9 @@ int main() {
   std::cout << "\n";
 
   // We select an image
-  char fileNameToRead[] = "../imageSamples/test.jpg";
+  char fileNameToRead[] = "../imageSamples/test.png";
   // We open and decode the image
-  Image myImage(fileNameToRead, "jpg");
+  Image myImage(fileNameToRead, "png");
 
   // We print some informations
 
@@ -37,7 +37,7 @@ int main() {
 
   // The alpha channel is the transparancy
   std::cout << "Image Alpha Channel : ";
-  if(alphaUsed) {
+  if(myImage.isAlphaChannelUsed()) {
     std::cout << "Used" << "\n";
   }
   else {
@@ -78,13 +78,13 @@ int main() {
   rgbValues.push_back(0); // G (green) value
   rgbValues.push_back(0); // B (blue) value
   // We set the pixel where X = 0 and Y = 0 to the RGB values
-  myImage.setRgbColor(rgbValues, 0, 0);
+  myImage.setPixel(rgbValues, 0, 0);
   // We set the pixel where X = 1 and Y = 0 to the RGB values
-  myImage.setRgbColor(rgbValues, 1, 0);
+  myImage.setPixel(rgbValues, 1, 0);
   // We set the pixel where X = 0 and Y = 1 to the RGB values
-  myImage.setRgbColor(rgbValues, 0, 1);
+  myImage.setPixel(rgbValues, 0, 1);
   // We set the pixel where X = 1 and Y = 1 to the RGB values
-  myImage.setRgbColor(rgbValues, 1, 1);
+  myImage.setPixel(rgbValues, 1, 1);
   // The top left corner is now red
 
   // We convert the image to grayscale (you can remove the // to do it)

@@ -61,7 +61,7 @@ void Image::applyCannyFilter() {
 
   std::vector<std::vector<uint8_t>> gradient = pixels;
 
-  std::vector<std::vector<float>> direction(height, width);
+  std::vector<std::vector<float>> direction(height, std::vector<float>(width));
 
   // For each line of the image...
   for(unsigned int i = 1; i < height - 1; i++) {
@@ -85,7 +85,7 @@ void Image::applyCannyFilter() {
 
       gradient[i][j] = static_cast<unsigned int>( sqrt( pow(SXvalue * pixels[i][j], 2) + pow(SYvalue * pixels[i][j], 2) ));
 
-      direction[i][j] = atan(SYvalue / SXvalue);
+      //direction[i][j] = atan(SYvalue / SXvalue);
     }
   }
 
