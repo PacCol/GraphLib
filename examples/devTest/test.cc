@@ -5,7 +5,7 @@
 int main() {
   std::cout << "\n";
 
-  char fileNameToRead[] = "testNoise.jpg";
+  char fileNameToRead[] = "test.jpg";
   Image myImage(fileNameToRead, "jpg");
 
   std::cout << "Image Dimensions : " << myImage.getWidth() << "x" << myImage.getHeight() <<"\n";
@@ -14,6 +14,7 @@ int main() {
   std::cout << "Image Pixel Size : " << myImage.getPixelSize() << "\n";
 
   myImage.applyMedianFilter();
+  myImage.applyCannyFilter();
 
   std::cout << "saving..." << "\n";
 

@@ -1,5 +1,6 @@
 #include <iostream>
 #include <algorithm>
+#include <cmath>
 
 #include "image.h"
 
@@ -58,6 +59,37 @@ void Image::applyCannyFilter() {
     removeAlphaChannel();
   }
 
-  // In developpement...
+  std::vector<std::vector<uint8_t>> gradient = pixels;
 
+  std::vector<std::vector<float>> direction(height, width);
+
+  // For each line of the image...
+  for(unsigned int i = 1; i < height - 1; i++) {
+
+    // For each pixel of this line...
+    for(unsigned int j = 1; j < width - 1; j++) {
+
+      uint8_t SXvalue = (-1 * pixels[i - 1][j - 1]
+                        + 1 * pixels[i - 1][j + 1]
+                        + -2 * pixels[i][j - 1]
+                        + 2 * pixels[i][j + 1]
+                        + -1 * pixels[i + 1][j - 1]
+                        + 1 * pixels[i + 1][j + 1] ) / 8;
+
+      uint8_t SYvalue = (-1 * pixels[i - 1][j - 1]
+                        + 1 * pixels[i - 1][j + 1]
+                        + -2 * pixels[i - 1][j]
+                        + 2 * pixels[i + 1][j]
+                        + -1 * pixels[i + 1][j - 1]
+                        + 1 * pixels[i + 1][j + 1] ) / 8;
+
+      gradient[i][j] = static_cast<unsigned int>( sqrt( pow(SXvalue * pixels[i][j], 2) + pow(SYvalue * pixels[i][j], 2) ));
+
+      direction[i][j] = atan(SYvalue / SXvalue);
+    }
+  }
+
+  pixels = gradient;
+  width = width;
+  height = height;
 }
