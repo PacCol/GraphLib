@@ -13,7 +13,7 @@ clean :
 	rm -f *.o libgraph.so.$(RELEASE) libgraph.$(RELEASE).a
 
 %.o: ../src/*/%.cc
-	g++ -Wall -fPIC -o $@ -c $<
+	g++ -Wall -g -fPIC -o $@ -c $<
 
 # Image
 OBJ := openSave.o jpeg.o png.o imageInformations.o getPixel.o resizeCrop.o setPixel.o convertToGrayscale.o alphaChannel.o filters.o

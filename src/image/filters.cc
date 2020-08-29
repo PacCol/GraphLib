@@ -69,27 +69,43 @@ void Image::applyCannyFilter() {
     // For each pixel of this line...
     for(unsigned int j = 1; j < width - 1; j++) {
 
+      // We want to compute the gradient
       uint8_t SXvalue = (-1 * pixels[i - 1][j - 1]
                         + 1 * pixels[i - 1][j + 1]
                         + -2 * pixels[i][j - 1]
                         + 2 * pixels[i][j + 1]
                         + -1 * pixels[i + 1][j - 1]
-                        + 1 * pixels[i + 1][j + 1] ) / 8;
+                        + 1 * pixels[i + 1][j + 1]
+                        ) / 8;
 
       uint8_t SYvalue = (-1 * pixels[i - 1][j - 1]
                         + 1 * pixels[i - 1][j + 1]
                         + -2 * pixels[i - 1][j]
                         + 2 * pixels[i + 1][j]
                         + -1 * pixels[i + 1][j - 1]
-                        + 1 * pixels[i + 1][j + 1] ) / 8;
+                        + 1 * pixels[i + 1][j + 1]
+                        ) / 8;
 
+      // We define the gradient value
       gradient[i][j] = static_cast<unsigned int>( sqrt( pow(SXvalue * pixels[i][j], 2) + pow(SYvalue * pixels[i][j], 2) ));
 
-      //direction[i][j] = atan(SYvalue / SXvalue);
+      // We define the direction of the gradient
+      if(!SXvalue == 0) {
+        std::cout << "working..." << "\n";
+        direction[i][j] = atan(SYvalue / SXvalue);
+      }
+      else {
+        std::cout << "error : nul value" << "\n";
+        direction[i][j] = 90;
+      }
     }
   }
 
   pixels = gradient;
   width = width;
   height = height;
+
+  std::cout << "direction : " << static_cast<unsigned int>(direction[30][30]) << "\n";
+  std::cout << "direction : " << static_cast<unsigned int>(direction[95][78]) << "\n";
+  std::cout << "direction : " << static_cast<unsigned int>(direction[34][39]) << "\n";
 }
