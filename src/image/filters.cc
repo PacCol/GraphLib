@@ -114,7 +114,8 @@ void Image::applyCannyFilter() {
   // We create a new vector to save the new pixels
   std::vector<std::vector<uint8_t>> newPixels;
   // We reserve the output height
-  newPixels.reserve(height);
+  // (The borders are ignored once again)
+  newPixels.reserve(height - 2);
 
   // For each line of the image...
   for(unsigned int i = 1; i < height - 1; i++) {
@@ -122,31 +123,57 @@ void Image::applyCannyFilter() {
     // We create a vector to save the new line
     std::vector<uint8_t> newLine;
     // We reserve the line width
-    newLine.reserve(width);
+    // (The borders are ignored once again)
+    newLine.reserve(width - 2);
 
     // For each pixel of this line...
     for(unsigned int j = 1; j < width - 1; j++) {
 
-      if (direction[i][j] > - 90 && direction[i][j] <= - 67.5) {
+      if(gradientDirection[i][j] > - 90 && gradientDirection[i][j] <= - 67.5) {
         if(gradient[i][j] > gradient[i - 1][j] && gradient[i][j] > gradient[i + 1][j]) {
-
+          newLine.push_back(255);
+        }
+        else {
+          newLine.push_back(0);
         }
       }
 
-      if (direction[i][j] > - 67.5 && direction[i][j] <= - 22.5) {
+      if(gradientDirection[i][j] > - 67.5 && gradientDirection[i][j] <= - 22.5) {
+        if(gradient[i][j] > gradient[i - 1][j] && gradient[i][j] > gradient[i + 1][j]) {
+          newLine.push_back(255);
+        }
+        else {
+          newLine.push_back(0);
+        }
       }
 
-      if (direction[i][j] > - 22.5 && direction[i][j] <= 22.5) {
+      if(gradientDirection[i][j] > - 22.5 && gradientDirection[i][j] <= 22.5) {
+        if(gradient[i][j] > gradient[i - 1][j] && gradient[i][j] > gradient[i + 1][j]) {
+          newLine.push_back(255);
+        }
+        else {
+          newLine.push_back(0);
+        }
       }
 
-      if (direction[i][j] > 22.5 && direction[i][j] <= 67.5) {
+      if(gradientDirection[i][j] > 22.5 && gradientDirection[i][j] <= 67.5) {
+        if(gradient[i][j] > gradient[i - 1][j] && gradient[i][j] > gradient[i + 1][j]) {
+          newLine.push_back(255);
+        }
+        else {
+          newLine.push_back(0);
+        }
       }
 
-      if (direction[i][j] > 67.5 && direction[i][j] <= 90) {
+      if(gradientDirection[i][j] > 67.5 && gradientDirection[i][j] <= 90) {
+        if(gradient[i][j] > gradient[i - 1][j] && gradient[i][j] > gradient[i + 1][j]) {
+          newLine.push_back(255);
+        }
+        else {
+          newLine.push_back(0);
+        }
       }
 
-      }
-      
       // We push the new line
       newPixels.push_back(newLine);
     }
