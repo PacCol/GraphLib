@@ -139,7 +139,7 @@ void Image::applyCannyFilter() {
       }
 
       if(gradientDirection[i][j] > - 67.5 && gradientDirection[i][j] <= - 22.5) {
-        if(gradient[i][j] > gradient[i - 1][j] && gradient[i][j] > gradient[i + 1][j]) {
+        if(gradient[i][j] > gradient[i - 1][j - 1] && gradient[i][j] > gradient[i - 1][j - 1]) {
           newLine.push_back(255);
         }
         else {
@@ -148,7 +148,7 @@ void Image::applyCannyFilter() {
       }
 
       if(gradientDirection[i][j] > - 22.5 && gradientDirection[i][j] <= 22.5) {
-        if(gradient[i][j] > gradient[i - 1][j] && gradient[i][j] > gradient[i + 1][j]) {
+        if(gradient[i][j] > gradient[i][j - 1] && gradient[i][j] > gradient[i][j + 1]) {
           newLine.push_back(255);
         }
         else {
@@ -157,7 +157,7 @@ void Image::applyCannyFilter() {
       }
 
       if(gradientDirection[i][j] > 22.5 && gradientDirection[i][j] <= 67.5) {
-        if(gradient[i][j] > gradient[i - 1][j] && gradient[i][j] > gradient[i + 1][j]) {
+        if(gradient[i][j] > gradient[i - 1][j + 1] && gradient[i][j] > gradient[i + 1][j - 1]) {
           newLine.push_back(255);
         }
         else {
@@ -179,5 +179,11 @@ void Image::applyCannyFilter() {
     }
   }
 
-  pixels = gradient;
+  // We delete the borders of the image
+  // (We find the values for the borders of the image)
+  width = width - 2;
+  height = height - 2;
+
+  // We update the pixels
+  pixels = newPixels;
 }
