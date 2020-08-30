@@ -13,7 +13,10 @@ int main() {
   std::cout << "Image Color Type : " << myImage.getColorType() << "\n";
   std::cout << "Image Pixel Size : " << myImage.getPixelSize() << "\n";
 
+  myImage.convertToGrayscale();
+
   myImage.applyMedianFilter(2);
+
   //myImage.applyCannyFilter();
 
   std::cout << "saving..." << "\n";
