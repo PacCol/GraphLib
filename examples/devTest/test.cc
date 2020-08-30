@@ -5,7 +5,7 @@
 int main() {
   std::cout << "\n";
 
-  char fileNameToRead[] = "test2.jpg";
+  char fileNameToRead[] = "test2_noise_removed.jpg";
   Image myImage(fileNameToRead, "jpg");
 
   std::cout << "Image Dimensions : " << myImage.getWidth() << "x" << myImage.getHeight() <<"\n";
@@ -18,7 +18,7 @@ int main() {
 
   std::cout << "saving..." << "\n";
 
-  char fileNameToSave[] = "testSaved.jpg";
+  char fileNameToSave[] = "testSaved1.jpg";
   myImage.save(fileNameToSave, 100, "jpg");
 
   std::cout << "\n";

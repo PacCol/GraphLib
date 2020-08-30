@@ -7,13 +7,33 @@
 #include "image.h"
 
 // We create a function to reduce the noise of the image
-void Image::applyMedianFilter() {
+void Image::applyMedianFilter(unsigned int radius) {
+
+  // We check the radius
+  if(radius >= 3) {
+    throw std::runtime_error("Error : in Image::applyMedianFilter : The radius must be equal to or greater than 3");
+  }
+  else if(radius > height || radius > width) {
+    throw std::runtime_error("Error : in Image::applyMedianFilter : The radius is to big");
+  }
+  else if(radius % 2 != 1) {
+    throw std::runtime_error("Error : in Image::applyMedianFilter : The radius must be odd");
+  }
 
   // We create a vector to save the new image
-  std::vector<std::vector<uint8_t>> newPixels = pixels;
+  std::vector<std::vector<uint8_t>> newPixels;
+  // We reserve the output height
+  // (We can't compute the median of the borders of the image)
+  newPixels.reserve(height - (radius - 1) / 2);
 
   // For each line of the image...
   for(unsigned int i = 1; i < height - 1; i++) {
+
+    // We create a vector to save the new line
+    std::vector<uint8_t> newLine;
+    // We reserve the line width
+    // (We can't compute the median of the borders of the image)
+    newLine.reserve(width - 2);
 
     // For each pixel of this line...
     for(unsigned int j = 1; j < width - 1; j++) {
@@ -40,10 +60,14 @@ void Image::applyMedianFilter() {
         uint8_t median = medianPixels[4];
 
         // And we update the value
-        newPixels[i][j * pixelSize + k] = median;
+        newLine.push_back(median);
       }
     }
+
+    // We push the new line
+    newPixels.push_back(newLine);
   }
+
   // We update the image
   pixels = newPixels;
 }
