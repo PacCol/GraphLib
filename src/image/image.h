@@ -52,6 +52,9 @@ class Image {
     // We create a function to reduce the noise of the image
     void applyMedianFilter();
 
+    // We create a function to reduce the noise of the image
+    void applyGaussianFilter(unsigned int radius);
+
     // We create a function to show the edge of the objects of the image
     void applyCannyFilter();
 

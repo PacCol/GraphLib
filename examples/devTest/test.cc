@@ -5,7 +5,7 @@
 int main() {
   std::cout << "\n";
 
-  char fileNameToRead[] = "test1.jpg";
+  char fileNameToRead[] = "test2.jpg";
   Image myImage(fileNameToRead, "jpg");
 
   std::cout << "Image Dimensions : " << myImage.getWidth() << "x" << myImage.getHeight() <<"\n";
