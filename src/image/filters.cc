@@ -10,33 +10,30 @@
 void Image::applyMedianFilter(unsigned int radius) {
 
   // We check the radius
-  if(radius >= 3) {
-    throw std::runtime_error("Error : in Image::applyMedianFilter : The radius must be equal to or greater than 3");
+  if(radius == 0) {
+    throw std::runtime_error("Error : in Image::applyMedianFilter : The radius can't be 0");
   }
-  else if(radius > height || radius > width) {
+  else if(radius * 2 + 1 > height || radius * 2 + 1 > width) {
     throw std::runtime_error("Error : in Image::applyMedianFilter : The radius is to big");
-  }
-  else if(radius % 2 != 1) {
-    throw std::runtime_error("Error : in Image::applyMedianFilter : The radius must be odd");
   }
 
   // We create a vector to save the new image
   std::vector<std::vector<uint8_t>> newPixels;
   // We reserve the output height
   // (We can't compute the median of the borders of the image)
-  newPixels.reserve(height - (radius - 1) / 2);
+  newPixels.reserve(height - radius  * 2);
 
   // For each line of the image...
-  for(unsigned int i = 1; i < height - 1; i++) {
+  for(unsigned int i = radius; i < height - radius; i++) {
 
     // We create a vector to save the new line
     std::vector<uint8_t> newLine;
     // We reserve the line width
     // (We can't compute the median of the borders of the image)
-    newLine.reserve(width - 2);
+    newLine.reserve(width - radius  * 2);
 
     // For each pixel of this line...
-    for(unsigned int j = 1; j < width - 1; j++) {
+    for(unsigned int j = radius; j < width - radius; j++) {
 
       // For each value of this pixel...
       for(unsigned int k = 0; k < pixelSize; k++) {
@@ -45,8 +42,7 @@ void Image::applyMedianFilter(unsigned int radius) {
         // For example for an RGB image :
         // Fist, we calculate the median of the red values of the pixels of the neighborhood
         std::vector<uint8_t> medianPixels;
-        // We reserve 9 places (3x3)
-        medianPixels.reserve(9);
+        medianPixels.reserve(radius * 2 + 1);
 
         // We add the pixels values in the vector
         for(int l = -1; l < 2; l++) {
