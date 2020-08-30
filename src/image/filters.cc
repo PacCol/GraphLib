@@ -1,5 +1,7 @@
 #include <iostream>
 #include <algorithm>
+
+#define _USE_MATH_DEFINES
 #include <cmath>
 
 #include "image.h"
@@ -59,9 +61,14 @@ void Image::applyCannyFilter() {
     removeAlphaChannel();
   }
 
-  std::vector<std::vector<uint8_t>> gradient = pixels;
+  // We can't compute the gradient of the borders of the image
+  // So the output image will be smaller
 
-  std::vector<std::vector<float>> direction(height, std::vector<float>(width));
+  // We store the gradient values into a vector
+  std::vector<std::vector<uint8_t>> gradient (height - 2, std::vector<uint8_t>(width - 2));
+
+  // We store the gradient direction of the pixels into a vector
+  std::vector<std::vector<float>> gradientDirection (height - 2, std::vector<float>(width - 2));
 
   // For each line of the image...
   for(unsigned int i = 1; i < height - 1; i++) {
@@ -70,7 +77,7 @@ void Image::applyCannyFilter() {
     for(unsigned int j = 1; j < width - 1; j++) {
 
       // We want to compute the gradient
-      uint8_t SXvalue = (-1 * pixels[i - 1][j - 1]
+      float SXvalue = (-1 * pixels[i - 1][j - 1]
                         + 1 * pixels[i - 1][j + 1]
                         + -2 * pixels[i][j - 1]
                         + 2 * pixels[i][j + 1]
@@ -78,7 +85,7 @@ void Image::applyCannyFilter() {
                         + 1 * pixels[i + 1][j + 1]
                         ) / 8;
 
-      uint8_t SYvalue = (-1 * pixels[i - 1][j - 1]
+      float SYvalue = (-1 * pixels[i - 1][j - 1]
                         + 1 * pixels[i - 1][j + 1]
                         + -2 * pixels[i - 1][j]
                         + 2 * pixels[i + 1][j]
@@ -87,25 +94,63 @@ void Image::applyCannyFilter() {
                         ) / 8;
 
       // We define the gradient value
-      gradient[i][j] = static_cast<unsigned int>( sqrt( pow(SXvalue * pixels[i][j], 2) + pow(SYvalue * pixels[i][j], 2) ));
+      gradient[i][j] = sqrt( pow(SXvalue * pixels[i][j], 2) + pow(SYvalue * pixels[i][j], 2) );
 
       // We define the direction of the gradient
       if(!SXvalue == 0) {
-        std::cout << "working..." << "\n";
-        direction[i][j] = atan(SYvalue / SXvalue);
+        gradientDirection[i][j] = atan(SYvalue / SXvalue) * 180 / M_PI;
       }
       else {
-        std::cout << "error : nul value" << "\n";
-        direction[i][j] = 90;
+        gradientDirection[i][j] = 90;
       }
     }
   }
 
-  pixels = gradient;
-  width = width;
-  height = height;
+  // We delete the borders of the image
+  // (We can't compute the gradient of the borders of the image)
+  width = width - 2;
+  height = height - 2;
 
-  std::cout << "direction : " << static_cast<unsigned int>(direction[30][30]) << "\n";
-  std::cout << "direction : " << static_cast<unsigned int>(direction[95][78]) << "\n";
-  std::cout << "direction : " << static_cast<unsigned int>(direction[34][39]) << "\n";
+  // We create a new vector to save the new pixels
+  std::vector<std::vector<uint8_t>> newPixels;
+  // We reserve the output height
+  newPixels.reserve(height);
+
+  // For each line of the image...
+  for(unsigned int i = 1; i < height - 1; i++) {
+
+    // We create a vector to save the new line
+    std::vector<uint8_t> newLine;
+    // We reserve the line width
+    newLine.reserve(width);
+
+    // For each pixel of this line...
+    for(unsigned int j = 1; j < width - 1; j++) {
+
+      if (direction[i][j] > - 90 && direction[i][j] <= - 67.5) {
+        if(gradient[i][j] > gradient[i - 1][j] && gradient[i][j] > gradient[i + 1][j]) {
+
+        }
+      }
+
+      if (direction[i][j] > - 67.5 && direction[i][j] <= - 22.5) {
+      }
+
+      if (direction[i][j] > - 22.5 && direction[i][j] <= 22.5) {
+      }
+
+      if (direction[i][j] > 22.5 && direction[i][j] <= 67.5) {
+      }
+
+      if (direction[i][j] > 67.5 && direction[i][j] <= 90) {
+      }
+
+      }
+      
+      // We push the new line
+      newPixels.push_back(newLine);
+    }
+  }
+
+  pixels = gradient;
 }
