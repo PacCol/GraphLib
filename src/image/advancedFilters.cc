@@ -10,8 +10,8 @@
 void Image::applyCannyFilter() {
 
   // We define the limits to select the pixels that will be retained
-  const unsigned int highLimit = 170;
-  const unsigned int lowLimit = 85;
+  const unsigned int highLimit = 190;
+  const unsigned int lowLimit = 90;
 
   // If the image is not a grayscale, we convert it
   if(colorSpace != 1) {
@@ -111,8 +111,15 @@ void Image::applyCannyFilter() {
 
       if(gradientDirection[i][j] > - 90 && gradientDirection[i][j] <= - 67.5) {
         if(gradient[i][j] > gradient[i - 1][j] && gradient[i][j] > gradient[i + 1][j]) {
-          
-          newLine.push_back(255);
+          if(gradient[i][j] > highLimit) {
+            newLine.push_back(255);
+          }
+          else if(gradient[i][j] > lowLimit) {
+            newLine.push_back(120);
+          }
+          else {
+            newLine.push_back(0);
+          }
         }
         else {
           newLine.push_back(0);
@@ -121,7 +128,15 @@ void Image::applyCannyFilter() {
 
       if(gradientDirection[i][j] > - 67.5 && gradientDirection[i][j] <= - 22.5) {
         if(gradient[i][j] > gradient[i - 1][j - 1] && gradient[i][j] > gradient[i - 1][j - 1]) {
-          newLine.push_back(255);
+          if(gradient[i][j] > highLimit) {
+            newLine.push_back(255);
+          }
+          else if(gradient[i][j] > lowLimit) {
+            newLine.push_back(120);
+          }
+          else {
+            newLine.push_back(0);
+          }
         }
         else {
           newLine.push_back(0);
@@ -130,7 +145,15 @@ void Image::applyCannyFilter() {
 
       if(gradientDirection[i][j] > - 22.5 && gradientDirection[i][j] <= 22.5) {
         if(gradient[i][j] > gradient[i][j - 1] && gradient[i][j] > gradient[i][j + 1]) {
-          newLine.push_back(255);
+          if(gradient[i][j] > highLimit) {
+            newLine.push_back(255);
+          }
+          else if(gradient[i][j] > lowLimit) {
+            newLine.push_back(120);
+          }
+          else {
+            newLine.push_back(0);
+          }
         }
         else {
           newLine.push_back(0);
@@ -139,7 +162,15 @@ void Image::applyCannyFilter() {
 
       if(gradientDirection[i][j] > 22.5 && gradientDirection[i][j] <= 67.5) {
         if(gradient[i][j] > gradient[i - 1][j + 1] && gradient[i][j] > gradient[i + 1][j - 1]) {
-          newLine.push_back(255);
+          if(gradient[i][j] > highLimit) {
+            newLine.push_back(255);
+          }
+          else if(gradient[i][j] > lowLimit) {
+            newLine.push_back(120);
+          }
+          else {
+            newLine.push_back(0);
+          }
         }
         else {
           newLine.push_back(0);
@@ -148,7 +179,15 @@ void Image::applyCannyFilter() {
 
       if(gradientDirection[i][j] > 67.5 && gradientDirection[i][j] <= 90) {
         if(gradient[i][j] > gradient[i - 1][j] && gradient[i][j] > gradient[i + 1][j]) {
-          newLine.push_back(255);
+          if(gradient[i][j] > highLimit) {
+            newLine.push_back(255);
+          }
+          else if(gradient[i][j] > lowLimit) {
+            newLine.push_back(120);
+          }
+          else {
+            newLine.push_back(0);
+          }
         }
         else {
           newLine.push_back(0);

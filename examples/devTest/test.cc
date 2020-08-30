@@ -23,5 +23,7 @@ int main() {
 
   std::cout << "\n";
 
+  system("gwenview testSaved.jpg");
+
   return 0;
 }
