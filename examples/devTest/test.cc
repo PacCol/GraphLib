@@ -13,12 +13,12 @@ int main() {
   std::cout << "Image Color Type : " << myImage.getColorType() << "\n";
   std::cout << "Image Pixel Size : " << myImage.getPixelSize() << "\n";
 
-  myImage.applyMedianFilter(1);
+  myImage.applyMedianFilter(2);
   //myImage.applyCannyFilter();
 
   std::cout << "saving..." << "\n";
 
-  char fileNameToSave[] = "testSaved.jpg";
+  char fileNameToSave[] = "testSaved1.jpg";
   myImage.save(fileNameToSave, 100, "jpg");
 
   std::cout << "\n";

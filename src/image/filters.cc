@@ -42,8 +42,8 @@ void Image::applyMedianFilter(unsigned int radius) {
         medianPixels.reserve(radius * 2 + 1);
 
         // We add the pixels values in the vector
-        for(int l = -(int(radius)); l < radius + 1; l++) {
-          for(int m = -(int(radius)); m < radius + 1; m++) {
+        for(int l = -(int(radius)); l < int(radius + 1); l++) {
+          for(int m = -(int(radius)); m < int(radius + 1); m++) {
             medianPixels.push_back(pixels[i + l][(j + m) * pixelSize + k]);
           }
         }
