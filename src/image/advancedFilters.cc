@@ -111,6 +111,7 @@ void Image::applyCannyFilter() {
 
       if(gradientDirection[i][j] > - 90 && gradientDirection[i][j] <= - 67.5) {
         if(gradient[i][j] > gradient[i - 1][j] && gradient[i][j] > gradient[i + 1][j]) {
+          
           newLine.push_back(255);
         }
         else {
