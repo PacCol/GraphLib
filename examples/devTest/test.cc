@@ -15,13 +15,13 @@ int main() {
 
   myImage.convertToGrayscale();
 
-  myImage.applyMedianFilter(2);
+  myImage.applyMedianFilter(3);
 
   //myImage.applyCannyFilter();
 
   std::cout << "saving..." << "\n";
 
-  char fileNameToSave[] = "testSaved1.jpg";
+  char fileNameToSave[] = "testSaved.jpg";
   myImage.save(fileNameToSave, 100, "jpg");
 
   std::cout << "\n";
