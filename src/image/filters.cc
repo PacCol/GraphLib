@@ -1,9 +1,6 @@
 #include <iostream>
 #include <algorithm>
 
-#define _USE_MATH_DEFINES
-#include <cmath>
-
 #include "image.h"
 
 // We create a function to reduce the noise of the image
@@ -13,7 +10,7 @@ void Image::applyMedianFilter(unsigned int radius) {
   if(radius == 0) {
     throw std::runtime_error("Error : in Image::applyMedianFilter : The radius can't be 0");
   }
-  else if(radius * 2 + 1 > height || radius * 2 + 1 > width) {
+  else if(radius * 2 + 1 >= height || radius * 2 + 1 >= width) {
     throw std::runtime_error("Error : in Image::applyMedianFilter : The radius is to big");
   }
 
@@ -45,15 +42,15 @@ void Image::applyMedianFilter(unsigned int radius) {
         medianPixels.reserve(radius * 2 + 1);
 
         // We add the pixels values in the vector
-        for(int l = -1; l < 2; l++) {
-          for(int m = -1; m < 2; m++) {
+        for(int l = -(int(radius)); l < radius + 1; l++) {
+          for(int m = -(int(radius)); m < radius + 1; m++) {
             medianPixels.push_back(pixels[i + l][(j + m) * pixelSize + k]);
           }
         }
 
         // We compute the median of this values
         std::sort(medianPixels.begin(), medianPixels.end());
-        uint8_t median = medianPixels[4];
+        uint8_t median = medianPixels[medianPixels.size() / 2];
 
         // And we update the value
         newLine.push_back(median);
@@ -64,48 +61,14 @@ void Image::applyMedianFilter(unsigned int radius) {
     newPixels.push_back(newLine);
   }
 
+  // We update the image dimensions
+  // (We can't compute the median of the borders of the image)
+  width = width - radius * 2;
+  height = height - radius * 2;
+
   // We update the image
   pixels = newPixels;
 }
 
 // We create a function to reduce the noise of the image
-void Image::applyGaussianFilter(unsigned int radius) {
-
-  // We create a vector to save the new image
-  std::vector<std::vector<uint8_t>> newPixels = pixels;
-
-  // For each line of the image...
-  for(unsigned int i = 1; i < height - 1; i++) {
-
-    // For each pixel of this line...
-    for(unsigned int j = 1; j < width - 1; j++) {
-
-      // For each value of this pixel...
-      for(unsigned int k = 0; k < pixelSize; k++) {
-
-        // We create a vector to store the pixel values (value per value)
-        // For example for an RGB image :
-        // Fist, we calculate the median of the red values of the pixels of the neighborhood
-        std::vector<uint8_t> medianPixels;
-        // We reserve 9 places (3x3)
-        medianPixels.reserve(9);
-
-        // We add the pixels values in the vector
-        for(int l = -1; l < 2; l++) {
-          for(int m = -1; m < 2; m++) {
-            medianPixels.push_back(pixels[i + l][(j + m) * pixelSize + k]);
-          }
-        }
-
-        // We compute the median of this values
-        std::sort(medianPixels.begin(), medianPixels.end());
-        uint8_t median = medianPixels[4];
-
-        // And we update the value
-        newPixels[i][j * pixelSize + k] = median;
-      }
-    }
-  }
-  // We update the image
-  pixels = newPixels;
-}
+void Image::applyGaussianFilter(unsigned int radius) {}
