@@ -5,7 +5,7 @@
 int main() {
   std::cout << "\n";
 
-  Image myImage("test1.jpg", "jpg");
+  Image myImage();
 
   std::cout << "Image Dimensions : " << myImage.getWidth() << "x" << myImage.getHeight() <<"\n";
   std::cout << "Image Color Space : " << myImage.getColorSpace() << "\n";
@@ -19,7 +19,7 @@ int main() {
   //myImage.applyCannyFilter();
 
   std::cout << "saving..." << "\n";
-  
+
   myImage.save("testSaved.jpg", 100, "jpg");
 
   std::cout << "\n";

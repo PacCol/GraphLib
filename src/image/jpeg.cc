@@ -37,8 +37,8 @@ void Image::openJpegImage(std::string fileName) {
   // We store the image informations into privates variables
   width = imageInfo.output_width;
   height = imageInfo.output_height;
-  colorSpace = imageInfo.out_color_space;
   pixelSize = imageInfo.output_components;
+  colorSpace = imageInfo.out_color_space;
 
   /* - Color space 1 :
           1 value (monochrome image)
