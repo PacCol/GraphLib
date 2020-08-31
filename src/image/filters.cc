@@ -10,8 +10,8 @@ void Image::applyMedianFilter(unsigned int kernelSize) {
   if(kernelSize == 0) {
     throw std::runtime_error("Error : in Image::applyMedianFilter : The kernel size can't be 0");
   }
-  else if(kernelSize * 2 + 1 >= height || kernelSize * 2 + 1 >= width) {
-    throw std::runtime_error("Error : in Image::applyMedianFilter : The kernel size is to big");
+  else if(kernelSize * 2 + 1 > height || kernelSize * 2 + 1 > width) {
+    throw std::runtime_error("Error : in Image::applyMedianFilter : The kernel size is to big for this image");
   }
 
   // We create a vector to save the new image

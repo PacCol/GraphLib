@@ -19,7 +19,7 @@ int main() {
 
   myImage.applyCannyFilter();
 
-  std::cout << "saving..." << "\n";
+  std::cout << "Saving..." << "\n";
 
   myImage.saveJpegImage("testSaved.jpg", 100);
 
