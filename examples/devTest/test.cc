@@ -17,7 +17,7 @@ int main() {
 
   myImage.applyMedianFilter(3);
 
-  //myImage.applyCannyFilter();
+  myImage.applyCannyFilter();
 
   std::cout << "saving..." << "\n";
 

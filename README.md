@@ -12,14 +12,14 @@ To begin download the repository in a directory
 Open a terminal and go into the repository
 Create a lib directory (`mkdir lib`)  
 Go into the the build directory (`cd build`)  
-The library will be installed into `/usr/local/lib/`
-The headers will be installed into `/usr/local/include/graphlib/`
+The library will be installed into `/usr/local/lib/`  
+The headers will be installed into `/usr/local/include/graphlib/`  
 Build the library (`make auto`)  
-The library will be compiled and installed  
+The library will be compiled and installed
 
 ### Set the LD_LIBRARY_PATH
-The LD_LIBRARY_PATH is `/usr/local/lib/`
-G++ needs it
+The LD_LIBRARY_PATH is `/usr/local/lib/`  
+G++ needs it to find the library  
 To set it, return at the root of the repository (`cd ..`)  
 Set the LD_LIBRARY_PATH running `env.sh` (`. ./env.sh`)  
 ##### You must run the env.sh command each time you open a terminal (`. ./env.sh`)
