@@ -8,10 +8,23 @@
 class Image {
   public:
 
-    // The class takes one argument to open the image file
-    explicit Image(char* fileName, std::string option);
+    // The class takes no arguments
+    explicit Image();
+
+    // We create a function to open a jpeg image
+    void openJpegImage(std::string fileName);
+
+    // We create a function to save a jpeg image
+    void saveJpegImage(std::string fileName, unsigned int quality);
+
+    // We create a function to open a png image
+    void openPngImage(std::string fileName);
+
+    // We create a function to save a png image
+    void savePngImage(std::string fileName);
 
     // We create functions to return the image informations
+    bool isImageDefined();
     unsigned int getWidth();
     unsigned int getHeight();
     unsigned int getPixelSize();
@@ -20,9 +33,9 @@ class Image {
     unsigned int getColorType();
 
     // We create a function to save the modified image
-    void save(char * fileName, int quality, std::string option);
+    void save(std::string fileName, unsigned int quality, std::string option);
 
-    // We create a function to return the image
+    // We create a function to return the complete image
     std::vector<std::vector<uint8_t>> getPixels();
 
     // We create a function to return the requested pixel values
@@ -66,17 +79,8 @@ class Image {
 
   private:
 
-    // We create a function to open a jpeg image
-    void openJpegImage(char* fileName);
-
-    // We create a function to save a jpeg image
-    void saveJpegImage(char* fileName, unsigned int quality);
-
-    // We create a function to open a png image
-    void openPngImage(char* fileName);
-
-    // We create a function to save a png image
-    void savePngImage(char* fileName);
+    // We set this variable to undefined
+    bool imageDefined = false;
 
     // We store the pixels values into a vector
     std::vector<std::vector<uint8_t>> pixels;

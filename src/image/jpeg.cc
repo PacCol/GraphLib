@@ -1,4 +1,5 @@
 #include <iostream>
+#include <fstream>
 
 // We include the libjpeg
 #include <jpeglib.h>
@@ -12,11 +13,11 @@ struct my_error_mgr {
 };
 
 // We create a function to open a jpeg image
-void Image::openJpegImage(char* fileName) {
+void Image::openJpegImage(std::string fileName) {
 
   // We try to open the image file
   FILE * inputImageFile;
-  if((inputImageFile = fopen(fileName, "rb")) == NULL) {
+  if((inputImageFile = fopen(fileName.c_str(), "rb")) == NULL) {
     throw std::runtime_error("Error : in Image::openJpegImage : can't open this file");
   }
 
@@ -85,11 +86,11 @@ void Image::openJpegImage(char* fileName) {
 }
 
 // We create a function to save a jpeg image
-void Image::saveJpegImage(char* fileName, unsigned int quality) {
+void Image::saveJpegImage(std::string fileName, unsigned int quality) {
 
   // We try to create the image file
   FILE * outputImageFile;
-  if ((outputImageFile = fopen(fileName, "wb")) == NULL) {
+  if ((outputImageFile = fopen(fileName.c_str(), "wb")) == NULL) {
     throw std::runtime_error("Error : in Image::saveJpegImage : can't create this file");
   }
 

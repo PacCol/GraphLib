@@ -5,8 +5,7 @@
 int main() {
   std::cout << "\n";
 
-  char fileNameToRead[] = "test1.jpg";
-  Image myImage(fileNameToRead, "jpg");
+  Image myImage("test1.jpg", "jpg");
 
   std::cout << "Image Dimensions : " << myImage.getWidth() << "x" << myImage.getHeight() <<"\n";
   std::cout << "Image Color Space : " << myImage.getColorSpace() << "\n";
@@ -20,9 +19,8 @@ int main() {
   //myImage.applyCannyFilter();
 
   std::cout << "saving..." << "\n";
-
-  char fileNameToSave[] = "testSaved.jpg";
-  myImage.save(fileNameToSave, 100, "jpg");
+  
+  myImage.save("testSaved.jpg", 100, "jpg");
 
   std::cout << "\n";
 

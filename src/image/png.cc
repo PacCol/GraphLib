@@ -7,11 +7,11 @@
 #include "image.h"
 
 // We create a function to open a png image
-void Image::openPngImage(char* fileName) {
+void Image::openPngImage(std::string fileName) {
 
   // We try to open the image file
   FILE * inputImageFile;
-  if((inputImageFile = fopen(fileName, "rb")) == NULL) {
+  if((inputImageFile = fopen(fileName.c_str(), "rb")) == NULL) {
     throw std::runtime_error("Error : in Image::openPngImage : can't open this file");
   }
 
@@ -81,11 +81,11 @@ void Image::openPngImage(char* fileName) {
 }
 
 // We create a function to save a png image
-void Image::savePngImage(char* fileName) {
+void Image::savePngImage(std::string fileName) {
 
   // We try to create the image file
   FILE * outputImageFile;
-  if ((outputImageFile = fopen(fileName, "wb")) == NULL) {
+  if ((outputImageFile = fopen(fileName.c_str(), "wb")) == NULL) {
     throw std::runtime_error("Error : in Image::savePngImage : can't create this file");
   }
 

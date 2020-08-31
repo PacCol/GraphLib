@@ -3,7 +3,7 @@
 #include "image.h"
 
 // We create a class to create the Image object
-Image::Image(char* fileName, std::string option) {
+Image::Image(std::string fileName, std::string option) {
 
   // If the image is a jpeg file, we open it as jpeg
   if(option == "jpg" || option == "jpeg") {
@@ -21,7 +21,7 @@ Image::Image(char* fileName, std::string option) {
   }
 }
 
-void Image::save(char * fileName, int quality, std::string option) {
+void Image::save(std::string fileName, unsigned int quality, std::string option) {
 
   // If the image to save will be a jpeg file, we save it as a jpeg image
   if(option == "jpg" || option == "jpeg") {

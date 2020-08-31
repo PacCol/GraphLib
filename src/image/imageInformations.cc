@@ -3,6 +3,10 @@
 #include "image.h"
 
 // We create functions to return the image informations
+bool Image::isImageDefined() {
+  return imageDefined;
+}
+
 unsigned int Image::getWidth() {
   return width;
 }
