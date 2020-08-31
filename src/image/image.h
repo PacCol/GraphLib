@@ -32,9 +32,6 @@ class Image {
     unsigned int getColorSpace();
     unsigned int getColorType();
 
-    // We create a function to save the modified image
-    void save(std::string fileName, unsigned int quality, std::string option);
-
     // We create a function to return the complete image
     std::vector<std::vector<uint8_t>> getPixels();
 

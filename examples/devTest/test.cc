@@ -5,7 +5,8 @@
 int main() {
   std::cout << "\n";
 
-  Image myImage();
+  Image myImage;
+  myImage.openJpegImage("test.jpg");
 
   std::cout << "Image Dimensions : " << myImage.getWidth() << "x" << myImage.getHeight() <<"\n";
   std::cout << "Image Color Space : " << myImage.getColorSpace() << "\n";
@@ -20,7 +21,7 @@ int main() {
 
   std::cout << "saving..." << "\n";
 
-  myImage.save("testSaved.jpg", 100, "jpg");
+  myImage.saveJpegImage("testSaved.jpg", 100);
 
   std::cout << "\n";
 
