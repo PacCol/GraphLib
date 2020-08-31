@@ -99,7 +99,7 @@ void Image::saveJpegImage(std::string fileName, unsigned int quality) {
 
   // If the alpha channel is used, we throw an error
   if(alphaUsed) {
-    throw std::runtime_error("Error : in Image::saveJpegImage : can't save the alpha channel of the image (Please remove it)");
+    removeAlphaChannel();
   }
 
   // We create a jpeg compression structure

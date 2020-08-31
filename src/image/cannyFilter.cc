@@ -26,6 +26,11 @@ void Image::applyCannyFilter() {
   // We can't compute the gradient of the borders of the image
   // So the output image will be smaller
 
+  // We check if the dimensions will be sufficient
+  if(width < 25 || height < 25) {
+    throw std::runtime_error("Error : in Image::applyCannyFilter : The dimensions of the input image are too small");
+  }
+
   // We store the gradient values into a vector
   std::vector<std::vector<uint8_t>> gradient;
   // We reserve the height of the image

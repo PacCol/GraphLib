@@ -5,10 +5,11 @@
 int main() {
   std::cout << "\n";
 
-  // We select an image
-  char fileNameToRead[] = "../imageSamples/test.png";
-  // We open and decode the image
-  Image myImage(fileNameToRead, "png");
+  // We create an image
+  Image myImage;
+
+  // We open an existing image
+  myImage.openJpegImage("../imageSamples/test.jpg");
 
   // We print some informations
 
@@ -90,11 +91,9 @@ int main() {
   // We convert the image to grayscale (you can remove the // to do it)
   //myImage.convertToGrayscale();
 
-  // We choose a file name
-  char fileNameToSave[] = "../imageSamples/testSaved.jpg";
   // We save the modified image
-  // If you save the image as png, the quality (100 here) will not be used
-  myImage.save(fileNameToSave, 100, "jpg");
+  // We set the quality to 100
+  myImage.saveJpegImage("../imageSamples/testSaved.jpg", 100);
 
   // Now, you can open and compare the two images
 
