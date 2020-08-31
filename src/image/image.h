@@ -9,6 +9,7 @@ class Image {
   public:
 
     // The class takes no arguments
+    // When you create an image, the image is a black rectangle, with RGB values
     explicit Image();
 
     // We create a function to open a jpeg image
@@ -24,7 +25,6 @@ class Image {
     void savePngImage(std::string fileName);
 
     // We create functions to return the image informations
-    bool isImageDefined();
     unsigned int getWidth();
     unsigned int getHeight();
     unsigned int getPixelSize();
@@ -78,9 +78,6 @@ class Image {
     void removeAlphaChannel();
 
   private:
-
-    // We set this variable to undefined
-    bool imageDefined = false;
 
     // We store the pixels values into a vector
     std::vector<std::vector<uint8_t>> pixels;

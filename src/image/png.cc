@@ -67,6 +67,9 @@ void Image::openPngImage(std::string fileName) {
   // We continue to read the image
   png_read_update_info(png, imageInfo);
 
+  // We remove the old pixels
+  pixels.clear();
+
   // We want to store the pixels into a vector
   pixels.resize(height, std::vector<uint8_t>(width * pixelSize));
   std::vector<png_byte *> ppixels(height);

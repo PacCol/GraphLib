@@ -59,6 +59,9 @@ void Image::openJpegImage(std::string fileName) {
   // We are computing the row stride
   int rowStride = width * pixelSize;
 
+  // We remove the old pixels
+  pixels.clear();
+
   // We reserve the output height
   pixels.reserve(height);
 
