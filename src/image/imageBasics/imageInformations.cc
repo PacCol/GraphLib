@@ -1,6 +1,4 @@
-#include <iostream>
-
-#include "image.h"
+#include "../image.h"
 
 // We create functions to return the image informations
 unsigned int Image::getWidth() {

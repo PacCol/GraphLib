@@ -1,6 +1,4 @@
-#include <iostream>
-
-#include "image.h"
+#include "../image.h"
 
 // We create a function to return the complete image
 std::vector<std::vector<uint8_t>> Image::getPixels() {

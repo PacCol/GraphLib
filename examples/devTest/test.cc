@@ -1,5 +1,3 @@
-#include <iostream>
-
 #include <graphlib/image.h>
 
 int main() {

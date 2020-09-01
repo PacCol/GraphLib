@@ -1,11 +1,8 @@
-#include <iostream>
-#include <fstream>
+#include "../image.h"
 
 // We include the libjpeg
 #include <jpeglib.h>
 #include <setjmp.h>
-
-#include "image.h"
 
 struct my_error_mgr {
   struct jpeg_error_mgr pub;

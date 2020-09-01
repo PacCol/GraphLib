@@ -1,10 +1,9 @@
-#include <iostream>
 #include <algorithm>
+
+#include "../image.h"
 
 // We include the libpng
 #include <png.h>
-
-#include "image.h"
 
 // We create a function to open a png image
 void Image::openPngImage(std::string fileName) {

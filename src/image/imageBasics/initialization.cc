@@ -1,6 +1,4 @@
-#include <iostream>
-
-#include "image.h"
+#include "../image.h"
 
 // We create a class to create the Image object
 Image::Image() {

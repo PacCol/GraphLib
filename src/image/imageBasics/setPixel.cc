@@ -1,7 +1,6 @@
-#include <iostream>
 #include <string>
 
-#include "image.h"
+#include "../image.h"
 
 // We create a function to set all pixels of the image
 void Image::setPixels(std::vector<std::vector<uint8_t>> newPixels) {

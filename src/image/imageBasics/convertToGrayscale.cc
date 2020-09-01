@@ -1,6 +1,4 @@
-#include <iostream>
-
-#include "image.h"
+#include "../image.h"
 
 // We create a function to convert the image to grayscale
 void Image::convertToGrayscale() {
@@ -44,7 +42,7 @@ void Image::convertToGrayscale() {
   // We update the image informations
   pixelSize = pixelSize - 2;
   colorSpace = 1;
-  
+
   if(!alphaUsed) {
     colorType = 0;
   }

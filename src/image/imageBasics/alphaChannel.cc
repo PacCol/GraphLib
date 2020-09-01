@@ -1,6 +1,4 @@
-#include <iostream>
-
-#include "image.h"
+#include "../image.h"
 
 // We create a function to return the alpha value of a pixel
 uint8_t Image::getAlphaValue(unsigned int x, unsigned int y) {

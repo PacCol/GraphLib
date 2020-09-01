@@ -1,10 +1,9 @@
-#include <iostream>
 #include <algorithm>
 
 #define _USE_MATH_DEFINES
 #include <cmath>
 
-#include "image.h"
+#include "../image.h"
 
 // We create a function to show the edge of the objects of the image
 void Image::applyCannyFilter() {

@@ -12,11 +12,13 @@ all: libgraph.$(RELEASE).a libgraph.so.$(RELEASE)
 clean :
 	rm -f *.o libgraph.so.$(RELEASE) libgraph.$(RELEASE).a
 
-%.o: ../src/*/%.cc
+%.o: ../src/*/*/%.cc
 	g++ -Wall -g -fPIC -o $@ -c $<
 
 # Image
-OBJ := initialization.o jpeg.o png.o imageInformations.o getPixel.o resizeCrop.o setPixel.o convertToGrayscale.o alphaChannel.o filters.o cannyFilter.o
+OBJ := initialization.o jpeg.o png.o imageInformations.o getPixel.o resizeCrop.o setPixel.o convertToGrayscale.o alphaChannel.o
+# Image filters
+OBJ := $(OBJ) medianFilter.o gaussianFilter.o cannyFilter.o
 
 libgraph.so.$(RELEASE): $(OBJ)
 	g++ -Wall -shared -Wl,-soname,libgraph.so.$(MAJOR) -o libgraph.so.$(RELEASE) $(OBJ) -ljpeg -lpng

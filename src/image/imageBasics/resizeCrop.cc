@@ -1,6 +1,4 @@
-#include <iostream>
-
-#include "image.h"
+#include "../image.h"
 
 // We create a function to resize the image
 void Image::resize(unsigned int newWidth) {
@@ -93,7 +91,7 @@ void Image::crop(unsigned int xStartPoint, unsigned int yStartPoint, unsigned in
 
     // For each pixel of this line...
     for(unsigned int j = 0; j < newWidth; j++) {
-      
+
       // For each value of this pixel...
       for(unsigned int k = 0; k < pixelSize; k++) {
 

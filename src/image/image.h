@@ -1,3 +1,5 @@
+#include <iostream>
+
 #include <vector>
 #include <cstdint>
 
@@ -63,7 +65,7 @@ class Image {
     void applyMedianFilter(unsigned int kernelSize);
 
     // We create a function to reduce the noise of the image
-    void applyGaussianFilter(unsigned int indice);
+    void applyGaussianFilter(unsigned int kernelSize);
 
     // We create a function to show the edge of the objects of the image
     void applyCannyFilter();
