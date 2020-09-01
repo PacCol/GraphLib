@@ -11,11 +11,13 @@ int main() {
   std::cout << "Image Color Type : " << myImage.getColorType() << "\n";
   std::cout << "Image Pixel Size : " << myImage.getPixelSize() << "\n";
 
-  myImage.convertToGrayscale();
+  //myImage.convertToGrayscale();
 
-  myImage.applyMedianFilter(3);
+  myImage.applyGaussianFilter(2);
 
-  myImage.applyCannyFilter();
+  //myImage.applyMedianFilter(3);
+
+  //myImage.applyCannyFilter();
 
   std::cout << "Saving..." << "\n";
 
@@ -23,7 +25,7 @@ int main() {
 
   std::cout << "\n";
 
-  system("gwenview testSaved.jpg");
+  //system("gwenview testSaved.jpg");
 
   return 0;
 }

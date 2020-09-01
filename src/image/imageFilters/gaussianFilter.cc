@@ -6,24 +6,37 @@
 // We create a function to reduce the noise of the image
 void Image::applyGaussianFilter(unsigned int kernelSize) {
 
-  unsigned int kernelHeight = 2 * kernelSize + 1;
-  unsigned int kernelWidth = 2 * kernelSize + 1;
-  double sigma = ceil((2 * kernelSize + 1) / 6);;
+  int kernelHeight = 2 * kernelSize + 1;
+  int kernelWidth = 2 * kernelSize + 1;
+  //double sigma = ceil((2 * kernelSize + 1) / 6);
+  double sigma = 10.0;
 
-  std::vector<std::vector<uint8_t>> kernel(kernelHeight, std::vector<uint8_t>(kernelWidth));
+  std::cout << "sigma : " << sigma << "\n";
 
-  double sum=0.0;
+  std::vector<std::vector<double>> kernel(kernelHeight, std::vector<double>(kernelWidth));
 
-  for(unsigned int i = 0; i < kernelHeight; i++) {
-    for(unsigned int j = 0; j < kernelWidth; j++) {
-      kernel[i][j] = exp( -(i * i + j * j) / (2 * sigma * sigma))/(2 * M_PI * sigma * sigma );
+  double sum = 0.0;
+
+  for(int i = 0; i < kernelHeight; i++) {
+    for(int j = 0; j < kernelWidth; j++) {
+      kernel[i][j] = exp( -(i * i + j * j) / (2 * sigma * sigma)) / (2 * M_PI * sigma * sigma );
       sum = sum + kernel[i][j];
     }
   }
 
-  for(unsigned int i = 0; i < kernelHeight; i++) {
-    for(unsigned int j = 0; j < kernelWidth; j++) {
+  for(int i = 0; i < kernelHeight; i++) {
+    for(int j = 0; j < kernelWidth; j++) {
       kernel[i][j] = kernel[i][j] / sum;
     }
   }
+
+  std::cout << "\n---  kernelValues  ---\n\n";
+
+  for(int i = 0; i < kernelHeight; i++) {
+    for(int j = 0; j < kernelWidth; j++) {
+      std::cout << kernel[i][j] << " ";
+    }
+    std::cout << "\n";
+  }
+  std::cout << "\n";
 }
