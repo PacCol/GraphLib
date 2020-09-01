@@ -10,7 +10,7 @@ void Image::applyGaussianFilter(int kernelSize) {
   if(kernelSize <= 0) {
     throw std::runtime_error("Error : in Image::applyGaussianFilter : The kernel size must be at least 1");
   }
-  else if(kernelSize * 2 + 1 > height || kernelSize * 2 + 1 > width) {
+  else if(kernelSize * 2 + 1 > int(height) || kernelSize * 2 + 1 > int(width)) {
     throw std::runtime_error("Error : in Image::applyGaussianFilter : The kernel size is to big for this image");
   }
 
@@ -18,7 +18,7 @@ void Image::applyGaussianFilter(int kernelSize) {
   double sigma = ceil((2 * float(kernelSize) + 1) / 6);
 
   // We create a vector to store weight
-  std::vector<std::vector<double>> kernel(kernelHeight, std::vector<double>(kernelWidth));
+  std::vector<std::vector<double>> kernel (kernelSize * 2 + 1, std::vector<double>(kernelSize * 2 + 1));
 
   double sum = 0.0;
 
@@ -57,17 +57,25 @@ void Image::applyGaussianFilter(int kernelSize) {
       for(unsigned int k = 0; k < pixelSize; k++) {
 
         std::vector<std::vector<uint8_t>> averagePixels;
-        averagePixels.reserve(kernelSize * 2 + 1);
 
-        for(int i = -(kernelSize); i <= kernelSize; i++) {
-          for(int j = -(kernelSize); j <= kernelSize; j++) {
-            kernel[i + kernelSize][j + kernelSize] = exp( -(pow(i, 2) + pow(j, 2)) / (2 * pow(sigma, 2))) / (2 * M_PI * pow(sigma, 2) );
-            sum = sum + kernel[i + kernelSize][j + kernelSize];
+        for(int l = -(kernelSize); l <= kernelSize; l++) {
+          std::vector<uint8_t> averageLine;
+          for(int m = -(kernelSize); m <= kernelSize; m++) {
+            averageLine.push_back( pixels[i + l][(j + m) * pixelSize + k] );
+          }
+          averagePixels.push_back(averageLine);
+        }
+
+        float average = 0;
+
+        for(int l = 0; l < kernelSize * 2 + 1; l++) {
+          for(int m = 0; m < kernelSize * 2 + 1; m++) {
+            average = average + kernel[l][m] * averagePixels[l][m];
           }
         }
 
         // And we update the value
-        newLine.push_back(median);
+        newLine.push_back(uint8_t(average));
       }
     }
 

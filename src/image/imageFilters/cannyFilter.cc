@@ -6,11 +6,7 @@
 #include "../image.h"
 
 // We create a function to show the edge of the objects of the image
-void Image::applyCannyFilter() {
-
-  // We define the limits to select the pixels that will be retained
-  const unsigned int highLimit = 190;
-  const unsigned int lowLimit = 90;
+void Image::applyCannyFilter(const unsigned int highLimit, const unsigned int lowLimit) {
 
   // If the image is not a grayscale, we convert it
   if(colorSpace != 1) {
@@ -31,7 +27,7 @@ void Image::applyCannyFilter() {
   }
 
   // We store the gradient values into a vector
-  std::vector<std::vector<uint8_t>> gradient;
+  std::vector<std::vector<uint16_t>> gradient;
   // We reserve the height of the image
   gradient.reserve(height - 2);
 
@@ -44,7 +40,7 @@ void Image::applyCannyFilter() {
   for(unsigned int i = 1; i < height - 1; i++) {
 
     // We create a vector to save the new line
-    std::vector<uint8_t> gradientLine;
+    std::vector<uint16_t> gradientLine;
     // We reserve the line width
     gradientLine.reserve(width - 2);
 
