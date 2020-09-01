@@ -65,7 +65,7 @@ class Image {
     void applyMedianFilter(unsigned int kernelSize);
 
     // We create a function to reduce the noise of the image
-    void applyGaussianFilter(unsigned int kernelSize);
+    void applyGaussianFilter(int kernelSize);
 
     // We create a function to show the edge of the objects of the image
     void applyCannyFilter();

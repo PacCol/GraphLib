@@ -13,7 +13,7 @@ int main() {
 
   //myImage.convertToGrayscale();
 
-  myImage.applyGaussianFilter(2);
+  myImage.applyGaussianFilter(4);
 
   //myImage.applyMedianFilter(3);
 
