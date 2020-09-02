@@ -4,7 +4,7 @@ int main() {
   std::cout << "\n";
 
   Image myImage;
-  myImage.openJpegImage("test1.jpg");
+  myImage.openPngImage("test.png");
 
   std::cout << "Image Dimensions : " << myImage.getWidth() << "x" << myImage.getHeight() <<"\n";
   std::cout << "Image Color Space : " << myImage.getColorSpace() << "\n";
