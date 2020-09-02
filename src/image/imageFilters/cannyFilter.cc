@@ -109,6 +109,7 @@ void Image::applyCannyFilter(const unsigned int highLimit, const unsigned int lo
     // For each pixel of this line...
     for(unsigned int j = 1; j < width - 1; j++) {
 
+      // We remove the pixels that are not part of the outlines
       if(gradientDirection[i][j] > - 90 && gradientDirection[i][j] <= - 67.5) {
         if(gradient[i][j] > gradient[i - 1][j] && gradient[i][j] > gradient[i + 1][j]) {
           if(gradient[i][j] > highLimit) {
@@ -127,7 +128,7 @@ void Image::applyCannyFilter(const unsigned int highLimit, const unsigned int lo
       }
 
       if(gradientDirection[i][j] > - 67.5 && gradientDirection[i][j] <= - 22.5) {
-        if(gradient[i][j] > gradient[i - 1][j - 1] && gradient[i][j] > gradient[i - 1][j - 1]) {
+        if(gradient[i][j] > gradient[i - 1][j - 1] && gradient[i][j] > gradient[i + 1][j + 1]) {
           if(gradient[i][j] > highLimit) {
             newLine.push_back(255);
           }
