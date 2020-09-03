@@ -4,7 +4,7 @@
 ### A graphic library
 
 ## Get started
-Graphlib is very easy to learn. This library can open, read, modify and save jpeg images.
+Graphlib is very easy to learn. This library can open, read, edit and save jpeg images.
 
 ## Installation (On linux)
 ### Build and install the library
