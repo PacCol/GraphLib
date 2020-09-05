@@ -18,7 +18,7 @@ int main() {
   myImage.applyMedianFilter(1);
   myImage.applyGaussianFilter(3);
 
-  myImage.applyCannyFilter(240, 1800);
+  myImage.applyCannyFilter(250, 1800);
 
   std::cout << "Saving..." << "\n";
 
@@ -26,7 +26,7 @@ int main() {
 
   std::cout << "\n";
 
-  system("gwenview testSaved.jpg");
+  system("gpicview testSaved.jpg");
 
   return 0;
 }

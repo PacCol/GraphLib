@@ -8,8 +8,8 @@ Graphlib is very easy to learn. This library can open, read, edit and save jpeg 
 
 ## Installation (On linux)
 ### Build and install the library
-To begin download the repository in a directory  
-Open a terminal and go into the repository  
+To begin download the last release in a directory  
+Open a terminal, unzip the release and go into the repository  
 Create a lib directory (`mkdir lib`)  
 Go into the the build directory (`cd build`)  
 The library will be installed into `/usr/local/lib/`  

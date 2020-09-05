@@ -1,4 +1,5 @@
 #include <algorithm>
+#include <chrono>
 
 #define _USE_MATH_DEFINES
 #include <cmath>
@@ -25,6 +26,11 @@ void Image::applyCannyFilter(const unsigned int highLimit, const unsigned int lo
   if(width < 25 || height < 25) {
     throw std::runtime_error("Error : in Image::applyCannyFilter : The dimensions of the input image are too small");
   }
+  
+  
+  std::cout << "Applying Canny Filter" << "\n";
+  auto startTime = std::chrono::high_resolution_clock::now();
+  
 
   // We store the gradient values into a vector
   std::vector<std::vector<uint16_t>> gradient;
@@ -68,6 +74,9 @@ void Image::applyCannyFilter(const unsigned int highLimit, const unsigned int lo
                         + -1 * pixels[i + 1][j - 1]
                         + 1 * pixels[i + 1][j + 1]
                         ) / 8;
+                        
+      //float SXvalue = (-1 * pixels[i][j - 1] + pixels[i][j + 1]);
+      //float SYvalue = (-1 * pixels[i][j] + pixels[i][j + 1]);
 
       // We define the gradient value
       gradientLine.push_back( sqrt( pow(SXvalue * pixels[i][j], 2) + pow(SYvalue * pixels[i][j], 2) ) );
@@ -114,7 +123,7 @@ void Image::applyCannyFilter(const unsigned int highLimit, const unsigned int lo
       // For a direction of the gradient, we choose a method to find
       // the pixels that are not part of the outlines
 
-      if(gradientDirection[i][j] > - 90 && gradientDirection[i][j] <= - 67.5) {
+      if(gradientDirection[i][j] > -90 && gradientDirection[i][j] <= -67.5) {
         if(gradient[i][j] > gradient[i - 1][j] && gradient[i][j] > gradient[i + 1][j]) {
           if(gradient[i][j] > highLimit) {
             newLine.push_back(255);
@@ -131,7 +140,7 @@ void Image::applyCannyFilter(const unsigned int highLimit, const unsigned int lo
         }
       }
 
-      if(gradientDirection[i][j] > - 67.5 && gradientDirection[i][j] <= - 22.5) {
+      if(gradientDirection[i][j] > -67.5 && gradientDirection[i][j] <= -22.5) {
         if(gradient[i][j] > gradient[i - 1][j - 1] && gradient[i][j] > gradient[i + 1][j + 1]) {
           if(gradient[i][j] > highLimit) {
             newLine.push_back(255);
@@ -148,7 +157,7 @@ void Image::applyCannyFilter(const unsigned int highLimit, const unsigned int lo
         }
       }
 
-      if(gradientDirection[i][j] > - 22.5 && gradientDirection[i][j] <= 22.5) {
+      if(gradientDirection[i][j] > -22.5 && gradientDirection[i][j] <= 22.5) {
         if(gradient[i][j] > gradient[i][j - 1] && gradient[i][j] > gradient[i][j + 1]) {
           if(gradient[i][j] > highLimit) {
             newLine.push_back(255);
@@ -211,4 +220,8 @@ void Image::applyCannyFilter(const unsigned int highLimit, const unsigned int lo
 
   // We update the pixels
   pixels = newPixels;
+  
+  auto stopTime = std::chrono::high_resolution_clock::now();
+  auto duration = std::chrono::duration_cast<std::chrono::microseconds>(stopTime - startTime); 
+  std::cout << "Execution time : " << duration.count() << " microseconds\n";
 }
