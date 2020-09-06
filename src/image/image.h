@@ -68,7 +68,7 @@ class Image {
     void applyGaussianFilter(int kernelSize);
 
     // We create a function to show the edge of the objects of the image
-    void applyCannyFilter(const unsigned int highLimit, const unsigned int lowLimit);
+    void applyCannyFilter(unsigned int highLimit, unsigned int lowLimit);
 
     // We create a function to return the alpha value of a pixel
     uint8_t getAlphaValue(unsigned int x, unsigned int y);

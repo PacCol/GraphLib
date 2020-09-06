@@ -5,6 +5,7 @@ int main() {
 
   Image myImage;
   myImage.openPngImage("test.png");
+  myImage.resize(70);
 
   std::cout << "Image Dimensions : " << myImage.getWidth() << "x" << myImage.getHeight() <<"\n";
   std::cout << "Image Color Space : " << myImage.getColorSpace() << "\n";
@@ -13,12 +14,12 @@ int main() {
 
   //myImage.removeAlphaChannel();
 
-  myImage.convertToGrayscale();
+  //myImage.convertToGrayscale();
 
-  myImage.applyMedianFilter(1);
-  myImage.applyGaussianFilter(3);
+  //myImage.applyMedianFilter(1);
+  myImage.applyGaussianFilter(1);
 
-  myImage.applyCannyFilter(250, 1800);
+  //myImage.applyCannyFilter(250, 1800);
 
   std::cout << "Saving..." << "\n";
 
@@ -26,7 +27,7 @@ int main() {
 
   std::cout << "\n";
 
-  system("gpicview testSaved.jpg");
+  //system("gwenview testSaved.jpg");
 
   return 0;
 }

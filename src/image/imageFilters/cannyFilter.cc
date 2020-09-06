@@ -7,7 +7,7 @@
 #include "../image.h"
 
 // We create a function to show the edge of the objects of the image
-void Image::applyCannyFilter(const unsigned int highLimit, const unsigned int lowLimit) {
+void Image::applyCannyFilter(unsigned int highLimit, unsigned int lowLimit) {
 
   // If the image is not a grayscale, we convert it
   if(colorSpace != 1) {
@@ -26,11 +26,9 @@ void Image::applyCannyFilter(const unsigned int highLimit, const unsigned int lo
   if(width < 25 || height < 25) {
     throw std::runtime_error("Error : in Image::applyCannyFilter : The dimensions of the input image are too small");
   }
-  
-  
+
   std::cout << "Applying Canny Filter" << "\n";
   auto startTime = std::chrono::high_resolution_clock::now();
-  
 
   // We store the gradient values into a vector
   std::vector<std::vector<uint16_t>> gradient;
@@ -220,7 +218,7 @@ void Image::applyCannyFilter(const unsigned int highLimit, const unsigned int lo
 
   // We update the pixels
   pixels = newPixels;
-  
+
   auto stopTime = std::chrono::high_resolution_clock::now();
   auto duration = std::chrono::duration_cast<std::chrono::microseconds>(stopTime - startTime); 
   std::cout << "Execution time : " << duration.count() << " microseconds\n";
