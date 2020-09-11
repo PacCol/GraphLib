@@ -6,7 +6,7 @@ int main() {
   Image myImage;
   myImage.openPngImage("test.png");
 
-  //myImage.resize(80);
+  myImage.resize(400);
 
   std::cout << "Image Dimensions : " << myImage.getWidth() << "x" << myImage.getHeight() <<"\n";
   std::cout << "Image Color Space : " << myImage.getColorSpace() << "\n";
@@ -15,12 +15,12 @@ int main() {
 
   //myImage.removeAlphaChannel();
 
-  //myImage.convertToGrayscale();
+  myImage.convertToGrayscale();
 
   //myImage.applyMedianFilter(1);
-  myImage.applyGaussianFilter(3);
+  myImage.applyGaussianFilter(2);
 
-  //myImage.applyCannyFilter(250, 1800);
+  myImage.applyCannyFilter(250, 1800);
 
   std::cout << "Saving..." << "\n";
 
