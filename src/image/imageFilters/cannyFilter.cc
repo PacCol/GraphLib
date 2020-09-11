@@ -27,9 +27,6 @@ void Image::applyCannyFilter(unsigned int highLimit, unsigned int lowLimit) {
     throw std::runtime_error("Error : in Image::applyCannyFilter : The dimensions of the input image are too small");
   }
 
-  std::cout << "Applying Canny Filter" << "\n";
-  auto startTime = std::chrono::high_resolution_clock::now();
-
   // We store the gradient values into a vector
   std::vector<std::vector<uint16_t>> gradient;
   // We reserve the height of the image
@@ -218,8 +215,4 @@ void Image::applyCannyFilter(unsigned int highLimit, unsigned int lowLimit) {
 
   // We update the pixels
   pixels = newPixels;
-
-  auto stopTime = std::chrono::high_resolution_clock::now();
-  auto duration = std::chrono::duration_cast<std::chrono::microseconds>(stopTime - startTime); 
-  std::cout << "Execution time : " << duration.count() << " microseconds\n";
 }

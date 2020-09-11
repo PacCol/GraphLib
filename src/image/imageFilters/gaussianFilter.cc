@@ -1,9 +1,9 @@
+#include "../image.h"
+
 #include <chrono>
 
 #define _USE_MATH_DEFINES
 #include <cmath>
-
-#include "../image.h"
 
 // We create a function to reduce the noise of the image
 void Image::applyGaussianFilter(int kernelSize) {
@@ -17,6 +17,7 @@ void Image::applyGaussianFilter(int kernelSize) {
   }
 
   std::cout << "Applying Gaussian Filter" << "\n";
+
   auto startTime = std::chrono::high_resolution_clock::now();
 
   // We want to compute the gaussian weights
@@ -43,7 +44,7 @@ void Image::applyGaussianFilter(int kernelSize) {
   // We create a vector to save the new image
   std::vector<std::vector<uint8_t>> newPixels;
   // We reserve the output height
-  // (We can't compute the median of the borders of the image)
+  // (We can't compute the average of the borders of the image)
   newPixels.reserve(height - kernelSize  * 2);
 
   // For each line of the image...
@@ -52,7 +53,7 @@ void Image::applyGaussianFilter(int kernelSize) {
     // We create a vector to save the new line
     std::vector<uint8_t> newLine;
     // We reserve the line width
-    // (We can't compute the median of the borders of the image)
+    // (We can't compute the average of the borders of the image)
     newLine.reserve(width - kernelSize  * 2);
 
     // For each pixel of this line...
@@ -62,17 +63,13 @@ void Image::applyGaussianFilter(int kernelSize) {
       for(unsigned int k = 0; k < pixelSize; k++) {
 
         // We store the values in a vector to compute the average
-        std::vector<std::vector<uint8_t>> averagePixels;
-        averagePixels.reserve(kernelSize * 2 + 1);
+        std::vector<std::vector<uint8_t>> averagePixels (kernelSize * 2 + 1, std::vector<uint8_t>(kernelSize * 2 + 1));
 
         // We get the values
         for(int l = -(kernelSize); l <= kernelSize; l++) {
-          std::vector<uint8_t> averageLine;
-          averageLine.reserve(kernelSize * 2 + 1);
           for(int m = -(kernelSize); m <= kernelSize; m++) {
-            averageLine.push_back( pixels[i + l][(j + m) * pixelSize + k] );
+            averagePixels[l + kernelSize][m + kernelSize] = pixels[i + l][(j + m) * pixelSize + k];
           }
-          averagePixels.push_back(averageLine);
         }
 
         // We store the average value in a float
@@ -103,6 +100,6 @@ void Image::applyGaussianFilter(int kernelSize) {
   pixels = newPixels;
 
   auto stopTime = std::chrono::high_resolution_clock::now();
-  auto duration = std::chrono::duration_cast<std::chrono::microseconds>(stopTime - startTime); 
+  auto duration = std::chrono::duration_cast<std::chrono::microseconds>(stopTime - startTime);
   std::cout << "Execution time : " << duration.count() << " microseconds\n";
 }

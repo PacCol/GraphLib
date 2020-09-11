@@ -1,7 +1,6 @@
 #include <iostream>
 
 #include <vector>
-#include <cstdint>
 
 #ifndef GRAPHLIB_IMAGE_H
 #define GRAPHLIB_IMAGE_H
