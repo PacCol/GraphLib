@@ -7,7 +7,7 @@
 #include "../image.h"
 
 // We create a function to show the edge of the objects of the image
-void Image::applyCannyFilter(unsigned int highLimit, unsigned int lowLimit) {
+void Image::applyCannyFilter(unsigned int limit) {
 
   // If the image is not a grayscale, we convert it
   if(colorSpace != 1) {
@@ -60,7 +60,7 @@ void Image::applyCannyFilter(unsigned int highLimit, unsigned int lowLimit) {
                         + 2 * pixels[i][j + 1]
                         + -1 * pixels[i + 1][j - 1]
                         + 1 * pixels[i + 1][j + 1]
-                        ) / 8;
+                      ) / 8;
 
       float SYvalue = (-1 * pixels[i - 1][j - 1]
                         + 1 * pixels[i - 1][j + 1]
@@ -68,10 +68,7 @@ void Image::applyCannyFilter(unsigned int highLimit, unsigned int lowLimit) {
                         + 2 * pixels[i + 1][j]
                         + -1 * pixels[i + 1][j - 1]
                         + 1 * pixels[i + 1][j + 1]
-                        ) / 8;
-                        
-      //float SXvalue = (-1 * pixels[i][j - 1] + pixels[i][j + 1]);
-      //float SYvalue = (-1 * pixels[i][j] + pixels[i][j + 1]);
+                      ) / 8;
 
       // We define the gradient value
       gradientLine.push_back( sqrt( pow(SXvalue * pixels[i][j], 2) + pow(SYvalue * pixels[i][j], 2) ) );
@@ -134,75 +131,6 @@ void Image::applyCannyFilter(unsigned int highLimit, unsigned int lowLimit) {
           newLine.push_back(0);
         }
       }
-
-      if(gradientDirection[i][j] > -67.5 && gradientDirection[i][j] <= -22.5) {
-        if(gradient[i][j] > gradient[i - 1][j - 1] && gradient[i][j] > gradient[i + 1][j + 1]) {
-          if(gradient[i][j] > highLimit) {
-            newLine.push_back(255);
-          }
-          else if(gradient[i][j] > lowLimit) {
-            newLine.push_back(120);
-          }
-          else {
-            newLine.push_back(0);
-          }
-        }
-        else {
-          newLine.push_back(0);
-        }
-      }
-
-      if(gradientDirection[i][j] > -22.5 && gradientDirection[i][j] <= 22.5) {
-        if(gradient[i][j] > gradient[i][j - 1] && gradient[i][j] > gradient[i][j + 1]) {
-          if(gradient[i][j] > highLimit) {
-            newLine.push_back(255);
-          }
-          else if(gradient[i][j] > lowLimit) {
-            newLine.push_back(120);
-          }
-          else {
-            newLine.push_back(0);
-          }
-        }
-        else {
-          newLine.push_back(0);
-        }
-      }
-
-      if(gradientDirection[i][j] > 22.5 && gradientDirection[i][j] <= 67.5) {
-        if(gradient[i][j] > gradient[i - 1][j + 1] && gradient[i][j] > gradient[i + 1][j - 1]) {
-          if(gradient[i][j] > highLimit) {
-            newLine.push_back(255);
-          }
-          else if(gradient[i][j] > lowLimit) {
-            newLine.push_back(120);
-          }
-          else {
-            newLine.push_back(0);
-          }
-        }
-        else {
-          newLine.push_back(0);
-        }
-      }
-
-      if(gradientDirection[i][j] > 67.5 && gradientDirection[i][j] <= 90) {
-        if(gradient[i][j] > gradient[i - 1][j] && gradient[i][j] > gradient[i + 1][j]) {
-          if(gradient[i][j] > highLimit) {
-            newLine.push_back(255);
-          }
-          else if(gradient[i][j] > lowLimit) {
-            newLine.push_back(120);
-          }
-          else {
-            newLine.push_back(0);
-          }
-        }
-        else {
-          newLine.push_back(0);
-        }
-      }
-    }
 
     // We push the new line
     newPixels.push_back(newLine);
