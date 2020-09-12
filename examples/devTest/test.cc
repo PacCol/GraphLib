@@ -19,7 +19,7 @@ int main() {
   //myImage.applyMedianFilter(1);
   myImage.applyGaussianFilter(3);
 
-  myImage.applyCannyFilter(2500, 800);
+  myImage.applyCannyFilter(2500, 3000);
 
   std::cout << "Saving..." << "\n";
 

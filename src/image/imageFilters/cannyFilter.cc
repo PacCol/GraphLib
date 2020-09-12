@@ -123,7 +123,7 @@ void Image::applyCannyFilter(unsigned int highLimit, unsigned int lowLimit) {
         }
 
 
-      /*if(-100 <= gradientDirection[i][j] && gradientDirection[i][j] < -75) {
+      if(-100 <= gradientDirection[i][j] && gradientDirection[i][j] < -75) {
         if(gradient[i][j] > gradient[i + 1][j] && gradient[i][j] > gradient[i - 1][j]) {
           HYSTERESIS_THRESOLDING;
         }
@@ -132,7 +132,7 @@ void Image::applyCannyFilter(unsigned int highLimit, unsigned int lowLimit) {
         }
       }
       else if(-75 <= gradientDirection[i][j] && gradientDirection[i][j] < -25) {
-        if(gradient[i][j] > gradient[i + 1][j + 1] && gradient[i][j] > gradient[i - 1][j - 1]) {
+        if(gradient[i][j] > gradient[i - 1][j + 1] && gradient[i][j] > gradient[i + 1][j - 1]) {
           HYSTERESIS_THRESOLDING;
         }
         else {
@@ -148,7 +148,7 @@ void Image::applyCannyFilter(unsigned int highLimit, unsigned int lowLimit) {
         }
       }
       else if(25 <= gradientDirection[i][j] && gradientDirection[i][j] < 75) {
-        if(gradient[i][j] > gradient[i - 1][j + 1] && gradient[i][j] > gradient[i + 1][j - 1]) {
+        if(gradient[i][j] > gradient[i + 1][j + 1] && gradient[i][j] > gradient[i - 1][j - 1]) {
           HYSTERESIS_THRESOLDING;
         }
         else {
@@ -162,7 +162,7 @@ void Image::applyCannyFilter(unsigned int highLimit, unsigned int lowLimit) {
         else {
           newLine.push_back(0);
         }
-      }*/
+      }
 
     }
 

@@ -45,6 +45,10 @@ uninstall:
 	rm -rf $(INCLUDE_DIR)graphlib
 
 auto:
+	make all
+	make install
+
+auto-clean:
 	make clean
 	make all
 	make install
