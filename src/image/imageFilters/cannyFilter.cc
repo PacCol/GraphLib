@@ -57,7 +57,7 @@ void Image::applyCannyFilter(unsigned int highLimit, unsigned int lowLimit) {
                         + 2 * pixels[i][j + 1]
                         + -1 * pixels[i + 1][j - 1]
                         + 1 * pixels[i + 1][j + 1]
-                      ) / 8;
+                      );
 
       float SYvalue = (-1 * pixels[i - 1][j - 1]
                         + 1 * pixels[i - 1][j + 1]
@@ -65,14 +65,14 @@ void Image::applyCannyFilter(unsigned int highLimit, unsigned int lowLimit) {
                         + 2 * pixels[i + 1][j]
                         + -1 * pixels[i + 1][j - 1]
                         + 1 * pixels[i + 1][j + 1]
-                      ) / 8;
+                      );
 
       // We define the gradient value
       gradientLine.push_back( sqrt( pow(SXvalue * pixels[i][j], 2) + pow(SYvalue * pixels[i][j], 2) ) );
 
-      // We define the direction of the gradient
+      // We define the direction of the gradient (in grades)
       if(!SXvalue == 0) {
-        gradientDirectionLine.push_back( atan(SYvalue / SXvalue) );
+        gradientDirectionLine.push_back(atan(SYvalue / SXvalue) * 200 / M_PI);
       }
       else {
         gradientDirectionLine.push_back(100);
@@ -108,37 +108,56 @@ void Image::applyCannyFilter(unsigned int highLimit, unsigned int lowLimit) {
     for(unsigned int j = 1; j < width - 1; j++) {
 
       // We remove the pixels that are not part of the outlines
+      // A pixel is only retained if the gradient is maximum in its direction
 
-      // For a direction of the gradient, we choose a method to find
-      // the pixels that are not part of the outlines
+      // We create a macro to to do the hysteresis thresholding
+      #define HYSTERESIS_THRESOLDING          \
+        if(gradient[i][j] > highLimit) {      \
+          newLine.push_back(255);             \
+        }                                     \
+        else if(gradient[i][j] > lowLimit) {  \
+          newLine.push_back(100);             \
+        }                                     \
+        else {                                \
+          newLine.push_back(0);               \
+        }
 
-      if(-100 <= gradientDirection[i][j] && gradientDirection[i][j] < -50) {
-        if(gradient[i][j] > gradient[i + 1][j]) {
-          newLine.push_back(255);
+
+      if(-100 <= gradientDirection[i][j] && gradientDirection[i][j] < -75) {
+        if(gradient[i][j] > gradient[i + 1][j] && gradient[i][j] > gradient[i - 1][j]) {
+          HYSTERESIS_THRESOLDING;
         }
         else {
           newLine.push_back(0);
         }
       }
-      else if(-50 <= gradientDirection[i][j] && gradientDirection[i][j] < 0) {
-        if(gradient[i][j] > gradient[i + 1][j + 1]) {
-          newLine.push_back(255);
+      else if(-75 <= gradientDirection[i][j] && gradientDirection[i][j] < -25) {
+        if(gradient[i][j] > gradient[i + 1][j + 1] && gradient[i][j] > gradient[i - 1][j - 1]) {
+          HYSTERESIS_THRESOLDING;
         }
         else {
           newLine.push_back(0);
         }
       }
-      else if(0 <= gradientDirection[i][j] && gradientDirection[i][j] < 50) {
-        if(gradient[i][j] > gradient[i - 1][j + 1]) {
-          newLine.push_back(255);
+      else if(-25 <= gradientDirection[i][j] && gradientDirection[i][j] < 25) {
+        if(gradient[i][j] > gradient[i][j + 1] && gradient[i][j] > gradient[i][j - 1]) {
+          HYSTERESIS_THRESOLDING;
         }
         else {
           newLine.push_back(0);
         }
       }
-      else if(50 <= gradientDirection[i][j] && gradientDirection[i][j] <= 100) {
-        if(gradient[i][j] > gradient[i - 1][j]) {
-          newLine.push_back(255);
+      else if(25 <= gradientDirection[i][j] && gradientDirection[i][j] < 75) {
+        if(gradient[i][j] > gradient[i - 1][j + 1] && gradient[i][j] > gradient[i + 1][j - 1]) {
+          HYSTERESIS_THRESOLDING;
+        }
+        else {
+          newLine.push_back(0);
+        }
+      }
+      else if(75 <= gradientDirection[i][j] && gradientDirection[i][j] <= 100) {
+        if(gradient[i][j] > gradient[i - 1][j] && gradient[i][j] > gradient[i + 1][j]) {
+          HYSTERESIS_THRESOLDING;
         }
         else {
           newLine.push_back(0);

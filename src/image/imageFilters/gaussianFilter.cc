@@ -2,7 +2,6 @@
 
 #include <chrono>
 
-#define _USE_MATH_DEFINES
 #include <cmath>
 
 // We create a function to reduce the noise of the image

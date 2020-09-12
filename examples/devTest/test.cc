@@ -5,7 +5,7 @@ int main() {
 
   Image myImage;
   myImage.openPngImage("test.png");
-  //myImage.openJpegImage("test2.jpg");
+  //myImage.openJpegImage("test1.jpg");
 
   std::cout << "Image Dimensions : " << myImage.getWidth() << "x" << myImage.getHeight() <<"\n";
   std::cout << "Image Color Space : " << myImage.getColorSpace() << "\n";
@@ -19,7 +19,7 @@ int main() {
   //myImage.applyMedianFilter(1);
   myImage.applyGaussianFilter(3);
 
-  myImage.applyCannyFilter(160, 6000);
+  myImage.applyCannyFilter(2500, 800);
 
   std::cout << "Saving..." << "\n";
 
