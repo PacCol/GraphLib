@@ -1,13 +1,10 @@
 #include <algorithm>
-#include <chrono>
-
-#define _USE_MATH_DEFINES
 #include <cmath>
 
 #include "../image.h"
 
 // We create a function to show the edge of the objects of the image
-void Image::applyCannyFilter(unsigned int limit) {
+void Image::applyCannyFilter(unsigned int highLimit, unsigned int lowLimit) {
 
   // If the image is not a grayscale, we convert it
   if(colorSpace != 1) {
@@ -75,10 +72,10 @@ void Image::applyCannyFilter(unsigned int limit) {
 
       // We define the direction of the gradient
       if(!SXvalue == 0) {
-        gradientDirectionLine.push_back( atan(SYvalue / SXvalue) * 180 / M_PI );
+        gradientDirectionLine.push_back( atan(SYvalue / SXvalue) );
       }
       else {
-        gradientDirectionLine.push_back(90);
+        gradientDirectionLine.push_back(100);
       }
     }
 
@@ -115,22 +112,40 @@ void Image::applyCannyFilter(unsigned int limit) {
       // For a direction of the gradient, we choose a method to find
       // the pixels that are not part of the outlines
 
-      if(gradientDirection[i][j] > -90 && gradientDirection[i][j] <= -67.5) {
-        if(gradient[i][j] > gradient[i - 1][j] && gradient[i][j] > gradient[i + 1][j]) {
-          if(gradient[i][j] > highLimit) {
-            newLine.push_back(255);
-          }
-          else if(gradient[i][j] > lowLimit) {
-            newLine.push_back(120);
-          }
-          else {
-            newLine.push_back(0);
-          }
+      if(-100 <= gradientDirection[i][j] && gradientDirection[i][j] < -50) {
+        if(gradient[i][j] > gradient[i + 1][j]) {
+          newLine.push_back(255);
         }
         else {
           newLine.push_back(0);
         }
       }
+      else if(-50 <= gradientDirection[i][j] && gradientDirection[i][j] < 0) {
+        if(gradient[i][j] > gradient[i + 1][j + 1]) {
+          newLine.push_back(255);
+        }
+        else {
+          newLine.push_back(0);
+        }
+      }
+      else if(0 <= gradientDirection[i][j] && gradientDirection[i][j] < 50) {
+        if(gradient[i][j] > gradient[i - 1][j + 1]) {
+          newLine.push_back(255);
+        }
+        else {
+          newLine.push_back(0);
+        }
+      }
+      else if(50 <= gradientDirection[i][j] && gradientDirection[i][j] <= 100) {
+        if(gradient[i][j] > gradient[i - 1][j]) {
+          newLine.push_back(255);
+        }
+        else {
+          newLine.push_back(0);
+        }
+      }
+
+    }
 
     // We push the new line
     newPixels.push_back(newLine);
