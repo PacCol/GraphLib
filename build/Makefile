@@ -12,7 +12,7 @@ all: libgraph.$(RELEASE).a libgraph.so.$(RELEASE)
 clean :
 	rm -f *.o libgraph.so.$(RELEASE) libgraph.$(RELEASE).a
 
-%.o: ../src/*/*/%.cc
+%.o: ../src/*/%.cc
 	g++ -Wall -g -fPIC -o $@ -c $<
 
 # Image
@@ -33,7 +33,7 @@ libgraph.$(RELEASE).a: $(OBJ)
 
 install:
 	mkdir -p $(INCLUDE_DIR)graphlib
-	install -m 644 -o root -g root ../src/image/image.h -t $(INCLUDE_DIR)graphlib/
+	install -m 644 -o root -g root ../src/image.h -t $(INCLUDE_DIR)graphlib/
 	install -m 644 -o root -g root ../lib/libgraph.so.$(RELEASE) ../lib/libgraph.$(RELEASE).a -t $(LIB_DIR)
 	rm -f $(LIB_DIR)libgraph.so
 	rm -f $(LIB_DIR)libgraph.so.$(MAJOR)

@@ -1,33 +1,26 @@
 #include <graphlib/image.h>
 
 int main() {
-  std::cout << "\n";
 
+  /*Image myImage;
+
+  while(true) {
+
+    system("streamer -f jpeg -o picture.jpeg");
+
+    myImage.openJpegImage("picture.jpeg");
+
+    myImage.convertToGrayscale();
+
+    myImage.applyGaussianFilter(3);
+
+    myImage.applyCannyFilter(1500, 3000);
+
+    myImage.saveJpegImage("output.jpg", 100);
+  }*/
+  
   Image myImage;
-  myImage.openPngImage("test.png");
-  //myImage.openJpegImage("test1.jpg");
-
-  std::cout << "Image Dimensions : " << myImage.getWidth() << "x" << myImage.getHeight() <<"\n";
-  std::cout << "Image Color Space : " << myImage.getColorSpace() << "\n";
-  std::cout << "Image Color Type : " << myImage.getColorType() << "\n";
-  std::cout << "Image Pixel Size : " << myImage.getPixelSize() << "\n";
-
-  //myImage.removeAlphaChannel();
-
-  myImage.convertToGrayscale();
-
-  //myImage.applyMedianFilter(1);
-  myImage.applyGaussianFilter(3);
-
-  myImage.applyCannyFilter(2500, 3000);
-
-  std::cout << "Saving..." << "\n";
-
-  myImage.saveJpegImage("testSaved.jpg", 100);
-
-  std::cout << "\n";
-
-  system("gwenview testSaved.jpg");
-
-  return 0;
+  myImage.openJpegImage("../../../../Web/kingdomsBattle/frontend/textures/brick.jpg");
+  myImage.resize(128);
+  myImage.saveJpegImage("../../../../Web/kingdomsBattle/frontend/textures/brick.jpg", 60);
 }
