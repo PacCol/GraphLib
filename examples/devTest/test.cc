@@ -4,13 +4,13 @@ int main() {
 
   Image myImage;
 
-    myImage.openJpegImage("../imageSamples/beam.jpg");
+  myImage.openJpegImage("../imageSamples/beam.jpg");
 
-    myImage.convertToGrayscale();
+  myImage.convertToGrayscale();
 
-    myImage.applyGaussianFilter(5);
+  myImage.applyGaussianFilter(5);
 
-    myImage.applyCannyFilter(1500, 3000);
+  myImage.applyCannyFilter(1500, 3000);
 
-    myImage.saveJpegImage("output.jpg", 100);
+  myImage.saveJpegImage("output.jpg", 100);
 }

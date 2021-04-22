@@ -17,8 +17,6 @@ void Image::applyGaussianFilter(int kernelSize) {
 
   std::cout << "Applying Gaussian Filter" << "\n";
 
-  auto startTime = std::chrono::high_resolution_clock::now();
-
   // We want to compute the gaussian weights
   double sigma = ceil((2 * float(kernelSize) + 1) / 6);
 
@@ -45,6 +43,8 @@ void Image::applyGaussianFilter(int kernelSize) {
   // We reserve the output height
   // (We can't compute the average of the borders of the image)
   newPixels.reserve(height - kernelSize  * 2);
+
+  auto startTime = std::chrono::high_resolution_clock::now();
 
   // For each line of the image...
   for(unsigned int i = kernelSize; i < height - kernelSize; i++) {
@@ -100,5 +100,5 @@ void Image::applyGaussianFilter(int kernelSize) {
 
   auto stopTime = std::chrono::high_resolution_clock::now();
   auto duration = std::chrono::duration_cast<std::chrono::microseconds>(stopTime - startTime);
-  std::cout << "Execution time: " << (int(duration.count()) / 10000) << " seconds\n";
+  std::cout << "Execution time: " << (float(duration.count()) / 1000000) << " seconds\n";
 }

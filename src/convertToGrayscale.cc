@@ -26,11 +26,6 @@ void Image::convertToGrayscale() {
 
       // We push the luminance of the pixel
       newLine.push_back(getLuminance(j, i));
-
-      // If the alpha channel is used, we push the alpha value
-      if(alphaUsed) {
-        newLine.push_back(getAlphaValue(j, i));
-      }
     }
     // We push the new line into the newPixels vector
     newPixels.push_back(newLine);
@@ -40,13 +35,6 @@ void Image::convertToGrayscale() {
   pixels = newPixels;
 
   // We update the image informations
-  pixelSize = pixelSize - 2;
+  pixelSize = 1;
   colorSpace = 1;
-
-  if(!alphaUsed) {
-    colorType = 0;
-  }
-  else {
-    colorType = 4;
-  }
 }
