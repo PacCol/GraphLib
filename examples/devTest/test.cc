@@ -1,11 +1,8 @@
-#include <graphlib/graphlib.h>
+#include <graphlib.h>
 
 int main() {
 
   Image myImage;
-
-
-    //system("streamer -f jpeg -o capture.jpeg");
 
     myImage.openJpegImage("../imageSamples/beam.jpg");
 

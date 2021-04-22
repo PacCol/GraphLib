@@ -100,5 +100,5 @@ void Image::applyGaussianFilter(int kernelSize) {
 
   auto stopTime = std::chrono::high_resolution_clock::now();
   auto duration = std::chrono::duration_cast<std::chrono::microseconds>(stopTime - startTime);
-  std::cout << "Execution timee : " << (int(duration.count()) / 10000) << " microseconds\n";
+  std::cout << "Execution time: " << (int(duration.count()) / 10000) << " seconds\n";
 }
