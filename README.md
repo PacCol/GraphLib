@@ -1,4 +1,4 @@
-# GraphLib (for v1.0)
+# GraphLib
 [![Language](https://img.shields.io/badge/language-C%2B%2B11-green.svg)](https://isocpp.org)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 ### A graphic library
@@ -19,7 +19,7 @@ The library will be compiled and installed
 
 ### Set the LD_LIBRARY_PATH
 The LD_LIBRARY_PATH is `/usr/local/lib/`  
-G++ needs it to find the library when you run a programm that use the library  
+G++ needs it to find the library when you run a programm that use this library  
 To set it, return at the root of the repository (`cd ..`)  
 Set the LD_LIBRARY_PATH running `env.sh` (`. ./env.sh`)  
 ##### You must run the env.sh command each time you open a terminal (`. ./env.sh`)
@@ -34,7 +34,9 @@ To build the programm you need to use this shell line :
 `-Wall` option : show all warnings  
 `-I/usr/local/include` option : find the graphlib headers  
 `-L/usr/local/lib` option : find the graphlib executable  
-`-lgraph` option : include the graphlib
+`-lgraph` option : include the graphlib  
+Open the output image and view the change  
+Begin your first project !
 
 ## Errors
 If you detected any errors, please contact me in the issues section !
