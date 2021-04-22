@@ -98,4 +98,4 @@ class Image {
     unsigned int colorType = 0;
 };
 
-#endif // GRAPHLIB_IMAGE_H
+#endif // GRAPHLIB_H
