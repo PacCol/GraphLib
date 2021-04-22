@@ -1,26 +1,19 @@
-#include <graphlib/image.h>
+#include <graphlib/graphlib.h>
 
 int main() {
 
-  /*Image myImage;
+  Image myImage;
 
-  while(true) {
 
-    system("streamer -f jpeg -o picture.jpeg");
+    //system("streamer -f jpeg -o capture.jpeg");
 
-    myImage.openJpegImage("picture.jpeg");
+    myImage.openJpegImage("../imageSamples/beam.jpg");
 
     myImage.convertToGrayscale();
 
-    myImage.applyGaussianFilter(3);
+    myImage.applyGaussianFilter(5);
 
     myImage.applyCannyFilter(1500, 3000);
 
     myImage.saveJpegImage("output.jpg", 100);
-  }*/
-  
-  Image myImage;
-  myImage.openJpegImage("../../../../Web/kingdomsBattle/frontend/textures/brick.jpg");
-  myImage.resize(128);
-  myImage.saveJpegImage("../../../../Web/kingdomsBattle/frontend/textures/brick.jpg", 60);
 }
