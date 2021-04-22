@@ -5,7 +5,7 @@
 // We create a function to reduce the noise of the image
 void Image::applyMedianFilter(unsigned int kernelSize) {
 
-  // We check the kernel
+  // We check the kernel size
   if(kernelSize == 0) {
     throw std::runtime_error("Error : in Image::applyMedianFilter : The kernel size can't be 0");
   }

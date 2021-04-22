@@ -8,9 +8,9 @@ int main() {
 
   myImage.convertToGrayscale();
 
-  myImage.applyGaussianFilter(5);
+  //myImage.applyGaussianFilter(3);
 
-  myImage.applyCannyFilter(1500, 3000);
+  myImage.applyCannyFilter(1, 1);
 
   myImage.saveJpegImage("output.jpg", 100);
 }

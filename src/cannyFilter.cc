@@ -4,16 +4,11 @@
 #include "graphlib.h"
 
 // We create a function to show the edge of the objects of the image
-void Image::applyCannyFilter(unsigned int highLimit, unsigned int lowLimit) {
+void Image::applyCannyFilter(unsigned int lowLimit, unsigned int highLimit) {
 
   // If the image is not a grayscale, we convert it
   if(colorSpace != 1) {
     convertToGrayscale();
-  }
-
-  // If the image has an alpha channel, we remove it
-  if(alphaUsed) {
-    removeAlphaChannel();
   }
 
   // We can't compute the gradient of the borders of the image
@@ -57,7 +52,7 @@ void Image::applyCannyFilter(unsigned int highLimit, unsigned int lowLimit) {
                         + 2 * pixels[i][j + 1]
                         + -1 * pixels[i + 1][j - 1]
                         + 1 * pixels[i + 1][j + 1]
-                      );
+                      ) / 8;
 
       float SYvalue = (-1 * pixels[i - 1][j - 1]
                         + 1 * pixels[i - 1][j + 1]
@@ -65,7 +60,7 @@ void Image::applyCannyFilter(unsigned int highLimit, unsigned int lowLimit) {
                         + 2 * pixels[i + 1][j]
                         + -1 * pixels[i + 1][j - 1]
                         + 1 * pixels[i + 1][j + 1]
-                      );
+                      ) / 8;
 
       // We define the gradient value
       gradientLine.push_back( sqrt( pow(SXvalue * pixels[i][j], 2) + pow(SYvalue * pixels[i][j], 2) ) );

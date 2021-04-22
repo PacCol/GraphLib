@@ -5,13 +5,13 @@
 #include <cmath>
 
 // We create a function to reduce the noise of the image
-void Image::applyGaussianFilter(int kernelSize) {
+void Image::applyGaussianFilter(unsigned int kernelSize) {
 
   // We check the kernel size
-  if(kernelSize <= 0) {
+  if(kernelSize == 0) {
     throw std::runtime_error("Error : in Image::applyGaussianFilter : The kernel size must be at least 1");
   }
-  else if(kernelSize * 2 + 1 > int(height) || kernelSize * 2 + 1 > int(width)) {
+  else if(kernelSize * 2 + 1 > static_cast<unsigned int>(height) || kernelSize * 2 + 1 > static_cast<unsigned int>(width)) {
     throw std::runtime_error("Error : in Image::applyGaussianFilter : The kernel size is to big for this image");
   }
 
@@ -26,14 +26,14 @@ void Image::applyGaussianFilter(int kernelSize) {
   double sum = 0.0;
 
   // We apply the algorythm to compute the gaussian weights
-  for(int i = -(kernelSize); i <= kernelSize; i++) {
-    for(int j = -(kernelSize); j <= kernelSize; j++) {
+  for(unsigned int i = -(kernelSize); i <= kernelSize; i++) {
+    for(unsigned int j = -(kernelSize); j <= kernelSize; j++) {
       kernel[i + kernelSize][j + kernelSize] = exp( -(pow(i, 2) + pow(j, 2)) / (2 * pow(sigma, 2))) / (2 * M_PI * pow(sigma, 2) );
       sum = sum + kernel[i + kernelSize][j + kernelSize];
     }
   }
-  for(int i = -(kernelSize); i <= kernelSize; i++) {
-    for(int j = -(kernelSize); j <= kernelSize; j++) {
+  for(unsigned int i = -(kernelSize); i <= kernelSize; i++) {
+    for(unsigned int j = -(kernelSize); j <= kernelSize; j++) {
       kernel[i + kernelSize][j + kernelSize] = kernel[i + kernelSize][j + kernelSize] / sum;
     }
   }
@@ -65,8 +65,8 @@ void Image::applyGaussianFilter(int kernelSize) {
         std::vector<std::vector<uint8_t>> averagePixels (kernelSize * 2 + 1, std::vector<uint8_t>(kernelSize * 2 + 1));
 
         // We get the values
-        for(int l = -(kernelSize); l <= kernelSize; l++) {
-          for(int m = -(kernelSize); m <= kernelSize; m++) {
+        for(unsigned int l = -(kernelSize); l <= kernelSize; l++) {
+          for(unsigned int m = -(kernelSize); m <= kernelSize; m++) {
             averagePixels[l + kernelSize][m + kernelSize] = pixels[i + l][(j + m) * pixelSize + k];
           }
         }
@@ -75,8 +75,8 @@ void Image::applyGaussianFilter(int kernelSize) {
         float average = 0;
 
         // We compute the average using the gaussian weights
-        for(int l = 0; l < kernelSize * 2 + 1; l++) {
-          for(int m = 0; m < kernelSize * 2 + 1; m++) {
+        for(unsigned int l = 0; l < kernelSize * 2 + 1; l++) {
+          for(unsigned int m = 0; m < kernelSize * 2 + 1; m++) {
             average = average + kernel[l][m] * averagePixels[l][m];
           }
         }

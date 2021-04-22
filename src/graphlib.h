@@ -64,10 +64,10 @@ class Image {
     void applyMedianFilter(unsigned int kernelSize);
 
     // We create a function to reduce the noise of the image
-    void applyGaussianFilter(int kernelSize);
+    void applyGaussianFilter(unsigned int kernelSize);
 
     // We create a function to show the edge of the objects of the image
-    void applyCannyFilter(unsigned int highLimit, unsigned int lowLimit);
+    void applyCannyFilter(unsigned int lowLimit, unsigned int highLimit);
 
     // We create a function to return the alpha value of a pixel
     uint8_t getAlphaValue(unsigned int x, unsigned int y);
