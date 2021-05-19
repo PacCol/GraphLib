@@ -3,13 +3,16 @@
 #include "graphlib.h"
 
 // We create a function to reduce the noise of the image
-void Image::applyMedianFilter(unsigned int kernelSize) {
+void Image::applyMedianFilter(unsigned int kernelSize)
+{
 
   // We check the kernel size
-  if(kernelSize == 0) {
+  if (kernelSize == 0)
+  {
     throw std::runtime_error("Error : in Image::applyMedianFilter : The kernel size can't be 0");
   }
-  else if(kernelSize * 2 + 1 > height || kernelSize * 2 + 1 > width) {
+  else if (kernelSize * 2 + 1 > height || kernelSize * 2 + 1 > width)
+  {
     throw std::runtime_error("Error : in Image::applyMedianFilter : The kernel size is to big for this image");
   }
 
@@ -17,22 +20,25 @@ void Image::applyMedianFilter(unsigned int kernelSize) {
   std::vector<std::vector<uint8_t>> newPixels;
   // We reserve the output height
   // (We can't compute the median of the borders of the image)
-  newPixels.reserve(height - kernelSize  * 2);
+  newPixels.reserve(height - kernelSize * 2);
 
   // For each line of the image...
-  for(unsigned int i = kernelSize; i < height - kernelSize; i++) {
+  for (unsigned int i = kernelSize; i < height - kernelSize; i++)
+  {
 
     // We create a vector to save the new line
     std::vector<uint8_t> newLine;
     // We reserve the line width
     // (We can't compute the median of the borders of the image)
-    newLine.reserve(width - kernelSize  * 2);
+    newLine.reserve(width - kernelSize * 2);
 
     // For each pixel of this line...
-    for(unsigned int j = kernelSize; j < width - kernelSize; j++) {
+    for (unsigned int j = kernelSize; j < width - kernelSize; j++)
+    {
 
       // For each value of this pixel...
-      for(unsigned int k = 0; k < pixelSize; k++) {
+      for (unsigned int k = 0; k < pixelSize; k++)
+      {
 
         // We create a vector to store the pixel values (value per value)
         // For example for an RGB image :
@@ -41,8 +47,10 @@ void Image::applyMedianFilter(unsigned int kernelSize) {
         medianPixels.reserve(kernelSize * 2 + 1);
 
         // We add the pixels values in the vector
-        for(int l = -(int(kernelSize)); l <= int(kernelSize); l++) {
-          for(int m = -(int(kernelSize)); m <= int(kernelSize); m++) {
+        for (int l = -(int(kernelSize)); l <= int(kernelSize); l++)
+        {
+          for (int m = -(int(kernelSize)); m <= int(kernelSize); m++)
+          {
             medianPixels.push_back(pixels[i + l][(j + m) * pixelSize + k]);
           }
         }
