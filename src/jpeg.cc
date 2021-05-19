@@ -4,17 +4,19 @@
 #include <jpeglib.h>
 #include <setjmp.h>
 
-struct my_error_mgr {
+struct my_error_mgr
+{
   struct jpeg_error_mgr pub;
   jmp_buf setjmp_buffer;
 };
 
 // We create a function to open a jpeg image
-void Image::openJpegImage(std::string fileName) {
-
+void Image::openJpegImage(std::string fileName)
+{
   // We try to open the image file
-  FILE * inputImageFile;
-  if((inputImageFile = fopen(fileName.c_str(), "rb")) == NULL) {
+  FILE *inputImageFile;
+  if ((inputImageFile = fopen(fileName.c_str(), "rb")) == NULL)
+  {
     throw std::runtime_error("Error : in Image::openJpegImage : can't open this file");
   }
 
@@ -38,7 +40,8 @@ void Image::openJpegImage(std::string fileName) {
   colorSpace = imageInfo.out_color_space;
 
   // We check the color space
-  if (colorSpace != 1 && colorSpace != 2) {
+  if (colorSpace != 1 && colorSpace != 2)
+  {
     throw std::runtime_error("Error : in Image::openJpegImage : this color space is not supported");
   }
 
@@ -52,11 +55,11 @@ void Image::openJpegImage(std::string fileName) {
   pixels.reserve(height);
 
   // For each line
-  while(imageInfo.output_scanline < height) {
-
+  while (imageInfo.output_scanline < height)
+  {
     // We create a vector to store the scanned line
     std::vector<uint8_t> scannedLine(rowStride);
-    uint8_t* p = scannedLine.data();
+    uint8_t *p = scannedLine.data();
 
     // We read the image
     jpeg_read_scanlines(&imageInfo, &p, 1);
@@ -74,11 +77,12 @@ void Image::openJpegImage(std::string fileName) {
 }
 
 // We create a function to save a jpeg image
-void Image::saveJpegImage(std::string fileName, unsigned int quality) {
-
+void Image::saveJpegImage(std::string fileName, unsigned int quality)
+{
   // We try to create the image file
-  FILE * outputImageFile;
-  if ((outputImageFile = fopen(fileName.c_str(), "wb")) == NULL) {
+  FILE *outputImageFile;
+  if ((outputImageFile = fopen(fileName.c_str(), "wb")) == NULL)
+  {
     throw std::runtime_error("Error : in Image::saveJpegImage : can't create this file");
   }
 
@@ -103,7 +107,8 @@ void Image::saveJpegImage(std::string fileName, unsigned int quality) {
   jpeg_set_quality(&imageInfo, quality, TRUE);
   jpeg_start_compress(&imageInfo, TRUE);
 
-  for(auto const& vecLine : pixels) {
+  for (auto const &vecLine : pixels)
+  {
     JSAMPROW rowPointer[1];
 
     // We read the image vector line per line

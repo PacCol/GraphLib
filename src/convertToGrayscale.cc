@@ -1,10 +1,12 @@
 #include "graphlib.h"
 
 // We create a function to convert the image to grayscale
-void Image::convertToGrayscale() {
+void Image::convertToGrayscale()
+{
 
   // We check the actual color space
-  if(colorSpace == 1) {
+  if (colorSpace == 1)
+  {
     throw std::runtime_error("Error : in Image::convertToGrayscale : the image is already monochrome");
   }
 
@@ -14,7 +16,8 @@ void Image::convertToGrayscale() {
   newPixels.reserve(height);
 
   // For each line of the image...
-  for(unsigned int i = 0; i < height; i++) {
+  for (unsigned int i = 0; i < height; i++)
+  {
 
     // We create a vector to save the new line
     std::vector<uint8_t> newLine;
@@ -22,7 +25,8 @@ void Image::convertToGrayscale() {
     newLine.reserve(width * pixelSize);
 
     // For each pixel of this line...
-    for(unsigned int j = 0; j < width; j++) {
+    for (unsigned int j = 0; j < width; j++)
+    {
 
       // We push the luminance of the pixel
       newLine.push_back(getLuminance(j, i));
