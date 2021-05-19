@@ -12,7 +12,7 @@ clean :
 	g++ -Wall -g -fPIC -o $@ -c $<
 
 # Image basics
-OBJ := initialization.o jpeg.o imageInformations.o getPixel.o resizeCrop.o setPixel.o convertToGrayscale.o
+OBJ := initialization.o jpeg.o getPixel.o resizeCrop.o setPixel.o convertToGrayscale.o
 
 # Image filters
 OBJ := $(OBJ) medianFilter.o gaussianFilter.o cannyFilter.o
