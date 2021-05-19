@@ -83,9 +83,6 @@ unsigned int height = 0;
 // For exmple an RGB image will have a pixelSize of 3
 unsigned int pixelSize = 0;
 
-// The alpha used variable tell us if the alpha channel is used
-bool alphaUsed = false;
-
 // The color space tell us which colors are we using
 unsigned int colorSpace = 0;
 };

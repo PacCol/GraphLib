@@ -43,7 +43,7 @@ void Image::openJpegImage(std::string fileName) {
   }
 
   // We are computing the row stride
-  int rowStride = width * pixelSize;
+  unsigned int rowStride = width * pixelSize;
 
   // We remove the old pixels
   pixels.clear();
@@ -56,7 +56,6 @@ void Image::openJpegImage(std::string fileName) {
 
     // We create a vector to store the scanned line
     std::vector<uint8_t> scannedLine(rowStride);
-    scannedLine.reserve(rowStride);
     uint8_t* p = scannedLine.data();
 
     // We read the image
@@ -76,7 +75,7 @@ void Image::openJpegImage(std::string fileName) {
 
 // We create a function to save a jpeg image
 void Image::saveJpegImage(std::string fileName, unsigned int quality) {
-  /*
+
   // We try to create the image file
   FILE * outputImageFile;
   if ((outputImageFile = fopen(fileName.c_str(), "wb")) == NULL) {
@@ -119,5 +118,5 @@ void Image::saveJpegImage(std::string fileName, unsigned int quality) {
   jpeg_destroy_compress(&imageInfo);
 
   // We close the image file
-  fclose(outputImageFile);*/
+  fclose(outputImageFile);
 }
