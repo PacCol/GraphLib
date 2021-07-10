@@ -4,114 +4,97 @@
 #include "graphlib.h"
 
 // We create a function to reduce the noise of the image
-void Image::applyGaussianFilter(unsigned int kernelSize)
-{
+void Image::applyGaussianFilter(unsigned int kernelSize) {
 
-  // We check the kernel size
-  if (kernelSize == 0)
-  {
-    throw std::runtime_error("Error : in Image::applyGaussianFilter : The kernel size must be at least 1");
-  }
-  else if (kernelSize * 2 + 1 > static_cast<unsigned int>(height) || kernelSize * 2 + 1 > static_cast<unsigned int>(width))
-  {
-    throw std::runtime_error("Error : in Image::applyGaussianFilter : The kernel size is to big for this image");
-  }
+	// We check the kernel size
+	if (kernelSize == 0) {
+		throw std::runtime_error("Error : in Image::applyGaussianFilter : The kernel size must be at least 1");
+	} else if (kernelSize * 2 + 1 > static_cast<unsigned int>(height) || kernelSize * 2 + 1 > static_cast<unsigned int>(width)) {
+		throw std::runtime_error("Error : in Image::applyGaussianFilter : The kernel size is to big for this image");
+	}
 
+	// We want to compute the gaussian weights
+	double sigma = ceil((2 * float(kernelSize) + 1) / 6);
 
+	// We create a vector to store weight
+	std::vector<std::vector<double>> kernel(kernelSize * 2 + 1, std::vector<double>(kernelSize * 2 + 1));
 
-  // We want to compute the gaussian weights
-  double sigma = ceil((2 * float(kernelSize) + 1) / 6);
+	double sum = 0.0;
 
-  // We create a vector to store weight
-  std::vector<std::vector<double>> kernel(kernelSize * 2 + 1, std::vector<double>(kernelSize * 2 + 1));
+	// We apply the algorythm to compute the gaussian weights
+	for (unsigned int i = -(kernelSize); i <= kernelSize; i++) {
+		for (unsigned int j = -(kernelSize); j <= kernelSize; j++) {
+			kernel[i + kernelSize][j + kernelSize] = exp(-(pow(i, 2) + pow(j, 2)) / (2 * pow(sigma, 2))) / (2 * M_PI * pow(sigma, 2));
+			sum = sum + kernel[i + kernelSize][j + kernelSize];
+		}
+	}
+	for (unsigned int i = -(kernelSize); i <= kernelSize; i++) {
+		for (unsigned int j = -(kernelSize); j <= kernelSize; j++) {
+			kernel[i + kernelSize][j + kernelSize] = kernel[i + kernelSize][j + kernelSize] / sum;
+		}
+	}
 
-  double sum = 0.0;
+	// We create a vector to save the new image
+	std::vector<std::vector<uint8_t>> newPixels;
+	// We reserve the output height
+	// (We can't compute the average of the borders of the image)
+	newPixels.reserve(height - kernelSize * 2);
 
-  // We apply the algorythm to compute the gaussian weights
-  for (unsigned int i = -(kernelSize); i <= kernelSize; i++)
-  {
-    for (unsigned int j = -(kernelSize); j <= kernelSize; j++)
-    {
-      kernel[i + kernelSize][j + kernelSize] = exp(-(pow(i, 2) + pow(j, 2)) / (2 * pow(sigma, 2))) / (2 * M_PI * pow(sigma, 2));
-      sum = sum + kernel[i + kernelSize][j + kernelSize];
-    }
-  }
-  for (unsigned int i = -(kernelSize); i <= kernelSize; i++)
-  {
-    for (unsigned int j = -(kernelSize); j <= kernelSize; j++)
-    {
-      kernel[i + kernelSize][j + kernelSize] = kernel[i + kernelSize][j + kernelSize] / sum;
-    }
-  }
+	auto startTime = std::chrono::high_resolution_clock::now();
 
-  // We create a vector to save the new image
-  std::vector<std::vector<uint8_t>> newPixels;
-  // We reserve the output height
-  // (We can't compute the average of the borders of the image)
-  newPixels.reserve(height - kernelSize * 2);
+	// For each line of the image...
+	for (unsigned int i = kernelSize; i < height - kernelSize; i++) {
 
-  auto startTime = std::chrono::high_resolution_clock::now();
+		// We create a vector to save the new line
+		std::vector<uint8_t> newLine;
+		// We reserve the line width
+		// (We can't compute the average of the borders of the image)
+		newLine.reserve(width - kernelSize * 2);
 
-  // For each line of the image...
-  for (unsigned int i = kernelSize; i < height - kernelSize; i++)
-  {
+		// For each pixel of this line...
+		for (unsigned int j = kernelSize; j < width - kernelSize; j++) {
 
-    // We create a vector to save the new line
-    std::vector<uint8_t> newLine;
-    // We reserve the line width
-    // (We can't compute the average of the borders of the image)
-    newLine.reserve(width - kernelSize * 2);
+			// For each value of this pixel...
+			for (unsigned int k = 0; k < pixelSize; k++) {
 
-    // For each pixel of this line...
-    for (unsigned int j = kernelSize; j < width - kernelSize; j++)
-    {
+				// We store the values in a vector to compute the average
+				std::vector<std::vector<uint8_t>> averagePixels(kernelSize * 2 + 1, std::vector<uint8_t>(kernelSize * 2 + 1));
 
-      // For each value of this pixel...
-      for (unsigned int k = 0; k < pixelSize; k++)
-      {
+				// We get the values
+				for (unsigned int l = -(kernelSize); l <= kernelSize; l++) {
+					for (unsigned int m = -(kernelSize); m <= kernelSize; m++) {
+						averagePixels[l + kernelSize][m + kernelSize] = pixels[i + l][(j + m) * pixelSize + k];
+					}
+				}
 
-        // We store the values in a vector to compute the average
-        std::vector<std::vector<uint8_t>> averagePixels(kernelSize * 2 + 1, std::vector<uint8_t>(kernelSize * 2 + 1));
+				// We store the average value in a float
+				float average = 0;
 
-        // We get the values
-        for (unsigned int l = -(kernelSize); l <= kernelSize; l++)
-        {
-          for (unsigned int m = -(kernelSize); m <= kernelSize; m++)
-          {
-            averagePixels[l + kernelSize][m + kernelSize] = pixels[i + l][(j + m) * pixelSize + k];
-          }
-        }
+				// We compute the average using the gaussian weights
+				for (unsigned int l = 0; l < kernelSize * 2 + 1; l++) {
+					for (unsigned int m = 0; m < kernelSize * 2 + 1; m++) {
+						average = average + kernel[l][m] * averagePixels[l][m];
+					}
+				}
 
-        // We store the average value in a float
-        float average = 0;
+				// And we update the value
+				newLine.push_back(uint8_t(average));
+			}
+		}
 
-        // We compute the average using the gaussian weights
-        for (unsigned int l = 0; l < kernelSize * 2 + 1; l++)
-        {
-          for (unsigned int m = 0; m < kernelSize * 2 + 1; m++)
-          {
-            average = average + kernel[l][m] * averagePixels[l][m];
-          }
-        }
+		// We push the new line
+		newPixels.push_back(newLine);
+	}
 
-        // And we update the value
-        newLine.push_back(uint8_t(average));
-      }
-    }
+	// We update the image dimensions
+	// (We can't compute the average of the borders of the image)
+	width = width - kernelSize * 2;
+	height = height - kernelSize * 2;
 
-    // We push the new line
-    newPixels.push_back(newLine);
-  }
+	// We update the image
+	pixels = newPixels;
 
-  // We update the image dimensions
-  // (We can't compute the average of the borders of the image)
-  width = width - kernelSize * 2;
-  height = height - kernelSize * 2;
-
-  // We update the image
-  pixels = newPixels;
-
-  auto stopTime = std::chrono::high_resolution_clock::now();
-  auto duration = std::chrono::duration_cast<std::chrono::microseconds>(stopTime - startTime);
-  std::cout << "Execution time: " << (float(duration.count()) / 1000000) << " seconds\n";
+	auto stopTime = std::chrono::high_resolution_clock::now();
+	auto duration = std::chrono::duration_cast<std::chrono::microseconds>(stopTime - startTime);
+	std::cout << "Execution time: " << (float(duration.count()) / 1000000) << " seconds\n";
 }

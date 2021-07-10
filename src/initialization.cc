@@ -1,8 +1,8 @@
 #include "graphlib.h"
 
 // We create a class to create the Image object
-Image::Image()
-{
+Image::Image() {
+
 	// We initialize an empty image
 	// (The dimensions are set by default to zero)
 
@@ -15,22 +15,18 @@ Image::Image()
 }
 
 // We create functions to return the image informations
-unsigned int Image::getWidth()
-{
+unsigned int Image::getWidth() {
 	return width;
 }
 
-unsigned int Image::getHeight()
-{
+unsigned int Image::getHeight() {
 	return height;
 }
 
-unsigned int Image::getPixelSize()
-{
+unsigned int Image::getPixelSize() {
 	return pixelSize;
 }
 
-unsigned int Image::getColorSpace()
-{
+unsigned int Image::getColorSpace() {
 	return colorSpace;
 }

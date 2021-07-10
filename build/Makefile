@@ -1,5 +1,5 @@
-LIB_DIR := /usr/local/lib/
-INCLUDE_DIR := /usr/local/include/
+LIB_DIR := /usr/lib/
+INCLUDE_DIR := /usr/include/
 
 .PHONY : all
 all: libgraph.so
