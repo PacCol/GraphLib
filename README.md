@@ -1,5 +1,5 @@
 # GraphLib
-[![Language](https://img.shields.io/badge/language-C%2B%2B11-green.svg)](https://isocpp.org)
+[![Language](https://img.shields.io/badge/language-C%2B%2B17-green.svg)](https://isocpp.org)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 ### A graphic library
 

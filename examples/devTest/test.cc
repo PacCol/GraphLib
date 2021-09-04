@@ -6,7 +6,7 @@ int main()
 
   myImage.openJpegImage("../imageSamples/beam.jpg");
 
-  myImage.applyCannyFilter();
+  myImage.applyMedianFilter(3);
 
   myImage.saveJpegImage("output.jpg", 100);
 }

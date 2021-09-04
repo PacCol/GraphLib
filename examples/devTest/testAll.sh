@@ -1,5 +1,6 @@
 cd ../../
 cd build/
-make auto
+make all
+make install
 cd ../examples/devTest/
 make

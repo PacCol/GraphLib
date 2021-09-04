@@ -1,4 +1,6 @@
+#include <execution>
 #include <algorithm>
+#include <chrono>
 #include <cmath>
 
 #include "graphlib.h"
@@ -23,6 +25,8 @@ void Image::applyMedianFilter(unsigned int kernelSize) {
 	// We can't compute the median for the borders of the image so we keep the old values
 	std::vector<std::vector<uint8_t>> newPixels = pixels;
 
+	auto startTime = std::chrono::high_resolution_clock::now();
+
 	// For each line of the image...
 	for (unsigned int i = kernelSize; i < (height - kernelSize); i++) {
 
@@ -46,7 +50,7 @@ void Image::applyMedianFilter(unsigned int kernelSize) {
 				}
 
 				// We compute the median of this values
-				std::sort(medianPixels.begin(), medianPixels.end());
+				std::sort(std::execution::par, medianPixels.begin(), medianPixels.end());
 				uint8_t median = medianPixels[medianPixels.size() / 2];
 
 				// We update the value
@@ -57,4 +61,8 @@ void Image::applyMedianFilter(unsigned int kernelSize) {
 
 	// We update the image
 	pixels = newPixels;
+
+	auto stopTime = std::chrono::high_resolution_clock::now();
+	auto duration = std::chrono::duration_cast<std::chrono::microseconds>(stopTime - startTime);
+	std::cout << "Execution time: " << (float(duration.count()) / 1000000) << " seconds\n";
 }
